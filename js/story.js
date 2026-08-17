@@ -521,7 +521,7 @@ var STORY = {
         '"State your business, warm thing," says the ginger.'
       ],
       choices: [
-        { text: 'Ring Barnaby\u2019s bell.', to: 'gate_bell', needItem: '🔔 Barnaby\u2019s Bell' },
+        { text: 'Ring Barnaby\u2019s bell.', to: 'gate_bell', needItem: '🔔 Barnaby\u2019s Bell', hideWhenLocked: false },
         { text: 'Show the sleeping kitten.', to: 'gate_kitten', needItem: '🐈 Sleeping Kitten' },
         { text: '"I\u2019ve come for my cat."',
           roll: { stat: 'courage', dc: 9, success: 'court', fail: 'gate_thrown', failEffects: { stats: { health: -1 } } } },
@@ -722,7 +722,7 @@ var STORY = {
       ],
       choices: [
         { text: 'Ring Barnaby\u2019s bell \u2014 the sound with roots.', to: 'end_bell', needItem: '🔔 Barnaby\u2019s Bell' },
-        { text: 'Hold up the truth shard and *see* it.', to: 'end_shard', needItem: '🪞 Truth Shard' },
+        { text: 'Hold up the truth shard and *see* it.', to: 'end_shard', needItem: '🪞 Truth Shard', hideWhenLocked: false },
         { text: 'Step in front of Mochi.',
           roll: { stat: 'courage', dc: 9, success: 'end_shield_win', fail: 'end_shield_fail', failEffects: { stats: { health: -2 } } } },
         { text: 'Speak to it kindly. Ask it what it lost.',

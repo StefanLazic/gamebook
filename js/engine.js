@@ -197,6 +197,8 @@
       (function (choice) {
         if (choice.onlyFlag && !state.flags[choice.onlyFlag]) return;
         var ok = meetsRequirement(choice);
+        // Locked choices are hidden by default; a passage can opt in to showing
+        // them greyed out (as a tease) with hideWhenLocked: false.
         if (!ok && choice.hideWhenLocked !== false) return;
 
         var btn = document.createElement('button');
@@ -218,6 +220,12 @@
 
         if (!ok) {
           btn.disabled = true;
+          if (choice.needItem) {
+            var need = document.createElement('span');
+            need.className = 'tag';
+            need.textContent = 'needs ' + choice.needItem;
+            btn.appendChild(need);
+          }
         } else {
           btn.addEventListener('click', function () { pick(choice); });
         }
@@ -319,7 +327,6 @@
     cont.textContent = 'Continue';
     cont.addEventListener('click', function () {
       busy = false;
-      if (state.stats.health <= 0 && STORY.passages.faint) { goto('faint'); return; }
       goto(target);
     });
     el.rollArea.appendChild(cont);

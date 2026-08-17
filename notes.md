@@ -49,3 +49,12 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
 - Tested by driving the real engine in jsdom: hundreds of clicks per run, several runs,
   zero console errors, no stuck screens.
 - README rewritten with the premise, rules, file map and how to serve the static site.
+
+## 2026-08-17 — Review follow-ups
+
+- Dropped the redundant faint check in the dice handler; `goto()` is the single place that
+  routes to the `faint` ending when Health reaches zero.
+- Put the previously unused `hideWhenLocked: false` option to work: two item-gated choices
+  (ringing Barnaby's Bell at the gate, and the Truth Shard during the hunt) now appear
+  greyed out with a "needs …" tag instead of vanishing, so players can see the routes they
+  missed and have a reason to replay.
