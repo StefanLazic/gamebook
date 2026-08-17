@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  var SAVE_KEY = 'whiskerlight.save.v1';
-  var STAT_LABELS = { courage: 'Courage', cunning: 'Cunning', kindness: 'Kindness', health: 'Health' };
+  var SAVE_KEY = 'whiskerlight.save.sr.v2';
+  var STAT_LABELS = { courage: 'Hrabrost', cunning: 'Lukavost', kindness: 'Dobrota', health: 'Zdravlje' };
 
   var el = {
     titleScreen: document.getElementById('title-screen'),
@@ -21,6 +21,10 @@
     menuBtn: document.getElementById('menu-btn'),
     menuResume: document.getElementById('menu-resume'),
     menuRestart: document.getElementById('menu-restart'),
+    menuHowto: document.getElementById('menu-howto'),
+    howto: document.getElementById('howto'),
+    howtoBtn: document.getElementById('howto-btn'),
+    howtoClose: document.getElementById('howto-close'),
     app: document.getElementById('app')
   };
 
@@ -223,7 +227,7 @@
           if (choice.needItem) {
             var need = document.createElement('span');
             need.className = 'tag';
-            need.textContent = 'needs ' + choice.needItem;
+            need.textContent = 'treba: ' + choice.needItem;
             btn.appendChild(need);
           }
         } else {
@@ -238,7 +242,7 @@
       var again = document.createElement('button');
       again.className = 'choice';
       again.type = 'button';
-      again.textContent = 'Begin a new night ↺';
+      again.textContent = 'Počni novu noć ↺';
       again.addEventListener('click', restart);
       el.choices.appendChild(again);
     }
@@ -278,7 +282,7 @@
 
     var caption = document.createElement('p');
     caption.className = 'roll-math';
-    caption.textContent = 'Rolling 2d6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') vs ' + roll.dc;
+    caption.textContent = 'Bacam 2k6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') protiv ' + roll.dc;
     el.rollArea.appendChild(caption);
     el.rollArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -304,13 +308,13 @@
     var fumble = (a === 1 && b === 1);
     var win = crit || (!fumble && total >= roll.dc);
 
-    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' vs ' + roll.dc;
+    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' protiv ' + roll.dc;
 
     var line = document.createElement('p');
     line.className = 'roll-line ' + (win ? 'success' : 'fail');
-    line.textContent = crit ? 'Snake eyes\u2019 opposite \u2014 double sixes! Wonderful.'
-      : fumble ? 'Double ones. Oh no.'
-      : win ? 'Success!' : 'It doesn\u2019t go your way\u2026';
+    line.textContent = crit ? 'Dve šestice \u2014 savršeno bacanje!'
+      : fumble ? 'Dve jedinice. Ma nemoj\u2026'
+      : win ? 'Uspeh!' : 'Ne ide ti naruku\u2026';
     el.rollArea.appendChild(line);
 
     var target = win ? roll.success : roll.fail;
@@ -324,7 +328,7 @@
     cont.className = 'btn btn-primary';
     cont.type = 'button';
     cont.style.marginTop = '.75rem';
-    cont.textContent = 'Continue';
+    cont.textContent = 'Dalje';
     cont.addEventListener('click', function () {
       busy = false;
       goto(target);
@@ -350,15 +354,23 @@
 
   function openMenu() { el.menu.classList.remove('hidden'); }
   function closeMenu() { el.menu.classList.add('hidden'); }
+  function openHowto() { el.howto.classList.remove('hidden'); el.howtoClose.focus(); }
+  function closeHowto() { el.howto.classList.add('hidden'); }
 
   el.startBtn.addEventListener('click', function () { clearSave(); startGame(null); });
   el.menuBtn.addEventListener('click', openMenu);
   el.menuResume.addEventListener('click', closeMenu);
   el.menuRestart.addEventListener('click', restart);
   el.menu.addEventListener('click', function (e) { if (e.target === el.menu) closeMenu(); });
+  el.howtoBtn.addEventListener('click', openHowto);
+  el.menuHowto.addEventListener('click', function () { closeMenu(); openHowto(); });
+  el.howtoClose.addEventListener('click', closeHowto);
+  el.howto.addEventListener('click', function (e) { if (e.target === el.howto) closeHowto(); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeMenu(); return; }
-    if (el.gameScreen.classList.contains('hidden') || !el.menu.classList.contains('hidden')) return;
+    if (e.key === 'Escape') { closeHowto(); closeMenu(); return; }
+    if (el.gameScreen.classList.contains('hidden') ||
+        !el.menu.classList.contains('hidden') ||
+        !el.howto.classList.contains('hidden')) return;
     if (/^[1-9]$/.test(e.key)) {
       var buttons = el.choices.querySelectorAll('.choice:not([disabled])');
       var target = buttons[parseInt(e.key, 10) - 1];

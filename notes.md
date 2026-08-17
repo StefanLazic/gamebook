@@ -58,3 +58,30 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
   (ringing Barnaby's Bell at the gate, and the Truth Shard during the hunt) now appear
   greyed out with a "needs …" tag instead of vanishing, so players can see the routes they
   missed and have a reason to replay.
+
+## 2026-08-17 — Serbian localisation, Mimi, and a how-to-play screen
+
+- **Mačka se sada zove Mimi.** Renamed the cat from Mochi to Mimi across the story, the
+  README and these notes' future entries. The name appears in prose only, never as a key,
+  so nothing in the engine had to change.
+- **Everything the player reads is now in Serbian** (Latin script): the title screen,
+  subtitle, buttons, HUD tooltips, menu sheet, dice captions ("Bacam 2k6 + Hrabrost (3)
+  protiv 8", "Uspeh!", "Dve jedinice. Ma nemoj…"), locked-choice tags ("treba: …"), and the
+  whole of `js/story.js` — every passage, choice and item name.
+- Stat labels in `engine.js`: Courage → **Hrabrost**, Cunning → **Lukavost**, Kindness →
+  **Dobrota**, Health → **Zdravlje**. These labels also feed the dice tags on choices
+  (e.g. `Hrabrost 8+`), so the roll hints are localised for free.
+- Item names are both display strings *and* identifiers (`needItem`, `itemBonus.item`,
+  `lose`), so each one was translated consistently everywhere and re-checked with a link
+  validator that walks every passage.
+- Because item identifiers changed, the save key moved to `whiskerlight.save.sr.v2`; an old
+  English save can't half-load into the Serbian story.
+- **New: "❓ Kako se igra — kocke i osobine"** button, first thing on the title screen (and
+  repeated in the in-game menu). It opens a bottom sheet explaining: 2k6 + osobina ≥ težina,
+  what double sixes / double ones do, item bonuses, what each of the four stats is for, that
+  failure branches the story instead of ending it, and the touch/keyboard controls.
+- `index.html` remains the single static entry point loading `css/style.css`, `js/story.js`
+  and `js/engine.js` — nothing else to build or serve.
+- **Mobile:** the new sheet is capped at `88dvh` with contained scrolling and a sticky close
+  button so it never traps the page behind it; the title-screen button keeps the 48px
+  minimum tap target; `Esc` and tapping the backdrop close it.
