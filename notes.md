@@ -37,3 +37,15 @@ passage links, every ending reachable.
 **Mobile-friendliness** — single column, sticky HUD, large tap targets, `touch-action:
 manipulation` to kill the 300ms delay, `env(safe-area-inset-*)` padding for notched
 phones, bottom sheet menu, `prefers-reduced-motion` support.
+
+## 2026-08-17 — Hardening pass
+
+- Health can now drop below zero from any effect, not just a dice check, so `goto()` routes
+  to the `faint` ending centrally instead of relying on the roll handler.
+- Removed a dead branch in `goto()` and the leftover `to:` fields on dice-check choices
+  (they are ignored by the engine — the roll's `success`/`fail`/`crit` decide the target).
+- Added desktop keyboard shortcuts: keys `1`–`9` pick the numbered choice. Touch remains
+  the primary input; nothing depends on hover.
+- Tested by driving the real engine in jsdom: hundreds of clicks per run, several runs,
+  zero console errors, no stuck screens.
+- README rewritten with the premise, rules, file map and how to serve the static site.

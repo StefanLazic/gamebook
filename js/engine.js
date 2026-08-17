@@ -152,6 +152,8 @@
   }
 
   function goto(id, extraNote) {
+    if (state.stats.health <= 0 && id !== 'faint' && STORY.passages.faint) id = 'faint';
+
     var p = STORY.passages[id];
     if (!p) { console.error('Missing passage: ' + id); return; }
 
@@ -180,7 +182,6 @@
       el.passage.appendChild(paragraph(textOf(body[i])));
     }
     if (extraNote) el.passage.appendChild(paragraph(extraNote, 'note'));
-    if (p.ending && state.stats.health <= 0) { /* handled by story text */ }
 
     renderChoices(p);
 
@@ -348,7 +349,15 @@
   el.menuResume.addEventListener('click', closeMenu);
   el.menuRestart.addEventListener('click', restart);
   el.menu.addEventListener('click', function (e) { if (e.target === el.menu) closeMenu(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (el.gameScreen.classList.contains('hidden') || !el.menu.classList.contains('hidden')) return;
+    if (/^[1-9]$/.test(e.key)) {
+      var buttons = el.choices.querySelectorAll('.choice:not([disabled])');
+      var target = buttons[parseInt(e.key, 10) - 1];
+      if (target) target.click();
+    }
+  });
 
   var saved = loadSaved();
   if (saved) {
