@@ -85,3 +85,16 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
 - **Mobile:** the new sheet is capped at `88dvh` with contained scrolling and a sticky close
   button so it never traps the page behind it; the title-screen button keeps the 48px
   minimum tap target; `Esc` and tapping the backdrop close it.
+
+### Validation of the translated story
+
+- `node --check` on both JS files; a link validator walks all 73 passages and confirms every
+  `to:` / `roll.success` / `roll.fail` / `roll.crit` target exists, every `needItem`,
+  `itemBonus.item` and `lose` string is actually granted somewhere (item names double as
+  identifiers, so a sloppy translation would silently break gates), and no passage is a dead
+  end. Only `faint` is "unreachable" by links — by design, the engine routes there when
+  Zdravlje hits 0.
+- 200 random playthroughs driven through the real engine in jsdom: zero console errors, no
+  stuck screens, and all five endings still reachable — *Udubljenje u jorganu*, *Stalni
+  poziv*, *Dve mačke, jedna Čuvarka, bez objašnjenja*, *Šuma te zadrži još malo*, *Dete koje
+  je ostalo do jutra*.

@@ -14,842 +14,842 @@ var STORY = {
     /* ---------- Act I: Thimbledown ---------- */
 
     porch: {
-      title: 'A Cat-Shaped Hole',
+      title: 'Rupa u obliku mačke',
       text: [
-        'Mochi has been gone since the moon came up, and the moon is now very high indeed.',
-        'You are eleven years old, you are still in your pyjama trousers, and you have exactly one plan: find your cat before the village wakes and everybody says the word *probably*.',
-        'Her food bowl is untouched. The dent in your quilt where she sleeps is cold. On the porch step there is a single sooty pawprint that glitters faintly, like someone spilled a star and swept it up badly.'
+        'Mimi je nestala otkako je izašao mesec, a mesec je sada već baš, baš visoko.',
+        'Imaš jedanaest godina, još si u donjem delu pidžame i imaš tačno jedan plan: da pronađeš svoju mačku pre nego što se selo probudi i svi počnu da govore reč *verovatno*.',
+        'Njena činija za hranu stoji netaknuta. Udubljenje na jorganu gde spava je hladno. Na stepeniku trema vidi se jedan jedini čađavi otisak šape koji jedva primetno svetluca, kao da je neko prosuo zvezdu pa je loše počistio.'
       ],
       choices: [
-        { text: 'Grab supplies from the garden shed first.', to: 'shed' },
-        { text: 'Knock on Mrs. Pell\u2019s door \u2014 she never sleeps.', to: 'pell' },
-        { text: 'Follow the glittering prints straight into the garden.', to: 'garden' }
+        { text: 'Najpre zgrabi potrepštine iz baštenske šupe.', to: 'shed' },
+        { text: 'Pokucaj na vrata gospođe Pel — ona nikad ne spava.', to: 'pell' },
+        { text: 'Prati svetlucave tragove pravo u baštu.', to: 'garden' }
       ]
     },
 
     shed: {
-      title: 'The Shed of Useful Rubbish',
+      title: 'Šupa puna korisnog đubreta',
       text: [
-        'The shed smells of tomato leaves and old rain. You take the tin lantern with the wobbly handle, and a strip of dried fish from the packet Dad hides from you.',
-        'On the way out you nearly trip over the garden spade, which is *definitely* not where you left it. The soil beneath the shed door has been dug up from the inside.'
+        'Šupa miriše na listove paradajza i staru kišu. Uzimaš limenu lampu sa klimavom drškom i trakicu sušene ribe iz paketića koji tata krije od tebe.',
+        'Na izlazu umalo ne zapneš za baštensku lopatu, koja *sigurno* nije tamo gde si je ostavio. Zemlja ispod vrata šupe raskopana je iznutra.'
       ],
-      firstVisitEffects: { items: ['🏮 Tin Lantern', '🐟 Fish Jerky'], flags: { supplied: true } },
+      firstVisitEffects: { items: ['🏮 Limena lampa', '🐟 Suva riba'], flags: { supplied: true } },
       choices: [
-        { text: 'Follow the prints into the garden.', to: 'garden' },
-        { text: 'Detour to Mrs. Pell\u2019s door.', to: 'pell', notFlag: 'metPell' }
+        { text: 'Prati tragove u baštu.', to: 'garden' },
+        { text: 'Usput skokni do vrata gospođe Pel.', to: 'pell', notFlag: 'metPell' }
       ]
     },
 
     pell: {
-      title: 'Mrs. Pell, Who Never Sleeps',
+      title: 'Gospođa Pel, koja nikad ne spava',
       text: [
-        'Mrs. Pell answers before you knock. She is ninety-one and knitting something with far too many sleeves.',
-        '"Black cat, white sock, opinions?" she says. "Yes. She went through the hedge at the bottom of your garden. Cats do, on Hollow Nights. Most of them come back."',
-        'She presses a small brass bell into your hand. "That was my Barnaby\u2019s. Ring it where the ringing sounds *wrong*, and you\u2019ll know you\u2019ve arrived."'
+        'Gospođa Pel otvara vrata pre nego što stigneš da pokucaš. Ima devedeset i jednu godinu i plete nešto sa mnogo, mnogo previše rukava.',
+        '„Crna mačka, bela čarapica, puna mišljenja?“ kaže. „Da. Prošla je kroz živicu na dnu tvoje bašte. Mačke to rade, u Šupljim noćima. Većina se vrati.“',
+        'Utiskuje ti u ruku malo mesingano zvonce. „To je bilo od mog Barnabija. Pozvoni njime tamo gde zvonjava zvuči *pogrešno*, pa ćeš znati da si stigao.“'
       ],
-      firstVisitEffects: { items: ['🔔 Barnaby\u2019s Bell'], flags: { metPell: true }, stats: { kindness: 1 } },
+      firstVisitEffects: { items: ['🔔 Barnabijevo zvono'], flags: { metPell: true }, stats: { kindness: 1 } },
       choices: [
-        { text: '"What\u2019s a Hollow Night?"', to: 'pell_lore' },
-        { text: 'Thank her and run for the garden.', to: 'garden' }
+        { text: '„Šta je to Šuplja noć?“', to: 'pell_lore' },
+        { text: 'Zahvali joj i potrči u baštu.', to: 'garden' }
       ]
     },
 
     pell_lore: {
-      title: 'What Mrs. Pell Knows',
+      title: 'Šta zna gospođa Pel',
       text: [
-        '"One night a year the hedges go thin," she says, "and the wood on the other side remembers it used to be bigger than the world. Cats are invited. Children are *tolerated*."',
-        '"Three things keep a child safe out there: nerve, cleverness, and being genuinely nice to things with too many eyes. Take all three. Don\u2019t take shortcuts offered by anyone with a lantern brighter than yours."',
-        'She goes back to her knitting. The extra sleeves, you notice, are cat-sized.'
+        '„Jednom godišnje živice se istanje“, kaže ona, „a šuma s druge strane seti se da je nekad bila veća od sveta. Mačke su pozvane. Deca se *trpe*.“',
+        '„Tri stvari čuvaju dete tamo napolju: hrabrost, lukavost i to da budeš iskreno fin prema stvarima sa previše očiju. Ponesi sve tri. Ne prihvataj prečice od bilo koga sa lampom sjajnijom od tvoje.“',
+        'Vraća se pletenju. Primećuješ da su dodatni rukavi mačje veličine.'
       ],
       firstVisitEffects: { stats: { cunning: 1 }, flags: { warned: true } },
       choices: [
-        { text: 'Head for the garden hedge.', to: 'garden' },
-        { text: 'Swing by the shed for supplies.', to: 'shed', notFlag: 'supplied' }
+        { text: 'Kreni ka baštenskoj živici.', to: 'garden' },
+        { text: 'Svraćaj do šupe po potrepštine.', to: 'shed', notFlag: 'supplied' }
       ]
     },
 
     garden: {
-      title: 'The Hedge That Breathes',
+      title: 'Živica koja diše',
       text: [
-        'At the bottom of the garden the hawthorn hedge is doing something hedges should not do: inhaling.',
-        'The pawprints march right up to a gap no wider than a cat, and stop. Through the gap you can see grass that is the wrong colour of silver, and hear a wood breathing back.',
-        'The gap is cat-sized. You are, annoyingly, kid-sized.'
+        'Na dnu bašte glogova živica radi nešto što živice nikako ne bi smele da rade: udiše.',
+        'Otisci šapa marširaju pravo do otvora koji je jedva dovoljno širok za mačku, a onda staju. Kroz njega vidiš travu koja je pogrešne nijanse srebra i čuješ kako šuma diše nazad.',
+        'Otvor je mačje veličine. Ti si, na veliku žalost, dečje veličine.'
       ],
       choices: [
-        { text: 'Wriggle through the thorny gap.',
+        { text: 'Provuci se kroz trnoviti otvor.',
           roll: { stat: 'cunning', dc: 7, success: 'hollowwood', fail: 'gap_fail', failEffects: { stats: { health: -1 } } } },
-        { text: 'Shout Mochi\u2019s name into the dark first.', to: 'garden_shout' },
-        { text: 'Go back for supplies.', to: 'shed', notFlag: 'supplied' }
+        { text: 'Prvo vikni Mimino ime u tamu.', to: 'garden_shout' },
+        { text: 'Vrati se po potrepštine.', to: 'shed', notFlag: 'supplied' }
       ]
     },
 
     garden_shout: {
-      title: 'Names Carry',
+      title: 'Imena putuju',
       text: [
-        '"MOCHI!"',
-        'The wood answers in a hundred small voices, all of them saying *Mochi* back at you, politely, like a class repeating a spelling word. Somewhere far off, something enormous stops chewing to listen.',
-        'You get the strong feeling you have just told the whole forest your business. On the bright side, the hedge sighs and opens a little wider, as if impressed by your rudeness.'
+        '„MIMI!“',
+        'Šuma odgovara sa stotinu sitnih glasova, i svi ti glasovi ti učtivo vraćaju *Mimi*, kao razred koji ponavlja tešku reč za diktat. Negde daleko nešto ogromno prestaje da žvaće kako bi oslušnulo.',
+        'Imaš snažan osećaj da si upravo celoj šumi ispričao svoja posla. S vedrije strane, živica uzdahne i otvori se malo šire, kao da je impresionirana tvojom nepristojnošću.'
       ],
       firstVisitEffects: { stats: { courage: 1 }, flags: { shouted: true } },
       choices: [
-        { text: 'Step through while it\u2019s wide.', to: 'hollowwood' }
+        { text: 'Prođi dok je široko.', to: 'hollowwood' }
       ]
     },
 
     gap_fail: {
-      title: 'Thorns Have Opinions',
+      title: 'Trnje ima svoje mišljenje',
       text: [
-        'The hedge takes a strip of your sleeve and a strip of you along with it. You land on the other side in a heap, stinging.',
-        'A thorn, still holding your sleeve, gives it back. Politely. That is the moment your night stops being ordinary.'
+        'Živica ti uzme parče rukava i malo tebe pride. Padaš na drugu stranu u gomili udova i peckanja.',
+        'Jedan trn, i dalje držeći tvoj rukav, vraća ga nazad. Učtivo. To je trenutak kad tvoja noć prestaje da bude obična.'
       ],
-      choices: [ { text: 'Stand up. Keep going.', to: 'hollowwood' } ]
+      choices: [ { text: 'Ustani. Nastavi dalje.', to: 'hollowwood' } ]
     },
 
     /* ---------- Act II: The Hollowwood ---------- */
 
     hollowwood: {
-      title: 'The Hollowwood',
+      title: 'Šuplja šuma',
       text: [
-        'The wood on the other side is enormous and quiet and lit from below, as if the moss has been storing moonlight all summer.',
-        'Mochi\u2019s starry prints run on ahead, then split \u2014 which is impossible, unless there were two of her, which you refuse to think about.',
-        'Three ways: a brook of black water on stepping stones, a stone bridge with something snoring beneath it, and a ring of mushrooms where moths are dancing in a very organised manner.'
+        'Šuma s druge strane je ogromna i tiha i osvetljena odozdo, kao da je mahovina čitavog leta skupljala mesečinu.',
+        'Mimini zvezdani tragovi šapa produžavaju napred, pa se onda razdvajaju — što je nemoguće, osim ako ih nije bilo dve, a o tome odbijaš da razmišljaš.',
+        'Tri puta: potok crne vode preko kamenova za gaženje, kameni most pod kojim nešto hrče i krug pečuraka gde moljci plešu vrlo organizovano.'
       ],
       choices: [
-        { text: 'Cross the black brook.', to: 'brook', notFlag: 'didBrook' },
-        { text: 'Take the bridge (and whoever is under it).', to: 'bridge', notFlag: 'didBridge' },
-        { text: 'Enter the mushroom ring.', to: 'ring', notFlag: 'didRing' },
-        { text: 'Follow the crow-noise deeper in.', to: 'crow_market', onlyFlag: 'wandered' }
+        { text: 'Pređi crni potok.', to: 'brook', notFlag: 'didBrook' },
+        { text: 'Idi preko mosta (i preko onoga ko je ispod njega).', to: 'bridge', notFlag: 'didBridge' },
+        { text: 'Uđi u krug pečuraka.', to: 'ring', notFlag: 'didRing' },
+        { text: 'Prati gavranju buku dublje unutra.', to: 'crow_market', onlyFlag: 'wandered' }
       ]
     },
 
     brook: {
-      title: 'The Brook That Reflects Yesterday',
+      title: 'Potok koji odražava juče',
       text: [
-        'The water is black and shows not you but *you an hour ago*, asleep, with Mochi curled in the crook of your knees.',
-        'Nine stones. The middle one is wet and grinning. Somewhere under the water, something with far too many fins is keeping time.'
+        'Voda je crna i ne pokazuje tebe nego *tebe od pre sat vremena*, kako spavaš, sa Mimi sklupčanom u pregibu tvojih kolena.',
+        'Devet kamenova. Srednji je mokar i kezast. Negde ispod vode nešto sa mnogo, mnogo previše peraja drži ritam.'
       ],
       effects: { flags: { didBrook: true, wandered: true } },
       choices: [
-        { text: 'Leap the stones without looking down.',
+        { text: 'Preskači kamenje ne gledajući nadole.',
           roll: { stat: 'courage', dc: 8, success: 'brook_win', fail: 'brook_fail',
                   failEffects: { stats: { health: -1 } }, crit: 'brook_crit' } },
-        { text: 'Wade instead \u2014 slow, cold, certain.', to: 'brook_wade' },
-        { text: 'Back to the three ways.', to: 'hollowwood' }
+        { text: 'Pregazi kroz vodu — sporo, hladno, sigurno.', to: 'brook_wade' },
+        { text: 'Nazad do tri puta.', to: 'hollowwood' }
       ]
     },
 
     brook_win: {
-      title: 'Nine Stones, Nine Heartbeats',
+      title: 'Devet kamenova, devet otkucaja srca',
       text: [
-        'You go over the stones like someone who has done this before, and the finned thing below applauds with a sound like wet hands.',
-        'On the far bank you find a glowworm sitting in a jar that has already been opened. "Took you long enough," it says. It hops into your pocket and starts glowing helpfully.'
+        'Prelaziš preko kamenova kao neko ko je ovo već radio, a perajasto stvorenje ispod tebe aplaudira zvukom mokrih dlanova.',
+        'Na drugoj obali nalaziš svica kako sedi u tegli koja je već otvorena. „Baš si se otegao“, kaže. Skoči ti u džep i počne uslužno da svetli.'
       ],
-      firstVisitEffects: { items: ['✨ Rude Glowworm'], stats: { courage: 1 } },
-      choices: [ { text: 'Onward.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['✨ Bezobrazni svitac'], stats: { courage: 1 } },
+      choices: [ { text: 'Napred.', to: 'crow_market' } ]
     },
 
     brook_crit: {
-      title: 'Perfect. Absolutely Perfect.',
+      title: 'Savršeno. Baš savršeno.',
       text: [
-        'You cross so beautifully that the brook, embarrassed, briefly runs backwards.',
-        'The finned thing surfaces \u2014 all whiskers and old coins \u2014 and gifts you a scale that hums when someone nearby is lying. "For the market," it burbles. "You\u2019ll want it."',
-        'A rude glowworm also joins you, uninvited, from a jar on the bank.'
+        'Pređeš tako lepo da se potok, postiđen, nakratko razlije unazad.',
+        'Perajasto stvorenje izroni — sve brkovi i stari novčići — i pokloni ti krljušt koja zuji kada neko u blizini laže. „Za pijacu“, klokota. „Trebaće ti.“',
+        'Pridružuje ti se i jedan bezobrazni svitac, nepozvan, iz tegle na obali.'
       ],
-      firstVisitEffects: { items: ['✨ Rude Glowworm', '🐠 Truth Scale'], stats: { courage: 1 } },
-      choices: [ { text: 'Onward, glowing.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['✨ Bezobrazni svitac', '🐠 Krljušt istine'], stats: { courage: 1 } },
+      choices: [ { text: 'Napred, svetlucavo.', to: 'crow_market' } ]
     },
 
     brook_fail: {
-      title: 'Splash',
+      title: 'Pljus',
       text: [
-        'The grinning stone was, in fact, grinning about this.',
-        'You go in up to your ribs. The water is so cold it argues with you. Something enormous and finned nudges you \u2014 not unkindly \u2014 to the far bank, then vanishes with your left slipper as payment.'
+        'Kezasti kamen se, ispostavlja se, kezi baš zbog ovoga.',
+        'Upadaš do rebara. Voda je toliko hladna da se prepire s tobom. Nešto ogromno i perajasto gurne te — nimalo neljubazno — do druge obale, pa nestane sa tvojom levom papučom kao naplatom.'
       ],
-      choices: [ { text: 'Squelch onward.', to: 'crow_market' } ]
+      choices: [ { text: 'Nastavi dalje, gnjecavo.', to: 'crow_market' } ]
     },
 
     brook_wade: {
-      title: 'Slow and Cold',
+      title: 'Sporo i hladno',
       text: [
-        'You wade. It is miserable and it works. Halfway across, the reflection of sleeping-you opens its eyes and mouths: *behind the hollow tree*.',
-        'You file that away in the part of your brain that is still taking notes.'
+        'Gaziš. Bedno je i uspeva. Na pola puta, odraz tvog usnulog-ja otvori oči i oblikuje usnama: *iza šupljeg drveta*.',
+        'Spremiš to u onaj deo mozga koji i dalje savesno vodi beleške.'
       ],
       firstVisitEffects: { flags: { hint: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Climb out and go on.', to: 'crow_market' } ]
+      choices: [ { text: 'Izađi na obalu i nastavi.', to: 'crow_market' } ]
     },
 
     bridge: {
-      title: 'Under the Bridge, a Snore',
+      title: 'Ispod mosta, hrkanje',
       text: [
-        'The snoring stops. A moss troll unfolds itself from beneath the bridge \u2014 nine feet of damp granite wearing a hat of ferns.',
-        '"Toll," it rumbles, and then, apologetically, "sorry, it\u2019s the job. Riddle or coin or kindness. Pick."',
-        'It has, you notice, three long scratches down its nose. Fresh ones. Cat-shaped ones.'
+        'Hrkanje prestaje. Mahovinasti trol se odmotava ispod mosta — skoro tri metra vlažnog granita sa šeširom od paprati.',
+        '„Mostarina“, zagrmi, a onda doda izvinjavajući se: „izvini, posao je takav. Zagonetka ili novčić ili dobrota. Biraj.“',
+        'Primećuješ da su mu preko nosa tri duge ogrebotine. Sveže. Mačkastog oblika.'
       ],
       effects: { flags: { didBridge: true, wandered: true } },
       choices: [
-        { text: 'Take the riddle.', to: 'troll_riddle' },
-        { text: 'Offer the fish jerky.', to: 'troll_gift', needItem: '🐟 Fish Jerky' },
-        { text: 'Ask about the scratches, and if the nose hurts.', to: 'troll_kind' },
-        { text: 'Back to the three ways.', to: 'hollowwood' }
+        { text: 'Uzmi zagonetku.', to: 'troll_riddle' },
+        { text: 'Ponudi suvu ribu.', to: 'troll_gift', needItem: '🐟 Suva riba' },
+        { text: 'Pitaj za ogrebotine i da li ga nos boli.', to: 'troll_kind' },
+        { text: 'Nazad do tri puta.', to: 'hollowwood' }
       ]
     },
 
     troll_riddle: {
-      title: 'The Toll of Words',
+      title: 'Mostarina od reči',
       text: [
-        '"I am kept by being given," says the troll. "I am broken by being told. Small creatures carry me across whole forests."',
-        'Its eyes are patient. Bridges are patient. You are not, but you try.'
+        '„Čuvam se tako što se dajem“, kaže trol. „Lomim se tako što se ispričam. Mala bića me nose preko čitavih šuma.“',
+        'Njegove oči su strpljive. Mostovi su strpljivi. Ti nisi, ali se trudiš.'
       ],
       choices: [
-        { text: '"A promise."', to: 'troll_right' },
-        { text: '"A shadow."', to: 'troll_wrong' },
-        { text: '"A really good stick."', to: 'troll_wrong' },
-        { text: 'Guess cleverly from context.',
+        { text: '„Obećanje.“', to: 'troll_right' },
+        { text: '„Senka.“', to: 'troll_wrong' },
+        { text: '„Baš dobar štap.“', to: 'troll_wrong' },
+        { text: 'Pametno pogađaj iz konteksta.',
           roll: { stat: 'cunning', dc: 8, success: 'troll_right', fail: 'troll_wrong' } }
       ]
     },
 
     troll_right: {
-      title: 'Correct, Irritatingly',
+      title: 'Tačno, iritantno tačno',
       text: [
-        '"Correct," sighs the troll, who enjoys collecting tolls more than giving directions. "Pass."',
-        'It adds, grudgingly: "Your cat went through at moonrise. Walked like she owned the bridge. Scratched me for saying otherwise. She was carrying something in her mouth, and it was *not* a mouse."'
+        '„Tačno“, uzdahne trol, koji više voli da naplaćuje mostarinu nego da daje uputstva. „Prođi.“',
+        'Dodaje, preko volje: „Tvoja mačka je prošla u vreme izlaska meseca. Hodala je kao da je most njen. Ogrebala me je kad sam rekao da nije. Nosila je nešto u ustima, i to *nije* bio miš.“'
       ],
       firstVisitEffects: { stats: { cunning: 1 }, flags: { trollTold: true } },
-      choices: [ { text: 'Cross the bridge.', to: 'crow_market' } ]
+      choices: [ { text: 'Pređi most.', to: 'crow_market' } ]
     },
 
     troll_wrong: {
-      title: 'Wrong, Cheerfully',
+      title: 'Pogrešno, ali veselo',
       text: [
-        '"No," says the troll, delighted. "Toll unpaid. But rules are rules, and rules say I only have to be *inconvenient*."',
-        'It picks you up by the pyjama collar and sets you down on the far side, upside down, then the right way up, so honour is satisfied. You lose a bit of dignity and a bit of skin.'
+        '„Ne“, kaže trol, oduševljeno. „Mostarina nije plaćena. Ali pravila su pravila, a pravila kažu da moram samo da budem *neprijatan*.“',
+        'Podiže te za kragnu pidžame i spušta na drugu stranu naopačke, pa onda uspravno, da čast bude zadovoljena. Gubiš malo dostojanstva i malo kože.'
       ],
       firstVisitEffects: { stats: { health: -1 } },
-      choices: [ { text: 'Walk away with the remains of your pride.', to: 'crow_market' } ]
+      choices: [ { text: 'Odlutaj sa ostacima svog ponosa.', to: 'crow_market' } ]
     },
 
     troll_gift: {
-      title: 'Jerky Diplomacy',
+      title: 'Diplomatija sa suvom ribom',
       text: [
-        'You hold up the fish jerky. The troll takes it with the delicacy of someone handling a jewel and eats it in a way that suggests nobody has offered it anything for two hundred years.',
-        '"Kindness accepted," it says thickly. "Advice included, free: at the crow market, never take the *first* price, and never say your cat\u2019s name out loud. Names are currency there."',
-        'It also hands you a lump of bridge-moss. "Chew it if the dark gets too dark."'
+        'Podigneš suvu ribu. Trol je uzme nežno kao da drži dragulj i pojede je na način koji jasno govori da mu niko ništa nije ponudio već dve stotine godina.',
+        '„Dobrota prihvaćena“, kaže punih usta. „Savet uključen, besplatno: na gavranjoj pijaci nikad ne prihvataj *prvu* cenu i nikad ne izgovaraj ime svoje mačke naglas. Tamo su imena valuta.“',
+        'Pruža ti i grumen mahovine sa mosta. „Žvaći ako mrak postane previše mračan.“'
       ],
-      firstVisitEffects: { lose: ['🐟 Fish Jerky'], items: ['🌿 Bridge Moss'], stats: { kindness: 1 }, flags: { marketTip: true } },
-      choices: [ { text: 'Cross with a friend behind you.', to: 'crow_market' } ]
+      firstVisitEffects: { lose: ['🐟 Suva riba'], items: ['🌿 Mostna mahovina'], stats: { kindness: 1 }, flags: { marketTip: true } },
+      choices: [ { text: 'Pređi most sa prijateljem iza sebe.', to: 'crow_market' } ]
     },
 
     troll_kind: {
-      title: 'Does It Hurt?',
+      title: 'Da li boli?',
       text: [
-        'Nobody, in two centuries, has asked the troll about its nose. It sits down so hard the bridge complains.',
-        '"She was frightened," it says. "Not of me. Of what was following her. Little black cat, white sock, and something behind her that I could hear but not see." It lets you dab the scratches with a wet fern.',
-        '"Go on then. Toll waived. And take this \u2014 it means *this child is a friend of the bridge*. It matters to some folk."'
+        'Niko, za dva veka, nije pitao trola za nos. Sedne tako naglo da se most pobuni.',
+        '„Bila je uplašena“, kaže. „Ne od mene. Od onoga što ju je pratilo. Mala crna mačka, bela čarapica, i nešto iza nje što sam mogao da čujem, ali ne i da vidim.“ Dozvoli ti da ogrebotine tapkaš mokrom paprati.',
+        '„Idi sad. Mostarina oproštena. I uzmi ovo — znači *ovo dete je prijatelj mosta*. Nekim ljudima je to važno.“'
       ],
-      firstVisitEffects: { items: ['🪨 Troll Token'], stats: { kindness: 1 }, flags: { trollFriend: true, followed: true } },
-      choices: [ { text: 'Cross the bridge, worried now.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['🪨 Trolov žeton'], stats: { kindness: 1 }, flags: { trollFriend: true, followed: true } },
+      choices: [ { text: 'Pređi most, sad već zabrinut.', to: 'crow_market' } ]
     },
 
     ring: {
-      title: 'The Ring of Very Organised Moths',
+      title: 'Krug vrlo organizovanih moljaca',
       text: [
-        'Two hundred moths are dancing a formal dance above the mushrooms. They are dancing in the shape of a cat. They are, you realise, *reenacting* something \u2014 a small cat running, and behind her a shape with too many legs.',
-        'The moths pause. They would like a partner. They are extremely clear about this despite having no faces.'
+        'Dvesta moljaca pleše svečani ples iznad pečuraka. Plešu u obliku mačke. Shvataš da oni *odglumljuju* nešto — malu mačku koja trči, a iza nje priliku sa previše nogu.',
+        'Moljci zastanu. Žele partnera. Krajnje su jasni po tom pitanju uprkos tome što nemaju lica.'
       ],
       effects: { flags: { didRing: true, wandered: true, followed: true } },
       choices: [
-        { text: 'Dance with the moths.',
+        { text: 'Pleši sa moljcima.',
           roll: { stat: 'kindness', dc: 7, success: 'ring_win', fail: 'ring_fail' } },
-        { text: 'Watch the whole story through instead.', to: 'ring_watch' },
-        { text: 'Back away slowly. Back to the three ways.', to: 'hollowwood' }
+        { text: 'Umesto toga isprati celu priču do kraja.', to: 'ring_watch' },
+        { text: 'Polako se povuci. Nazad do tri puta.', to: 'hollowwood' }
       ]
     },
 
     ring_win: {
-      title: 'A Very Silly, Very Serious Dance',
+      title: 'Veoma blesav, veoma ozbiljan ples',
       text: [
-        'You dance. Badly. Enormously badly, in pyjama trousers, with one slipper, in a ring of glowing mushrooms in a wood that should not exist.',
-        'The moths are delighted. They settle on your shoulders and knit themselves into a grey cloak that weighs nothing and makes you feel very slightly invisible.',
-        '"Hush-thing follows her," they whisper, all together. "Hush-thing wants her voice."'
+        'Plešeš. Loše. Strašno loše, u donjem delu pidžame, sa jednom papučom, u krugu svetlećih pečuraka usred šume koja ne bi smela da postoji.',
+        'Moljci su oduševljeni. Sleću ti na ramena i uplete se u sivi plašt koji ništa ne teži i zbog kog se osećaš pomalo nevidljivo.',
+        '„Tiho-stvar je prati“, šapuću svi zajedno. „Tiho-stvar hoće njen glas.“'
       ],
-      firstVisitEffects: { items: ['🦋 Moth Cloak'], stats: { kindness: 1 }, flags: { hushKnown: true } },
-      choices: [ { text: 'Follow the moths\u2019 pointing.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['🦋 Plašt od moljaca'], stats: { kindness: 1 }, flags: { hushKnown: true } },
+      choices: [ { text: 'Prati kuda moljci pokazuju.', to: 'crow_market' } ]
     },
 
     ring_fail: {
-      title: 'Two Left Feet, One Left Slipper',
+      title: 'Dve leve noge, jedna leva papuča',
       text: [
-        'You step on the dance. You can tell, because the dance stops and every moth turns to look at you at once, which is a lot of looking from things with no eyes to speak of.',
-        'They forgive you \u2014 moths are like that \u2014 but they will not lend you their cloak. They do whisper one word before scattering: *"Hush-thing."*'
+        'Nagaziš na ples. Znaš to jer se ples zaustavi i svaki moljac se odjednom okrene ka tebi, a to je mnogo gledanja od stvari koje, iskreno, nemaju oči.',
+        'Opraštaju ti — moljci su takvi — ali ti ne pozajmljuju svoj plašt. Ipak, pre nego što se razlete, šapnu jednu reč: *„Tiho-stvar.“*'
       ],
       firstVisitEffects: { flags: { hushKnown: true } },
-      choices: [ { text: 'Go on, unsettled.', to: 'crow_market' } ]
+      choices: [ { text: 'Nastavi dalje, uznemiren.', to: 'crow_market' } ]
     },
 
     ring_watch: {
-      title: 'The Whole Story, Told in Moths',
+      title: 'Cela priča, ispričana moljcima',
       text: [
-        'You sit and watch the dance three times through. Moth-Mochi runs. The many-legged Hush-thing follows. And then \u2014 the part you had to watch three times to be sure of \u2014 moth-Mochi stops running and turns around, because she is carrying something small, and the something small cannot run any further.',
-        'The moths finish. They bow. One lands on your nose to make sure you understood.'
+        'Sedneš i odgledaš ples tri puta. Moljac-Mimi trči. Mnogonoga Tiho-stvar je prati. A onda — deo koji si morao da gledaš tri puta da bi bio siguran — moljac-Mimi prestaje da trči i okreće se, zato što nosi nešto malo, a to malo više ne može da trči.',
+        'Moljci završavaju. Naklone se. Jedan sleti na tvoj nos da proveri da li si razumeo.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, sawKitten: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Go, quickly now.', to: 'crow_market' } ]
+      choices: [ { text: 'Hajde, brzo sad.', to: 'crow_market' } ]
     },
 
     /* ---------- Act III: The Market and the Witch ---------- */
 
     crow_market: {
-      title: 'The Crow Market',
+      title: 'Gavranja pijaca',
       text: [
-        'A clearing full of stalls made from umbrellas, staffed entirely by crows in waistcoats, lit by lanterns that are honestly just very smug fireflies.',
-        'They sell: directions, borrowed names, bottled apologies, and one (1) map to the Court of the Ninefold Hearth, where \u2014 a sign explains \u2014 *all lost cats are eventually filed*.',
-        'The head crow eyes your pyjamas. "Price is a name," it says. "Not yours. Anyone\u2019s."'
+        'Čistina puna tezgi napravljenih od kišobrana, na kojima rade isključivo gavrani u prslucima, osvetljena lampama koje su iskreno samo veoma samodopadljive krijesnice.',
+        'Prodaju: pravce, pozajmljena imena, izvinjenja u boci i jednu (1) mapu do Dvora devetostrukog ognjišta, gde — kako objašnjava natpis — *sve izgubljene mačke na kraju budu zavedene*.',
+        'Glavni gavran odmeri tvoju pidžamu. „Cena je jedno ime“, kaže. „Ne tvoje. Bilo čije.“'
       ],
       choices: [
-        { text: 'Trade a name you don\u2019t mind losing (your least-favourite teacher\u2019s).', to: 'market_trade' },
-        { text: 'Haggle. Never take the first price.', to: 'market_haggle', onlyFlag: 'marketTip' },
-        { text: 'Show the troll token.', to: 'market_token', needItem: '🪨 Troll Token' },
-        { text: 'Pickpocket the map while the crows argue.',
+        { text: 'Trguj imenom koje ti nije žao da izgubiš (onim nastavnika kog najmanje voliš).', to: 'market_trade' },
+        { text: 'Cenkaj se. Nikad ne prihvataj prvu cenu.', to: 'market_haggle', onlyFlag: 'marketTip' },
+        { text: 'Pokaži trolov žeton.', to: 'market_token', needItem: '🪨 Trolov žeton' },
+        { text: 'Džepari mapu dok se gavrani raspravljaju.',
           roll: { stat: 'cunning', dc: 9, success: 'market_stolen', fail: 'market_caught', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     market_trade: {
-      title: 'Sold: One Name',
+      title: 'Prodato: jedno ime',
       text: [
-        'You say a name. The crows write it down with great ceremony, and immediately you cannot remember what it was. Somewhere, a maths teacher wakes up feeling wonderfully anonymous.',
-        'The map is a feather. When you hold it, it points. It is currently pointing hard enough to sting.'
+        'Izgovoriš jedno ime. Gavrani ga sa velikom svečanošću zapišu i ti odmah više ne možeš da se setiš koje je bilo. Negde se nastavnik matematike budi sa divnim osećajem anonimnosti.',
+        'Mapa je pero. Kad ga držiš, ono pokazuje. Trenutno pokazuje toliko uporno da pecka.'
       ],
-      firstVisitEffects: { items: ['🪶 Pointing Feather'] },
-      choices: [ { text: 'Follow the feather.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'] },
+      choices: [ { text: 'Prati pero.', to: 'thornway' } ]
     },
 
     market_haggle: {
-      title: 'Never the First Price',
+      title: 'Nikad prva cena',
       text: [
-        '"That\u2019s your first price," you say. "I\u2019ll hear the second."',
-        'Every crow in the market goes silent, then bursts into applause, which for crows means throwing small shiny objects at your head.',
-        '"A *professional*," says the head crow, disgusted and impressed. You get the feather map for a button, plus a bottled apology "for when you need one, and you will."'
+        '„To vam je prva cena“, kažeš. „Saslušaću drugu.“',
+        'Svaki gavran na pijaci utihne, a onda prasne u aplauz, što kod gavrana znači da ti bacaju sitne sjajne stvarčice u glavu.',
+        '„*Profesionalac*,“ kaže glavni gavran, istovremeno zgađen i impresioniran. Dobijaš mapu-pero za jedno dugme, plus izvinjenje u boci „za kad ti zatreba, a hoće“.'
       ],
-      firstVisitEffects: { items: ['🪶 Pointing Feather', '🍾 Bottled Apology'], stats: { cunning: 1 } },
-      choices: [ { text: 'Follow the feather.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Pero koje pokazuje', '🍾 Izvinjenje u boci'], stats: { cunning: 1 } },
+      choices: [ { text: 'Prati pero.', to: 'thornway' } ]
     },
 
     market_token: {
-      title: 'Friend of the Bridge',
+      title: 'Prijatelj mosta',
       text: [
-        'You hold up the troll token. Waistcoats are straightened. Beaks are lowered.',
-        '"Bridge-friend," says the head crow. "No charge, then; we owe that big damp idiot everything." The map-feather is pressed into your hand along with a warning, delivered quietly:',
-        '"Something came through tonight that doesn\u2019t have a name to trade. It\u2019s hunting a voice. Walk soft."'
+        'Podigneš trolov žeton. Prsluci se zatežu. Kljunovi se spuštaju.',
+        '„Prijatelj mosta“, kaže glavni gavran. „Onda nema naplate; tom velikom vlažnom idiotu dugujemo sve.“ Mapa-pero spušta se u tvoju ruku zajedno s upozorenjem, izrečenim tiho:',
+        '„Nešto je večeras prošlo ovuda, a nema ime koje bi moglo da menja. Lovi glas. Idi meko.“'
       ],
-      firstVisitEffects: { items: ['🪶 Pointing Feather'], stats: { kindness: 1 }, flags: { hushKnown: true } },
-      choices: [ { text: 'Walk soft. Follow the feather.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'], stats: { kindness: 1 }, flags: { hushKnown: true } },
+      choices: [ { text: 'Idi meko. Prati pero.', to: 'thornway' } ]
     },
 
     market_stolen: {
-      title: 'Five-Finger Cartography',
+      title: 'Kartografija sa pet prstiju',
       text: [
-        'You lift the feather while two crows argue about whether a moon counts as a coin. It does not, apparently, and the argument is very loud.',
-        'You are three steps away before the head crow calls after you, entirely calm: "Fine. But a market always gets paid, child. We\u2019ll take it later, and we\u2019ll pick when."',
-        'That is somehow much worse than being caught.'
+        'Uzimaš pero dok se dva gavrana raspravljaju da li se mesec računa kao novčić. Ispostavlja se da ne računa, a rasprava je strašno glasna.',
+        'Tri koraka si daleko kad glavni gavran sasvim mirno dovikne za tobom: „Dobro. Ali pijaca se uvek naplati, dete. Uzećemo kasnije, a mi biramo kada.“',
+        'To je nekako mnogo gore nego da su te uhvatili.'
       ],
-      firstVisitEffects: { items: ['🪶 Pointing Feather'], flags: { crowDebt: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Leave quickly.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'], flags: { crowDebt: true }, stats: { cunning: 1 } },
+      choices: [ { text: 'Odlazi brzo.', to: 'thornway' } ]
     },
 
     market_caught: {
-      title: 'Crows Do Not Miss',
+      title: 'Gavrani ne promašuju',
       text: [
-        'Forty beaks turn at once. You are pecked with great precision and no real malice, then hung by your collar from an umbrella stall until you apologise.',
-        'You apologise. The head crow sighs, and gives you the feather anyway. "Take it. You\u2019re embarrassing." The crows all agree that this was the funniest thing to happen at market in years.'
+        'Četrdeset kljunova se odjednom okrene. Precizno te kljucnu, bez prave zlobe, pa te okače za kragnu o tezgu od kišobrana dok se ne izviniš.',
+        'Izviniš se. Glavni gavran uzdahne i ipak ti da pero. „Nosi. Sramotiš se.“ Svi gavrani se slažu da je to bilo najsmešnije što se na pijaci dogodilo godinama.'
       ],
-      firstVisitEffects: { items: ['🪶 Pointing Feather'] },
-      choices: [ { text: 'Slink off along the thorn path.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'] },
+      choices: [ { text: 'Iskradaj se niz trnovitu stazu.', to: 'thornway' } ]
     },
 
     thornway: {
-      title: 'The Thornway',
+      title: 'Trnoviti put',
       text: [
-        'The feather drags you down a corridor of black thorn where the moonlight has to squeeze in sideways.',
-        'Halfway along, the wood goes *quiet* \u2014 not silent, but muffled, like a hand over the world\u2019s mouth. Your footsteps stop making sound. Your breath stops making sound.',
-        'Something is walking beside you, matching you step for step, and it has more legs than that requires.'
+        'Pero te vuče niz hodnik od crnog trnja u koji mesečina mora da se ugura postrance.',
+        'Na pola puta šuma postaje *tiha* — ne nema, nego prigušena, kao da je nečija ruka prekrila usta sveta. Tvoji koraci prestaju da prave zvuk. Tvoj dah prestaje da pravi zvuk.',
+        'Nešto hoda kraj tebe, prati tvoj korak u stopu, a ima više nogu nego što je za to potrebno.'
       ],
       choices: [
-        { text: 'Chew the bridge moss and see truly.', to: 'hush_seen', needItem: '🌿 Bridge Moss', effects: { lose: ['🌿 Bridge Moss'] } },
-        { text: 'Ring Barnaby\u2019s bell into the hush.', to: 'hush_bell', needItem: '🔔 Barnaby\u2019s Bell' },
-        { text: 'Run. Just run.',
+        { text: 'Sažvaći mostnu mahovinu i vidi istinski.', to: 'hush_seen', needItem: '🌿 Mostna mahovina', effects: { lose: ['🌿 Mostna mahovina'] } },
+        { text: 'Pozvoni Barnabijevim zvonom u tišinu.', to: 'hush_bell', needItem: '🔔 Barnabijevo zvono' },
+        { text: 'Trči. Samo trči.',
           roll: { stat: 'courage', dc: 9, success: 'witch_hut', fail: 'hush_caught', failEffects: { stats: { health: -2 } } } },
-        { text: 'Stand perfectly still and be very, very boring.',
+        { text: 'Stoj savršeno mirno i budi vrlo, vrlo dosadan.',
           roll: { stat: 'cunning', dc: 8, success: 'witch_hut', fail: 'hush_caught', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     hush_seen: {
-      title: 'The Hush-Thing',
+      title: 'Tiho-stvar',
       text: [
-        'The moss tastes like a pond apologising, and then you can *see* it: a tall, folded, listening creature made of the spaces between sounds, wearing a collection of stolen voices like charms on a bracelet.',
-        'It notices you noticing. That, it turns out, is the one thing it cannot bear. It flinches, unravels a little, and slides away between the thorns \u2014 towards, you realise with a lurch, wherever Mochi is.'
+        'Mahovina ima ukus kao bara koja se izvinjava, a onda možeš da je *vidiš*: visoko, presavijeno, osluškujuće stvorenje napravljeno od prostora između zvukova, okićeno ukradenim glasovima kao narukvicom sa privescima.',
+        'Primeti da si ga primetio. Ispostavlja se da je to jedina stvar koju nikako ne podnosi. Trzne se, malo se rasplete i klizne između trnja — ka mestu gde je, shvataš uz trzaj u stomaku, Mimi.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, hushSeen: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Chase it.', to: 'witch_hut' } ]
+      choices: [ { text: 'Juri za njim.', to: 'witch_hut' } ]
     },
 
     hush_bell: {
-      title: 'A Sound It Cannot Swallow',
+      title: 'Zvuk koji ne može da proguta',
       text: [
-        'You ring the little brass bell. The hush tries to eat the sound and cannot \u2014 the bell was rung by a boy for his cat for sixty years, and that kind of ringing has *roots*.',
-        'The Hush-thing recoils, dropping three stolen voices, which scurry off into the undergrowth to find their owners. One of them, briefly, sounds exactly like a cat saying your name.'
+        'Pozvoniš malim mesinganim zvonom. Tišina pokuša da proguta zvuk i ne uspe — zvonom je jedan dečak zvao svoju mačku na čaj šezdeset godina, a takva zvonjava ima *korenje*.',
+        'Tiho-stvar ustukne i ispusti tri ukradena glasa, koji šmugnu u žbunje da pronađu svoje vlasnike. Jedan od njih, na trenutak, zvuči tačno kao mačka koja izgovara tvoje ime.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, bellWorks: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Follow the voice that sounded like her.', to: 'witch_hut' } ]
+      choices: [ { text: 'Prati glas koji je zvučao kao ona.', to: 'witch_hut' } ]
     },
 
     hush_caught: {
-      title: 'It Takes Something',
+      title: 'Uzme ti nešto',
       text: [
-        'Cold folds around you. Something long and careful goes through your pockets, and then through your *thoughts*, and takes the sound of your own laugh \u2014 you feel it go, like a tooth coming out.',
-        'Then it leaves, bored, because you are not the one it wants. You lie in the thorns until you can move, and the wood slowly gets its noises back.',
-        'You are going to need that laugh. You decide, lying there, that you are going to take it back.'
+        'Hladnoća se sklapa oko tebe. Nešto dugo i pažljivo prolazi kroz tvoje džepove, a onda kroz tvoje *misli*, i uzima zvuk tvog sopstvenog smeha — osetiš kako odlazi, kao kad ispadne zub.',
+        'Onda ode, dosađeno, jer ti nisi ono što želi. Ležiš u trnju dok ponovo ne možeš da se pomeriš, a šuma polako vraća svoje zvuke.',
+        'Trebaće ti taj smeh. Odlučuješ, ležeći tu, da ćeš ga uzeti nazad.'
       ],
       firstVisitEffects: { flags: { laughStolen: true, hushKnown: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Get up. Keep going.', to: 'witch_hut' } ]
+      choices: [ { text: 'Ustani. Nastavi dalje.', to: 'witch_hut' } ]
     },
 
     witch_hut: {
-      title: 'Bramblewick\u2019s Tea Hut',
+      title: 'Bramblvikina čajna koliba',
       text: [
-        'A hut stands on the stump of a tree that must have been the size of a cathedral. Smoke comes out of the chimney in the shape of small, contented animals.',
-        'The witch inside is about your mum\u2019s age, covered in cat hair, and extremely unsurprised to see you. "Ah," says Bramblewick. "You\u2019re hers. She talks about you."',
-        'She pours three cups without asking which one you want.'
+        'Koliba stoji na panju drveta koje je moralo biti veliko kao katedrala. Dim izlazi iz dimnjaka u obliku malih, zadovoljnih životinja.',
+        'Veštica unutra je otprilike godina tvoje mame, sva u mačjoj dlaci, i nimalo nije iznenađena što te vidi. „Aha“, kaže Bramblvik. „Ti si njen. Priča o tebi.“',
+        'Sipa tri šolje ne pitajući te koju želiš.'
       ],
       choices: [
-        { text: '"She TALKS about me?"', to: 'witch_talk' },
-        { text: 'Drink the red cup (bravery).', to: 'tea_red', effects: { stats: { courage: 2 } } },
-        { text: 'Drink the green cup (sharpness).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
-        { text: 'Drink the gold cup (warmth).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
+        { text: '„Ona PRIČA o meni?“', to: 'witch_talk' },
+        { text: 'Popij crvenu šolju (hrabrost).', to: 'tea_red', effects: { stats: { courage: 2 } } },
+        { text: 'Popij zelenu šolju (oštrina).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
+        { text: 'Popij zlatnu šolju (toplina).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
       ]
     },
 
     witch_talk: {
-      title: 'What Mochi Says About You',
+      title: 'Šta Mimi govori o tebi',
       text: [
-        '"Constantly," says Bramblewick. "Cats keep two homes: one where they\u2019re fed and one where they\u2019re *needed*. Your Mochi is a Warden of the Hollowwood \u2014 has been since before you were born \u2014 and she has never once shut up about the child with the cold feet."',
-        'She stirs the pot. "She came through tonight in a hurry, carrying something. And something came through after her, with no voice of its own. Drink your tea, then go and be useful."'
+        '„Stalno“, kaže Bramblvik. „Mačke imaju dva doma: jedan gde ih hrane i drugi gde su *potrebne*. Tvoja Mimi je Čuvarka Šuplje šume — još od pre nego što si se rodio — i nijednom nije začepila o detetu s hladnim stopalima.“',
+        'Promeša lonac. „Večeras je prošla ovuda u žurbi, noseći nešto. A za njom je prošlo i nešto što nema sopstveni glas. Popij čaj, pa idi i budi od koristi.“'
       ],
       firstVisitEffects: { flags: { knowsWarden: true }, stats: { kindness: 1 } },
       choices: [
-        { text: 'Drink the red cup (bravery).', to: 'tea_red', effects: { stats: { courage: 2 } } },
-        { text: 'Drink the green cup (sharpness).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
-        { text: 'Drink the gold cup (warmth).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
+        { text: 'Popij crvenu šolju (hrabrost).', to: 'tea_red', effects: { stats: { courage: 2 } } },
+        { text: 'Popij zelenu šolju (oštrina).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
+        { text: 'Popij zlatnu šolju (toplina).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
       ]
     },
 
     tea_red: {
-      title: 'Red Tea',
-      text: ['It tastes of cinnamon and standing up to someone bigger than you. Your hands stop shaking. Bramblewick nods and hands you a twig of rowan "for knocking".'],
-      firstVisitEffects: { items: ['🌾 Rowan Twig'] },
-      choices: [ { text: 'Out into the dark, towards the Court.', to: 'hollow_tree' } ]
+      title: 'Crveni čaj',
+      text: ['Ima ukus cimeta i onog osećaja kad se uspraviš pred nekim većim od sebe. Ruke prestaju da ti drhte. Bramblvik klimne i pruži ti grančicu jarebike „za kucanje“.'],
+      firstVisitEffects: { items: ['🌾 Grančica jarebike'] },
+      choices: [ { text: 'Izađi u mrak, ka Dvoru.', to: 'hollow_tree' } ]
     },
     tea_green: {
-      title: 'Green Tea',
-      text: ['It tastes of nettles and the moment before you understand a joke. Everything sharpens; you notice the hut has thirteen cat flaps, and one of them is still swinging.'],
-      firstVisitEffects: { items: ['🌾 Rowan Twig'], flags: { hint: true } },
-      choices: [ { text: 'Out through the swinging flap\u2019s direction.', to: 'hollow_tree' } ]
+      title: 'Zeleni čaj',
+      text: ['Ima ukus koprive i trenutka tik pre nego što razumeš šalu. Sve postaje oštrije; primećuješ da koliba ima trinaest mačjih vratanca, a jedna se još njišu.'],
+      firstVisitEffects: { items: ['🌾 Grančica jarebike'], flags: { hint: true } },
+      choices: [ { text: 'Izađi u pravcu vratanca koja se njišu.', to: 'hollow_tree' } ]
     },
     tea_gold: {
-      title: 'Gold Tea',
-      text: ['It tastes like being tucked in. The scratches close. Bramblewick tops up your cup, then fills a small flask "for a small thing that will need it more than you".'],
-      firstVisitEffects: { items: ['🌾 Rowan Twig', '🍼 Warm Flask'] },
-      choices: [ { text: 'Out, warm, into the cold.', to: 'hollow_tree' } ]
+      title: 'Zlatni čaj',
+      text: ['Ima ukus kao kad te neko lepo ušuška. Ogrebotine se zatvaraju. Bramblvik ti dospe još, a onda napuni malu flašicu „za nešto maleno čemu će trebati više nego tebi“.'],
+      firstVisitEffects: { items: ['🌾 Grančica jarebike', '🍼 Topla flašica'] },
+      choices: [ { text: 'Izađi, topao, u hladnoću.', to: 'hollow_tree' } ]
     },
 
     /* ---------- Act IV: The Court of the Ninefold Hearth ---------- */
 
     hollow_tree: {
-      title: 'The Hollow Tree',
+      title: 'Šuplje drvo',
       text: [
-        'The feather stops pulling at a dead oak the size of a church, split open down one side. Starry pawprints go in. None come out.',
-        'From inside comes the sound of many cats being extremely quiet, which is the loudest quiet there is.'
+        'Pero prestaje da vuče kod mrtvog hrasta veličine crkve, rascepljenog s jedne strane. Zvezdani otisci šapa ulaze unutra. Nijedan ne izlazi.',
+        'Iznutra dopire zvuk mnogih mačaka koje su strašno tihe, a to je najglasnija tišina koja postoji.'
       ],
       choices: [
-        { text: 'Check behind the hollow tree first.', to: 'behind_tree', onlyFlag: 'hint' },
-        { text: 'Knock with the rowan twig.', to: 'court_gate', needItem: '🌾 Rowan Twig' },
-        { text: 'Just climb in.', to: 'court_gate' }
+        { text: 'Prvo proveri iza šupljeg drveta.', to: 'behind_tree', onlyFlag: 'hint' },
+        { text: 'Pokucaj grančicom jarebike.', to: 'court_gate', needItem: '🌾 Grančica jarebike' },
+        { text: 'Samo se uvuci.', to: 'court_gate' }
       ]
     },
 
     behind_tree: {
-      title: 'Behind the Hollow Tree',
+      title: 'Iza šupljeg drveta',
       text: [
-        'Behind the tree, in a hollow of moss, is a nest: three scraps of blanket, a chewed bottle-top, and one very small, very grey kitten with a white sock, shivering and furious about it.',
-        'It hisses at you with its whole body. It is the size of a bread roll. It is, unmistakably, Mochi\u2019s.'
+        'Iza drveta, u udubljenju od mahovine, nalazi se gnezdo: tri parčeta ćebeta, izgrižen čep od flaše i jedno veoma malo, veoma sivo mače sa belom čarapicom, koje drhti i strašno se ljuti zbog toga.',
+        'Sikće na tebe celim telom. Veličine je zemičke. I nepogrešivo je Miminо.'
       ],
       firstVisitEffects: { flags: { foundKitten: true } },
       choices: [
-        { text: 'Give it the warm flask.', to: 'kitten_flask', needItem: '🍼 Warm Flask' },
-        { text: 'Tuck it inside your pyjama top and take it with you.', to: 'kitten_carry' },
-        { text: 'Leave it hidden \u2014 safer than coming with you.', to: 'court_gate', effects: { flags: { kittenLeft: true } } }
+        { text: 'Daj mu toplu flašicu.', to: 'kitten_flask', needItem: '🍼 Topla flašica' },
+        { text: 'Zadeni ga u gornji deo pidžame i ponesi sa sobom.', to: 'kitten_carry' },
+        { text: 'Ostavi ga sakrivenog — bezbednije je nego da ide s tobom.', to: 'court_gate', effects: { flags: { kittenLeft: true } } }
       ]
     },
 
     kitten_flask: {
-      title: 'Bread Roll, Fed',
+      title: 'Zemička, nahranjena',
       text: [
-        'The kitten drinks the whole flask, then falls asleep mid-hiss, which is the funniest thing you have ever seen. You feel your stolen laugh try to come back from wherever it went.',
-        'You tuck the warm lump inside your pyjama top. It purrs like a very small engine with a fault.'
+        'Mače popije celu flašicu, pa zaspi usred siktanja, što je najsmešnija stvar koju si ikad video. Osetiš kako tvoj ukradeni smeh pokušava da se vrati odakle god da je otišao.',
+        'Utakneš toplu grudvicu u pidžamu. Prede kao veoma mali motor sa kvarom.'
       ],
-      firstVisitEffects: { items: ['🐈 Sleeping Kitten'], lose: ['🍼 Warm Flask'], stats: { kindness: 1 }, flags: { hasKitten: true } },
-      choices: [ { text: 'To the Court.', to: 'court_gate' } ]
+      firstVisitEffects: { items: ['🐈 Uspavano mače'], lose: ['🍼 Topla flašica'], stats: { kindness: 1 }, flags: { hasKitten: true } },
+      choices: [ { text: 'Ka Dvoru.', to: 'court_gate' } ]
     },
 
     kitten_carry: {
-      title: 'Small, Furious Cargo',
+      title: 'Mali, besni teret',
       text: [
-        'You get bitten eleven times, all of them on purpose, none of them very hard. Then it gives up and burrows under your chin, still grumbling.',
-        'You have never carried anything so carefully in your life.'
+        'Izujeda te jedanaest puta, sve namerno, nijednom prejako. Onda odustane i zavuče se pod tvoju bradu, i dalje gunđajući.',
+        'Nikad u životu nisi nosio nešto pažljivije.'
       ],
-      firstVisitEffects: { items: ['🐈 Sleeping Kitten'], stats: { kindness: 1 }, flags: { hasKitten: true } },
-      choices: [ { text: 'To the Court.', to: 'court_gate' } ]
+      firstVisitEffects: { items: ['🐈 Uspavano mače'], stats: { kindness: 1 }, flags: { hasKitten: true } },
+      choices: [ { text: 'Ka Dvoru.', to: 'court_gate' } ]
     },
 
     court_gate: {
-      title: 'The Gate of Nine Whiskers',
+      title: 'Kapija devet brkova',
       text: [
-        'Inside the tree is not the inside of a tree. It is a hall of roots and firelight, nine hearths burning in a circle, and cats \u2014 hundreds of cats \u2014 arranged in the exact positions of maximum inconvenience.',
-        'Two enormous door-guards, one ginger and one entirely absent except for a smile, block the way.',
-        '"State your business, warm thing," says the ginger.'
+        'Unutrašnjost drveta nije unutrašnjost drveta. To je dvorana korenja i vatre, devet ognjišta gori u krugu, a mačke — stotine mačaka — raspoređene su tačno na mestima najveće moguće smetnje.',
+        'Dva ogromna čuvara na vratima, jedan riđ i jedan potpuno odsutan osim po osmehu, zaklanjaju prolaz.',
+        '„Kaži svoj posao, toplo stvorenje“, kaže riđi.'
       ],
       choices: [
-        { text: 'Ring Barnaby\u2019s bell.', to: 'gate_bell', needItem: '🔔 Barnaby\u2019s Bell', hideWhenLocked: false },
-        { text: 'Show the sleeping kitten.', to: 'gate_kitten', needItem: '🐈 Sleeping Kitten' },
-        { text: '"I\u2019ve come for my cat."',
+        { text: 'Pozvoni Barnabijevim zvonom.', to: 'gate_bell', needItem: '🔔 Barnabijevo zvono', hideWhenLocked: false },
+        { text: 'Pokaži uspavano mače.', to: 'gate_kitten', needItem: '🐈 Uspavano mače' },
+        { text: '„Došao sam po svoju mačku.“',
           roll: { stat: 'courage', dc: 9, success: 'court', fail: 'gate_thrown', failEffects: { stats: { health: -1 } } } },
-        { text: 'Offer to be scratched behind the ears first, as tribute.',
+        { text: 'Ponudi da te prvo češkaju iza ušiju, kao danak.',
           roll: { stat: 'kindness', dc: 8, success: 'court', fail: 'gate_thrown' } }
       ]
     },
 
     gate_bell: {
-      title: 'The Ringing That Sounds Wrong',
+      title: 'Zvonjava koja zvuči pogrešno',
       text: [
-        'You ring the bell and it comes out *wrong* \u2014 too big, too golden, a cathedral sound from a thimble.',
-        'Every cat in the hall stands up at once. The ginger guard bows so low his whiskers sweep the roots. "Barnaby\u2019s bell," he breathes. "The Warden\u2019s own. Go through, child. Quickly. She has been arguing for an hour and she is losing."'
+        'Pozvoniš zvonom i ono zazvuči *pogrešno* — preveliko, previše zlatno, zvuk katedrale iz naprstka.',
+        'Sve mačke u dvorani ustanu odjednom. Riđi stražar se pokloni toliko nisko da mu brkovi pometu korenje. „Barnabijevo zvono“, dahne. „Samo Čuvarkino. Prođi, dete. Brzo. Raspravlja se već sat vremena i gubi.“'
       ],
       firstVisitEffects: { stats: { courage: 1 } },
-      choices: [ { text: 'Go through.', to: 'court' } ]
+      choices: [ { text: 'Prođi.', to: 'court' } ]
     },
 
     gate_kitten: {
-      title: 'Cargo Diplomacy',
+      title: 'Teretna diplomatija',
       text: [
-        'You open your pyjama top an inch. One grey ear, one white sock, one enormous yawn.',
-        'The hall makes a noise no human has ever heard: three hundred cats going *oh*. The guards stand aside so fast the invisible one forgets to keep its smile.'
+        'Rasčepiš gornji deo pidžame za jedan prst. Jedno sivo uho, jedna bela čarapica, jedno ogromno zevanje.',
+        'Dvorana proizvede zvuk koji nijedan čovek nikad nije čuo: trista mačaka koje kažu *oh*. Stražari se sklanjaju toliko brzo da nevidljivi zaboravi da zadrži osmeh.'
       ],
-      choices: [ { text: 'Carry the heir inside.', to: 'court' } ]
+      choices: [ { text: 'Unesi naslednika unutra.', to: 'court' } ]
     },
 
     gate_thrown: {
-      title: 'Out, Then In',
+      title: 'Napolje, pa unutra',
       text: [
-        'You are removed from the hall by nine cats working with the coordination of a professional removals firm, deposited in the moss, and stared at.',
-        'Then a small voice from inside says something short and sharp, and the guards go stiff, and the ginger mutters, "Fine. *Fine.* The Warden asks for you."'
+        'Iz dvorane te ukloni devet mačaka koje rade usklađeno kao profesionalna selidbena firma, spuste te u mahovinu i pilje u tebe.',
+        'Onda se iznutra začuje mali glas koji kaže nešto kratko i oštro, pa se stražari ukrute, a riđi promrmlja: „Dobro. *Dobro.* Čuvarka traži tebe.“'
       ],
-      choices: [ { text: 'Walk back in with your chin up.', to: 'court' } ]
+      choices: [ { text: 'Vrati se unutra uzdignute brade.', to: 'court' } ]
     },
 
     court: {
-      title: 'The Court of the Ninefold Hearth',
+      title: 'Dvor devetostrukog ognjišta',
       text: [
-        'On a chair made of one enormous fossilised bone sits the Queen of Cats: white, ancient, with eyes like two coins at the bottom of a well.',
-        'And in the middle of the floor, small and black and furious, with a white sock and one torn ear, is *Mochi*.',
-        '"There you are," says Mochi, in a voice you have somehow always known she had. "You took ages. Also: don\u2019t panic."'
+        'Na stolici načinjenoj od jedne ogromne fosilizovane kosti sedi Kraljica mačaka: bela, drevna, s očima poput dva novčića na dnu bunara.',
+        'A nasred poda, mala i crna i besna, sa belom čarapicom i jednim pocepanim uhom, stoji *Mimi*.',
+        '„Eto te“, kaže Mimi glasom za koji nekako oduvek znaš da ga je imala. „Baš ti je trebalo. I još nešto: ne paniči.“'
       ],
       choices: [
-        { text: '"YOU CAN TALK?"', to: 'mochi_talk' },
-        { text: 'Panic.', to: 'mochi_talk' }
+        { text: '„TI ZNAŠ DA GOVORIŠ?“', to: 'mochi_talk' },
+        { text: 'Uhvati te panika.', to: 'mochi_talk' }
       ]
     },
 
     mochi_talk: {
-      title: 'Don\u2019t Panic',
+      title: 'Ne paniči',
       text: [
-        '"Everyone can talk," says Mochi. "Some of us choose not to, at home, because it would ruin everything."',
-        'The Queen speaks, and the hearths dim. "The Warden abandoned her post to hide a kitten, and a Hush-thing came through the thin place after her. The law is old: a Warden who runs is *unmade*, and her voice given to the hush to send it home."',
-        'Mochi does not look at you. Her tail is very still. That is how you know how frightened she is.'
+        '„Svi umeju da govore“, kaže Mimi. „Neki od nas biraju da kod kuće ne govore, jer bi to sve pokvarilo.“',
+        'Kraljica progovori i ognjišta potamne. „Čuvarka je napustila svoju dužnost da sakrije mače, a Tiho-stvar je kroz tanko mesto prošlo za njom. Zakon je star: Čuvarka koja pobegne biva *razobličena*, a njen glas dat tišini da ga ponese kući.“',
+        'Mimi te ne gleda. Rep joj je sasvim miran. Tako znaš koliko je uplašena.'
       ],
       choices: [
-        { text: '"Then take mine instead."', to: 'trial_offer' },
-        { text: '"Give me a trial. I\u2019ll pay her debt."', to: 'trials' },
-        { text: '"The Hush-thing took my laugh already. Let\u2019s go and get it back."', to: 'trials', needFlag: 'laughStolen' },
-        { text: 'Say nothing, and hold up the kitten.', to: 'kitten_evidence', needItem: '🐈 Sleeping Kitten' }
+        { text: '„Onda uzmite moj umesto njenog.“', to: 'trial_offer' },
+        { text: '„Dajte mi iskušenje. Otplatiću njen dug.“', to: 'trials' },
+        { text: '„Tiho-stvar mi je već uzelo smeh. Hajde da ga vratimo.“', to: 'trials', needFlag: 'laughStolen' },
+        { text: 'Ne reci ništa i podigni mače.', to: 'kitten_evidence', needItem: '🐈 Uspavano mače' }
       ]
     },
 
     kitten_evidence: {
-      title: 'Exhibit One: A Bread Roll',
+      title: 'Dokaz broj jedan: zemička',
       text: [
-        'You hold up the kitten. It wakes, looks at three hundred cats and one queen, and yawns directly at royalty.',
-        'The Queen\u2019s ancient eyes narrow. "You brought the heir *here*? With a hush loose in the wood?" A long silence. "...And yet you brought her warm, and fed, and carried."',
-        '"The child may stand the Trial in the Warden\u2019s place. Three tests. Fail all three, and I keep you both."'
+        'Podigneš mače. Ono se probudi, pogleda trista mačaka i jednu kraljicu, pa zine pravo u lice kraljevstvu.',
+        'Drevne oči Kraljice se suze. „Doneo si naslednicu *ovamo*? Dok je tišina puštena po šumi?“ Duga tišina. „...Pa ipak, doneo si je toplu, nahranjenu i nošenu.“',
+        '„Dete može da stane na Iskušenje umesto Čuvarke. Tri provere. Ako sve tri padneš, zadržaću vas oboje.“'
       ],
       firstVisitEffects: { stats: { kindness: 1 }, flags: { royalFavour: true } },
-      choices: [ { text: 'Stand the Trial.', to: 'trials' } ]
+      choices: [ { text: 'Stani na Iskušenje.', to: 'trials' } ]
     },
 
     trial_offer: {
-      title: 'An Offer the Court Did Not Expect',
+      title: 'Ponuda kakvu Dvor nije očekivao',
       text: [
-        'The hall goes so quiet you can hear nine fires thinking.',
-        '"A human offers a voice for a cat," says the Queen slowly. "That has not happened in six hundred years. The last time, it went *very* well, and we have never entirely recovered from the embarrassment."',
-        '"No. You will not give a voice. You will stand the Trial: courage, cunning, kindness. Pass what you can. Then we shall see what you are worth."'
+        'Dvorana utihne toliko da možeš da čuješ kako devet vatri razmišlja.',
+        '„Čovek nudi glas za mačku“, kaže Kraljica polako. „To se nije desilo šest stotina godina. Poslednji put je prošlo *vrlo* dobro, i još se nismo sasvim oporavili od sramote.“',
+        '„Ne. Nećeš dati glas. Proći ćeš Iskušenje: hrabrost, lukavost, dobrota. Prođi koliko možeš. Onda ćemo videti koliko vrediš.“'
       ],
       firstVisitEffects: { stats: { courage: 1 }, flags: { royalFavour: true } },
-      choices: [ { text: 'Stand the Trial.', to: 'trials' } ]
+      choices: [ { text: 'Stani na Iskušenje.', to: 'trials' } ]
     },
 
     trials: {
-      title: 'The Trial of Three Paws',
+      title: 'Iskušenje tri šape',
       text: [
-        'The Queen raises one paw and the floor of the hall opens into three doorways of firelight.',
-        '"Enter each. Take what you find. Then we go hunting, and you will need all of it."',
-        'Mochi, passing you, headbutts your ankle exactly the way she does at home when the food bowl is empty. It is the bravest thing you have ever felt.'
+        'Kraljica podigne jednu šapu i pod dvorane se otvori u tri vrata puna ognja.',
+        '„Uđi u svaka. Uzmi ono što nađeš. Onda idemo u lov, a trebaće ti sve to.“',
+        'Mimi, prolazeći kraj tebe, čelom gurne tvoj članak baš onako kako to radi kod kuće kad je činija prazna. To je najhrabrija stvar koju si ikad osetio.'
       ],
       choices: [
-        { text: 'The Door of Fire \u2014 courage.', to: 'trial_courage', notFlag: 'tCourage' },
-        { text: 'The Door of Mirrors \u2014 cunning.', to: 'trial_cunning', notFlag: 'tCunning' },
-        { text: 'The Door of Ashes \u2014 kindness.', to: 'trial_kindness', notFlag: 'tKind' },
-        { text: 'Declare yourself ready and go hunt the Hush-thing.', to: 'hunt' }
+        { text: 'Vrata vatre — hrabrost.', to: 'trial_courage', notFlag: 'tCourage' },
+        { text: 'Vrata ogledala — lukavost.', to: 'trial_cunning', notFlag: 'tCunning' },
+        { text: 'Vrata pepela — dobrota.', to: 'trial_kindness', notFlag: 'tKind' },
+        { text: 'Objavi da si spreman i kreni u lov na Tiho-stvar.', to: 'hunt' }
       ]
     },
 
     trial_courage: {
-      title: 'The Door of Fire',
+      title: 'Vrata vatre',
       text: [
-        'Beyond it: a corridor of hearth-flame, and at the end, a single ember on a plinth. The rule is stated by nobody and understood by everybody: *walk, don\u2019t run.*'
+        'Iza njih: hodnik ognjišne vatre, a na kraju jedan žar na postolju. Pravilo ne izgovara niko, a svi ga razumeju: *hodaj, ne trči.*'
       ],
       effects: { flags: { tCourage: true } },
       choices: [
-        { text: 'Walk the fire.',
+        { text: 'Prođi kroz vatru.',
           roll: { stat: 'courage', dc: 8, success: 'trial_c_win', fail: 'trial_c_fail', failEffects: { stats: { health: -1 } } } }
       ]
     },
     trial_c_win: {
-      title: 'Ember Taken',
-      text: ['You walk. The flames lick and do not bite. You lift the ember and it sits in your palm like a cross cat, warm and unbothered. Somewhere behind you, three hundred cats say *hm* in unison.'],
-      firstVisitEffects: { items: ['🔥 Hearth Ember'], stats: { courage: 1 } },
-      choices: [ { text: 'Back to the three doors.', to: 'trials' } ]
+      title: 'Žar uzet',
+      text: ['Hodaš. Plamen liže, ali ne ujeda. Podigneš žar i on ti sedi u dlanu kao namrgođena mačka, topao i sasvim miran. Negde iza tebe trista mačaka uglas kaže *hm*.'],
+      firstVisitEffects: { items: ['🔥 Žar iz ognjišta'], stats: { courage: 1 } },
+      choices: [ { text: 'Nazad do trojih vrata.', to: 'trials' } ]
     },
     trial_c_fail: {
-      title: 'You Ran',
-      text: ['Halfway along, your nerve does the maths and you run. The fire is disappointed rather than angry; it singes your eyebrows off as a keepsake. The ember stays on its plinth, glowing smugly.'],
-      choices: [ { text: 'Back to the three doors, eyebrow-less.', to: 'trials' } ]
+      title: 'Potrčao si',
+      text: ['Na pola puta tvoja hrabrost proračuna verovatnoću i ti potrčiš. Vatra je više razočarana nego ljuta; sprži ti obrve za uspomenu. Žar ostaje na svom postolju, samodovoljno užaren.'],
+      choices: [ { text: 'Nazad do trojih vrata, bez obrva.', to: 'trials' } ]
     },
 
     trial_cunning: {
-      title: 'The Door of Mirrors',
+      title: 'Vrata ogledala',
       text: [
-        'Nine mirrors. In eight of them you are looking for your cat. In one of them, your cat is looking for you.',
-        'You must pick the odd one out, and quickly, because the mirrors are shuffling like a card trick performed by someone with far too many paws.'
+        'Devet ogledala. U osam njih ti tražiš svoju mačku. U jednom od njih tvoja mačka traži tebe.',
+        'Moraš brzo da odabereš ono drugačije, jer se ogledala mešaju kao trik s kartama koji izvodi neko sa previše šapa.'
       ],
       effects: { flags: { tCunning: true } },
       choices: [
-        { text: 'Track the odd mirror.',
+        { text: 'Prati neobično ogledalo.',
           roll: { stat: 'cunning', dc: 8, success: 'trial_m_win', fail: 'trial_m_fail' } },
-        { text: 'Close your eyes and listen for a purr instead.',
+        { text: 'Zatvori oči i umesto toga oslušni predenje.',
           roll: { stat: 'kindness', dc: 9, success: 'trial_m_win', fail: 'trial_m_fail' } }
       ]
     },
     trial_m_win: {
-      title: 'Found in the Looking',
-      text: ['You slap your hand on the right mirror. It shatters into cold light that pools in your pocket as a shard that shows things as they truly are \u2014 including, when you glance at it, one long folded shape lurking at the edge of the hall. It is already here.'],
-      firstVisitEffects: { items: ['🪞 Truth Shard'], stats: { cunning: 1 }, flags: { hushHere: true } },
-      choices: [ { text: 'Back to the doors, faster now.', to: 'trials' } ]
+      title: 'Nađeno u pogledu',
+      text: ['Lupiš dlanom pravo ogledalo. Ono prsne u hladnu svetlost koja ti se sakuplja u džepu kao krhotina koja pokazuje stvari onakve kakve zaista jesu — uključujući, kad je krišom pogledaš, jedan dugi presavijeni oblik koji vreba na ivici dvorane. Već je ovde.'],
+      firstVisitEffects: { items: ['🪞 Krhotina istine'], stats: { cunning: 1 }, flags: { hushHere: true } },
+      choices: [ { text: 'Nazad do vrata, sad brže.', to: 'trials' } ]
     },
     trial_m_fail: {
-      title: 'Eight Wrong Guesses',
-      text: ['You pick wrong, and wrong, and wrong. The mirrors laugh in the voice of a cat who has knocked a glass off a table. You leave with nothing but a strong sense of having been *judged*.'],
-      choices: [ { text: 'Back to the doors.', to: 'trials' } ]
+      title: 'Osam pogrešnih pokušaja',
+      text: ['Biraš pogrešno, pa pogrešno, pa opet pogrešno. Ogledala se smeju glasom mačke koja je gurnula čašu sa stola. Odlaziš bez ičega osim snažnog osećaja da si bio *procenjen*.'],
+      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
     },
 
     trial_kindness: {
-      title: 'The Door of Ashes',
+      title: 'Vrata pepela',
       text: [
-        'A cold room, a dead hearth, and one very old cat lying in the ashes \u2014 blind, thin, shivering, and far past caring who sees.',
-        'There is nothing here to win. That is, of course, the test.'
+        'Hladna soba, mrtvo ognjište i jedna veoma stara mačka koja leži u pepelu — slepa, mršava, drhtava i odavno iznad toga da je briga ko gleda.',
+        'Ovde nema ničega što bi se osvojilo. Naravno, upravo je to ispit.'
       ],
       effects: { flags: { tKind: true } },
       choices: [
-        { text: 'Warm the old cat with the hearth ember.', to: 'trial_k_ember', needItem: '🔥 Hearth Ember' },
-        { text: 'Take off your pyjama top and wrap them in it.', to: 'trial_k_win' },
-        { text: 'Sit down and stroke them until they stop shivering.', to: 'trial_k_win' },
-        { text: 'Leave \u2014 you have a cat of your own to save.', to: 'trial_k_leave' }
+        { text: 'Ugrej staru mačku žarom iz ognjišta.', to: 'trial_k_ember', needItem: '🔥 Žar iz ognjišta' },
+        { text: 'Skini gornji deo pidžame i umotaj je u njega.', to: 'trial_k_win' },
+        { text: 'Sedi i mazi je dok ne prestane da drhti.', to: 'trial_k_win' },
+        { text: 'Odi — imaš svoju mačku koju treba spasiti.', to: 'trial_k_leave' }
       ]
     },
     trial_k_ember: {
-      title: 'The Hearth Relit',
+      title: 'Ognjište ponovo gori',
       text: [
-        'You set the ember in the dead hearth. It catches with a sound like a purr, and the room fills with light.',
-        'The old cat opens milky eyes. "Oh," they say. "That\u2019s better. You\u2019re the one with the cold feet." They press their forehead to your knuckles, and something warm and stubborn settles into your chest that no hush will ever be able to eat.'
+        'Staviš žar u mrtvo ognjište. On plane zvukom sličnim predenju i soba se napuni svetlošću.',
+        'Stara mačka otvori mlečne oči. „Oh“, kaže. „Tako je bolje. Ti si onaj sa hladnim stopalima.“ Spusti čelo na tvoje zglobove i nešto toplo i tvrdoglavo nastani ti se u grudima, nešto što nikakva tišina nikad neće moći da pojede.'
       ],
-      firstVisitEffects: { items: ['💛 A Warmth That Cannot Be Eaten'], lose: ['🔥 Hearth Ember'], stats: { kindness: 2, health: 1 }, flags: { blessed: true } },
-      choices: [ { text: 'Back to the doors.', to: 'trials' } ]
+      firstVisitEffects: { items: ['💛 Toplota koja se ne može pojesti'], lose: ['🔥 Žar iz ognjišta'], stats: { kindness: 2, health: 1 }, flags: { blessed: true } },
+      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
     },
     trial_k_win: {
-      title: 'Nothing to Win',
+      title: 'Ništa za osvojiti',
       text: [
-        'You sit in the ashes in a cold room with a stranger who is dying, and you do the only useful thing there is, which is stay.',
-        'After a while the shivering stops. "Kind," the old cat murmurs. "Kindness is the one they never spend." They breathe out a thread of silver that winds twice round your wrist and stays there.'
+        'Sediš u pepelu, u hladnoj sobi, sa neznancem koji umire, i radiš jedinu korisnu stvar koja postoji, a to je da ostaneš.',
+        'Posle nekog vremena drhtanje prestane. „Dobar“, promrmlja stara mačka. „Dobrotu jedinu nikad ne troše.“ Izdiše srebrnu nit koja ti se dvaput obavije oko ručnog zgloba i ostane tu.'
       ],
-      firstVisitEffects: { items: ['🧵 Silver Thread'], stats: { kindness: 2 }, flags: { blessed: true } },
-      choices: [ { text: 'Back to the doors.', to: 'trials' } ]
+      firstVisitEffects: { items: ['🧵 Srebrna nit'], stats: { kindness: 2 }, flags: { blessed: true } },
+      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
     },
     trial_k_leave: {
-      title: 'You Leave',
-      text: ['You leave. It is the sensible choice and it sits in your stomach like a swallowed stone for the rest of the night. Behind you, the shivering continues.'],
+      title: 'Odlaziš',
+      text: ['Odlaziš. To je razuman izbor i sedi ti u stomaku kao progutan kamen do kraja noći. Iza tebe, drhtanje se nastavlja.'],
       firstVisitEffects: { stats: { kindness: -1 }, flags: { coldChoice: true } },
-      choices: [ { text: 'Back to the doors.', to: 'trials' } ]
+      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
     },
 
     /* ---------- Act V: The Hunt ---------- */
 
     hunt: {
-      title: 'The Hush Comes Calling',
+      title: 'Tišina dolazi sama',
       text: [
-        'You do not have to go hunting. The hall goes quiet \u2014 the wrong quiet, the muffled kind \u2014 and every hearth gutters at once.',
-        'The Hush-thing unfolds from between two fires: tall, listening, hung with stolen voices like a wind chime made of other people\u2019s words. One of those voices is your laugh.',
-        'It reaches for Mochi, who stands her ground in front of three hundred silenced cats, because that is what a Warden does.'
+        'Ne moraš da ideš u lov. Dvorana utihne — ona pogrešna tišina, prigušena vrsta — i svako ognjište zatreperi odjednom.',
+        'Tiho-stvar se razmotava između dve vatre: visoko, osluškujuće, okićeno ukradenim glasovima kao zvečkom od tuđih reči. Jedan od tih glasova je tvoj smeh.',
+        'Pruža se ka Mimi, koja stoji čvrsto ispred trista utišanih mačaka, jer tako radi Čuvarka.'
       ],
       choices: [
-        { text: 'Ring Barnaby\u2019s bell \u2014 the sound with roots.', to: 'end_bell', needItem: '🔔 Barnaby\u2019s Bell' },
-        { text: 'Hold up the truth shard and *see* it.', to: 'end_shard', needItem: '🪞 Truth Shard', hideWhenLocked: false },
-        { text: 'Step in front of Mochi.',
+        { text: 'Pozvoni Barnabijevim zvonom — zvukom sa korenjem.', to: 'end_bell', needItem: '🔔 Barnabijevo zvono' },
+        { text: 'Podigni krhotinu istine i *vidi* je.', to: 'end_shard', needItem: '🪞 Krhotina istine', hideWhenLocked: false },
+        { text: 'Stani ispred Mimi.',
           roll: { stat: 'courage', dc: 9, success: 'end_shield_win', fail: 'end_shield_fail', failEffects: { stats: { health: -2 } } } },
-        { text: 'Speak to it kindly. Ask it what it lost.',
+        { text: 'Obrati joj se blago. Pitaj je šta je izgubila.',
           roll: { stat: 'kindness', dc: 8, success: 'end_ask_win', fail: 'end_shield_fail', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     end_bell: {
-      title: 'The Sound With Roots',
+      title: 'Zvuk sa korenjem',
       text: [
-        'You ring the bell, and this time the whole Court rings with it \u2014 nine hearths, three hundred throats, sixty years of one old man calling one old cat home for tea.',
-        'The Hush-thing cannot swallow it. It comes apart like fog at a window, and every stolen voice springs loose and bolts for its owner. Your laugh hits you in the chest and you are still laughing when the hearths roar back up.',
-        'The Queen inclines her head one careful inch. "The debt is paid, and the wood is quieter for it."'
+        'Pozvoniš zvonom i ovog puta zazvoni ceo Dvor s njim — devet ognjišta, trista grla, šezdeset godina jednog starca koji zove jednu staru mačku kući na čaj.',
+        'Tiho-stvar to ne može da proguta. Raspline se kao magla na prozoru i svaki ukradeni glas prsne slobodan i pojuri svom vlasniku. Tvoj smeh te udari u grudi i još se smeješ kad ognjišta opet planu.',
+        'Kraljica pažljivo spusti glavu za jedan jedini pedalj. „Dug je plaćen, a šuma je tiša zbog toga.“'
       ],
-      choices: [ { text: 'Turn to Mochi.', to: 'aftermath' } ]
+      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
     },
 
     end_shard: {
-      title: 'Seen',
+      title: 'Viđena',
       text: [
-        'You hold the shard up and *look* at it \u2014 properly, the way nobody has ever looked at it \u2014 and say, quite loudly, "I see you."',
-        'It stops. Being seen is the one thing a hush cannot survive. It folds smaller and smaller, dropping voices as it goes, until what is left is a small grey thing the size of a moth, which flits away into the roots to start again from nothing.',
-        'Your laugh comes back last, sheepishly, like a dog that ran off at the park.'
+        'Podigneš krhotinu i *pogledaš* je — zaista, onako kako je niko nikad nije pogledao — pa kažeš sasvim glasno: „Vidim te.“',
+        'Ona stane. Biti viđena jedina je stvar koju tišina ne može da preživi. Sklapa se u sve manju i manju, ispuštajući glasove usput, dok od nje ne ostane malo sivo stvorenje veličine moljca, koje odleprša u korenje da iz ničega počne iznova.',
+        'Tvoj smeh se vraća poslednji, pomalo postiđeno, kao pas koji je odlutao u parku.'
       ],
-      choices: [ { text: 'Turn to Mochi.', to: 'aftermath' } ]
+      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
     },
 
     end_shield_win: {
-      title: 'In Front',
+      title: 'Ispred',
       text: [
-        'You step between a hush and a cat, in pyjama trousers, with one slipper, and you say "no."',
-        'It takes hold of you and finds \u2014 to its enormous confusion \u2014 nothing worth eating: no silence in you at all, only a warm noisy tangle of a kid who talks to their cat about everything.',
-        'It lets go, offended, and flees the hall. The Court explodes into the most undignified cheering in nine hundred years.'
+        'Staneš između tišine i mačke, u donjem delu pidžame, sa jednom papučom, i kažeš „ne“.',
+        'Zgrabi te i pronađe — na svoju ogromnu zbunjenost — da u tebi nema ničega vrednog jedenja: nimalo tišine, samo topla bučna zbrka od deteta koje svojoj mački priča baš sve.',
+        'Pusti te, uvređeno, i pobegne iz dvorane. Dvor eksplodira u najnedostojnije navijanje u poslednjih devet stotina godina.'
       ],
       firstVisitEffects: { stats: { courage: 1 } },
-      choices: [ { text: 'Turn to Mochi.', to: 'aftermath' } ]
+      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
     },
 
     end_shield_fail: {
-      title: 'Not Enough, Alone',
+      title: 'Nije dovoljno, sam',
       text: [
-        'You are not fast enough, or loud enough, and the cold folds around you \u2014',
-        '\u2014 and then a very small grey shape with a white sock hurtles out of your pyjama top / out of the roots and hisses at the Hush-thing with its entire two hundred grams.',
-        'The whole Court hisses with it. Three hundred cats. Nine hearths. One kid on the floor, joining in with what\u2019s left of their voice. The hush cannot eat a noise that big. It unravels, and runs.'
+        'Nisi dovoljno brz, ni dovoljno glasan, i hladnoća se sklapa oko tebe —',
+        '— a onda iz tvog gornjeg dela pidžame / iz korenja izleće veoma mala siva prilika sa belom čarapicom i sikće na Tiho-stvar sa svih svojih dvesta grama.',
+        'Ceo Dvor sikće s njom. Trista mačaka. Devet ognjišta. Jedno dete na podu koje se pridružuje s onim što mu je ostalo od glasa. Tišina ne može da pojede buku toliku. Rasplete se i pobegne.'
       ],
-      choices: [ { text: 'Sit up, ears ringing.', to: 'aftermath' } ]
+      choices: [ { text: 'Uspravi se, dok ti zuji u ušima.', to: 'aftermath' } ]
     },
 
     end_ask_win: {
-      title: 'What Did You Lose?',
+      title: 'Šta si izgubila?',
       text: [
-        'You do the thing nobody in nine hundred years has tried. You sit down on the floor of the Court, look up at the tall folded silence, and ask, "What did *you* lose?"',
-        'It stops. Slowly, from among the stolen voices, one comes forward that is small and cracked and its own: *"Everything. I was a hearth. Nobody sat at me."*',
-        'So you relight it \u2014 with an ember, a wrapped-up shivering old cat\u2019s thread, or just by shuffling over and making room. The Hush-thing becomes the tenth fire in the Court of the Ninefold Hearth, and burns very quietly, and every voice it took goes home.'
+        'Učiniš nešto što niko devet stotina godina nije pokušao. Sedneš na pod Dvora, pogledaš nagore u visoku presavijenu tišinu i pitaš: „Šta si *ti* izgubila?“',
+        'Ona stane. Polako, među ukradenim glasovima, izađe jedan mali, napukao i njen sopstveni: *„Sve. Bila sam ognjište. Niko nije sedeo kraj mene.“*',
+        'Pa ga ponovo potpališ — žarom, niti umotane drhtave stare mačke, ili samo time što se primakneš i napraviš mesta. Tiho-stvar postane deseta vatra u Dvoru devetostrukog ognjišta, gori veoma tiho, i svaki glas koji je uzela vrati se kući.'
       ],
       firstVisitEffects: { stats: { kindness: 1 }, flags: { tenthHearth: true } },
-      choices: [ { text: 'Turn to Mochi.', to: 'aftermath' } ]
+      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
     },
 
     aftermath: {
-      title: 'The Reckoning of Cats',
+      title: 'Mačje svođenje računa',
       text: [
-        'The Queen of Cats considers you for a long, long time.',
-        '"The Warden\u2019s debt is paid by a human child in pyjamas," she says. "The Court is humiliated and I am, privately, delighted. Warden Mochi: you are released. Choose."',
-        'Mochi looks at the nine hearths, at her kitten, at the wood she has guarded since before you were born. Then at you.',
-        '"Well," she says. "Ask me, then. Properly."'
+        'Kraljica mačaka dugo, dugo te posmatra.',
+        '„Dug Čuvarke platilo je ljudsko dete u pidžami“, kaže. „Dvor je ponižen, a ja sam, u sebi, oduševljena. Čuvarko Mimi: oslobođena si. Biraj.“',
+        'Mimi pogleda devet ognjišta, svoje mače, šumu koju je čuvala još pre nego što si se rodio. Onda tebe.',
+        '„Dobro“, kaže. „Onda me pitaj. Kako treba.“'
       ],
       choices: [
-        { text: '"Come home. Please."', to: 'end_home' },
-        { text: '"Stay. This is your wood. I\u2019ll visit every Hollow Night."', to: 'end_stay' },
-        { text: '"Come home \u2014 and bring the kitten. And the job. We\u2019ll manage."', to: 'end_both', needFlag: 'foundKitten' },
-        { text: '"Can I stay here with you?"', to: 'end_wild' }
+        { text: '„Dođi kući. Molim te.“', to: 'end_home' },
+        { text: '„Ostani. Ovo je tvoja šuma. Dolaziću svake Šuplje noći.“', to: 'end_stay' },
+        { text: '„Dođi kući — i povedi mače. I posao. Snaći ćemo se.“', to: 'end_both', needFlag: 'foundKitten' },
+        { text: '„Mogu li ja da ostanem ovde s tobom?“', to: 'end_wild' }
       ]
     },
 
     /* ---------- Endings ---------- */
 
     end_home: {
-      title: 'Ending: The Dent in the Quilt',
+      title: 'Kraj: Udubljenje u jorganu',
       text: [
-        '"Obviously," says Mochi, and walks out of the Court of the Ninefold Hearth without looking back, tail up, like she owns the place \u2014 which, it turns out, she sort of does.',
-        'You come out through the hedge at four in the morning. She lets you carry her the last bit, which she has never once allowed.',
-        'In the morning there is a dent in the quilt, and a cat in it, and she does not say a single word \u2014 not at breakfast, not ever again, not where anyone could hear. But when you say "I know what you are," she blinks at you very slowly, which in cat means *yes*, and also *don\u2019t tell*.'
+        '„Naravno“, kaže Mimi i izađe iz Dvora devetostrukog ognjišta ne osvrćući se, uzdignutog repa, kao da joj mesto pripada — što se, ispostavlja se, zapravo donekle i dešava.',
+        'Izlazite kroz živicu u četiri ujutru. Pusti ti da je nosiš onaj poslednji komadić puta, što ti nikad ranije nije dopustila.',
+        'Ujutru na jorganu ima udubljenje, a u njemu mačka, i ne kaže nijednu jedinu reč — ne za doručkom, ne nikad više, ne tamo gde bi iko mogao da čuje. Ali kad kažeš „Znam šta si“, ona ti polako trepne, što na mačjem znači *da*, a takođe i *nemoj nikom da kažeš*.'
       ],
       ending: true,
       choices: []
     },
 
     end_stay: {
-      title: 'Ending: A Standing Invitation',
+      title: 'Kraj: Stalni poziv',
       text: [
-        'It is the hardest sentence you have ever said and you get through it without your voice going.',
-        'Mochi is quiet for a long moment. "That," she says, "is the kindest thing anyone has ever done to me, and I am including the time you gave me your entire chicken dinner."',
-        'She stays. You go home with an empty quilt \u2014 but on every Hollow Night after, the hedge breathes open, and a small black cat with a white sock is waiting on the other side with an entire year of news, and you are the only person alive who gets to hear a cat gossip.'
+        'To je najteža rečenica koju si ikad izgovorio i uspeš da je izneseš a da ti glas ne pukne.',
+        'Mimi dugo ćuti. „To“, kaže, „je najdobrotnija stvar koju je iko ikada učinio za mene, i tu računam i ono kad si mi dao celu svoju piletinu za večeru.“',
+        'Ona ostaje. Ti odlaziš kući sa praznim jorganom — ali svake sledeće Šuplje noći živica udahne i otvori se, a mala crna mačka sa belom čarapicom čeka s druge strane sa celom godinom novosti, i ti si jedina osoba na svetu koja sme da sluša mačje tračeve.'
       ],
       ending: true,
       choices: []
     },
 
     end_both: {
-      title: 'Ending: Two Cats, One Warden, No Explanations',
+      title: 'Kraj: Dve mačke, jedna Čuvarka, bez objašnjenja',
       text: [
-        '"Both," you say. "All of it. The kitten, the job, everything. We\u2019ve got a garden and a hedge that opens once a year and I\u2019m *very* good at keeping secrets."',
-        'The Queen of Cats makes a noise that might be a laugh or might be a lung problem. "A Warden\u2019s post, held from a *bungalow*," she says. "Do it. This century has been so boring."',
-        'You come home at dawn with a cat under one arm and a bread roll under your chin. Your parents are told there was a stray. Everyone chooses to believe this. On Hollow Nights your bedroom window is left open, and the whole wood knows the way.'
+        '„Oboje“, kažeš. „Sve to. Mače, posao, sve. Imamo baštu i živicu koja se otvara jednom godišnje, a ja *strašno* dobro čuvam tajne.“',
+        'Kraljica mačaka pusti zvuk koji bi mogao biti smeh, a mogao bi biti i problem sa plućima. „Mesto Čuvarke, vođeno iz *prizemnice*“, kaže. „Neka bude. Ovaj vek je bio užasno dosadan.“',
+        'Kući stižeš u zoru sa mačkom pod jednom rukom i zemičkom pod bradom. Roditeljima se kaže da je bilo jedno napušteno mače. Svi odluče da u to poveruju. U Šupljim noćima tvoj prozor spavaće sobe ostaje otvoren, a cela šuma zna put.'
       ],
       ending: true,
       choices: []
     },
 
     end_wild: {
-      title: 'Ending: The Child Who Stayed Till Morning',
+      title: 'Kraj: Dete koje je ostalo do jutra',
       text: [
-        '"No," says Mochi, gently, before the Queen can answer. "Absolutely not. You\u2019ve got school."',
-        'But she lets you stay till dawn, and the Court \u2014 who are, underneath everything, cats \u2014 spend those hours sitting on you, all of them, in shifts, purring, which is the closest thing to a knighthood the Hollowwood offers.',
-        'You go home at sunrise, warm, covered in fur, with your laugh back and a small grey shadow following at your heel, and a standing appointment with a wood that will always, always open for you.'
+        '„Ne“, kaže Mimi blago, pre nego što Kraljica stigne da odgovori. „Nipošto. Imaš školu.“',
+        'Ali pusti te da ostaneš do svitanja, a Dvor — koji su, ispod svega, ipak mačke — te sate provodi sedeći na tebi, svi oni, u smenama, predući, što je najbliže viteštvu što Šuplja šuma nudi.',
+        'Kući se vraćaš u izlazak sunca, topao, prekriven dlakom, sa vraćenim smehom i malom sivom senkom koja ti prati pete, i sa stalnim sastankom sa šumom koja će se za tebe uvek, uvek otvoriti.'
       ],
       ending: true,
       choices: []
     },
 
     faint: {
-      title: 'Ending: The Wood Keeps You a While',
+      title: 'Kraj: Šuma te zadrži još malo',
       text: [
-        'Your legs go. The moss comes up to meet you, and it is much softer than moss has any right to be.',
-        'You wake at noon in your own garden, dry, warm, with your scratches bandaged in cobweb and moth-silk, and no cat.',
-        'On the pillow beside you: one brass bell, one grey kitten with a white sock, and a note in a spidery hand: *"She is staying to finish it. She sends the small one. She says you did brilliantly, and to eat something."* Next Hollow Night, you will be ready. You have a whole year to get braver.'
+        'Noge te izdaju. Mahovina se podigne da te dočeka, a mnogo je mekša nego što mahovina ima ikakvo pravo da bude.',
+        'Budiš se u podne u sopstvenoj bašti, suv, topao, sa zavijenim ogrebotinama u paučinu i moljčevu svilu, i bez mačke.',
+        'Na jastuku pored tebe: jedno mesingano zvonce, jedno sivo mače sa belom čarapicom i poruka ispisana paučastom rukom: *„Ostaje da to dovrši. Šalje malenu. Kaže da si bio sjajan, i da pojedeš nešto.“* Sledeće Šuplje noći bićeš spreman. Imaš celu godinu da postaneš hrabriji.'
       ],
       ending: true,
       choices: []
