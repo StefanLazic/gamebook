@@ -517,7 +517,7 @@ var ART = (function () {
     },
     thorns: function (rnd) {
       var o = starField(rnd, 26, 120);
-      o += rect(0, 0, W, H, '#1c1733', { opacity: 0.2 });
+      o += rect(0, 0, W, H, '#1c1733', 0, { opacity: 0.2 });
       var i;
       for (i = 0; i < 7; i++) {
         var x0 = rnd() * W;

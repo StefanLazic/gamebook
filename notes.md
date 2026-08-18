@@ -165,3 +165,17 @@ Reviewed every rendered scene and fixed what read badly:
   also drawn smaller, and it no longer stands between the reader and the child.
 - The trnoviti пут got brighter thorns, fireflies and a moonlit path through the middle, so
   the darkest scene in the book still shows a way out.
+
+## 2026-08-18 — Validation and docs
+
+- Fixed one bad `rect()` call in the thornway background (options object landed in the `rx`
+  slot and Chromium logged an SVG attribute error).
+- 25 randomised playthroughs driven through the real page in headless Chromium at 390×780:
+  64 passages visited, four endings reached (`end_home`, `end_stay`, `end_wild`, `end_both`;
+  `faint` only triggers when Здравље hits 0), every passage rendered an `<svg>` scene, zero
+  console errors.
+- Layout asserted at 320 / 390 / 834 px: no horizontal scrolling, choices ≥ 52 px tall,
+  the scene box keeps its 8:5 ratio, choices stay hidden until the text has been read in.
+- „Како се игра“ gained a „🖼️ Слике и текст“ section explaining the picture-then-words pace
+  and how to skip it; README updated for the Cyrillic script, the art module and the new
+  controls.
