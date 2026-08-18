@@ -270,6 +270,18 @@ html, body {
   color: #10604d;
   animation: fadein .3s ease;
 }
+.item.grade-good {
+  background: rgba(255, 209, 102, .35);
+  border-color: rgba(224, 138, 30, .5);
+  color: #7a4a00;
+  font-weight: 700;
+}
+.item.grade-bad {
+  background: rgba(226, 86, 95, .16);
+  border-color: rgba(226, 86, 95, .45);
+  color: #9d2530;
+  font-weight: 700;
+}
 #pack:empty { display: none; }
 
 /* ---------- Menu sheet ---------- */

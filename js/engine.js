@@ -131,8 +131,11 @@
     el.pack.textContent = '';
     for (var i = 0; i < state.items.length; i++) {
       var span = document.createElement('span');
-      span.className = 'item';
-      span.textContent = state.items[i];
+      var text = state.items[i];
+      // добре и лоше оцене се разликују и бојом, не само знаком
+      span.className = 'item' + (text.indexOf('⭐') === 0 ? ' grade-good'
+        : text.indexOf('💢') === 0 ? ' grade-bad' : '');
+      span.textContent = text;
       el.pack.appendChild(span);
     }
   }
