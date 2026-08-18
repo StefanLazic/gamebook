@@ -34,6 +34,26 @@ var STORY = (function () {
   }
 
   return {
+  id: 'peti',
+  title: 'Први дан петог разреда',
+  emoji: '🎒',
+  blurb: 'Једанаестогодишњак, први дан у петом разреду у београдској основној школи. Пет часова, пет наставника и покушај да се дан заврши без иједне лоше оцене.',
+  tags: ['11 година', '5 часова', '🎲 коцке'],
+  cover: 'schoolyard',
+  playText: 'Почни први дан',
+  replayText: 'Почни дан изнова ↺',
+  legacySaveKey: 'petirazred.save.sr-cyr.v1',
+  statDefs: [
+    { key: 'knowledge', icon: '📘', label: 'Знање', start: 3 },
+    { key: 'courage', icon: '🔥', label: 'Смелост', start: 3 },
+    { key: 'friends', icon: '🤝', label: 'Другарство', start: 3 },
+    { key: 'calm', icon: '😌', label: 'Живци', start: 5 }
+  ],
+  guard: function (state, id) {
+    // кад живци падну на нулу, дан скреће код педагога
+    if (state.stats.calm <= 0 && id !== 'faint') return 'faint';
+    return null;
+  },
   start: 'kitchen',
   passages: {
 
@@ -959,3 +979,5 @@ var STORY = (function () {
   }
   };
 })();
+
+STORIES.register(STORY);

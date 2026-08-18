@@ -4,33 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f3d6b">
-<meta name="description" content="Први дан петог разреда — књига-игра о једанаестогодишњаку, првом дану у петом разреду у Београду и пет часова без лоше оцене.">
-<title>Први дан петог разреда — књига-игра</title>
+<meta name="description" content="Две књиге-игре на српском: први дан петог разреда и први дан првог разреда у Београду. Бирај причу, бацај коцке и стигни до краја дана.">
+<title>Књига-игра — две приче о првом школском дану</title>
 <link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎒</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 </head>
 <body>
 <div id="stars" aria-hidden="true"></div>
 
 <main id="app">
-  <!-- Naslovni ekran -->
+  <!-- Naslovni ekran: izbor priče -->
   <section id="title-screen" class="screen">
     <button id="howto-btn" class="btn btn-ghost howto-top">❓ Како се игра — коцке и особине</button>
-    <div class="title-art" aria-hidden="true">🎒</div>
-    <h1 class="title">Први дан <span>петог</span></h1>
-    <p class="subtitle">Књига-игра о једанаестогодишњаку, првом дану<br>у петом разреду у Београду и пет часова без кеца.</p>
-    <button id="start-btn" class="btn btn-primary">Почни први дан</button>
-    <button id="continue-btn" class="btn btn-ghost hidden">Настави</button>
-    <p class="credits">Баци коцке. Бирај. Прођи први дан без лоше оцене.</p>
+    <div class="title-art" aria-hidden="true">📚</div>
+    <h1 class="title">Књига<span>-игра</span></h1>
+    <p class="subtitle">Две приче о првом школском дану у Београду.<br>Изабери коју играш.</p>
+    <div id="story-list" class="story-list"></div>
+    <p class="credits">Баци коцке. Бирај. Свака прича има више завршетака.</p>
   </section>
 
   <!-- Ekran igre -->
   <section id="game-screen" class="screen hidden">
     <header id="hud">
-      <div class="stat" title="Знање"><span class="stat-icon">📘</span><span id="stat-knowledge">3</span></div>
-      <div class="stat" title="Смелост"><span class="stat-icon">🔥</span><span id="stat-courage">3</span></div>
-      <div class="stat" title="Другарство"><span class="stat-icon">🤝</span><span id="stat-friends">3</span></div>
-      <div class="stat" title="Живци"><span class="stat-icon">😌</span><span id="stat-calm">5</span></div>
+      <div id="stat-bar" class="stat-bar"></div>
       <button id="menu-btn" class="icon-btn" aria-label="Мени">☰</button>
     </header>
 
@@ -53,7 +49,8 @@
     <h2>Мени</h2>
     <button id="menu-resume" class="btn btn-ghost">Настави игру</button>
     <button id="menu-howto" class="btn btn-ghost">Како се игра</button>
-    <button id="menu-restart" class="btn btn-ghost">Почни дан изнова</button>
+    <button id="menu-restart" class="btn btn-ghost">Почни причу изнова</button>
+    <button id="menu-stories" class="btn btn-ghost">📚 Изабери другу причу</button>
     <p class="menu-note">Напредак се аутоматски чува на овом уређају.</p>
   </div>
 </div>
@@ -62,13 +59,14 @@
   <div class="sheet-inner sheet-scroll">
     <h2 id="howto-title">Како се игра</h2>
 
-    <p>Ово је књига-игра: читаш део приче и бираш шта ћеш да урадиш. Неки избори су сигурни,
-      а неки траже <strong>бацање коцки</strong>.</p>
+    <p>Ово су две књиге-игре: читаш део приче и бираш шта ћеш да урадиш. Неки избори су сигурни,
+      а неки траже <strong>бацање коцки</strong>. Причу бираш на почетном екрану, а свака чува
+      свој напредак посебно.</p>
 
     <h3>🎲 Коцке</h3>
     <p>Бацају се <strong>две шестостране коцке (2к6)</strong>, па се њихов збир сабира са
       особином коју избор користи. Резултат се пореди са <strong>тежином (ТБ)</strong> која
-      пише на дугмету, на пример <span class="tag">Знање 8+</span>.</p>
+      пише на дугмету, на пример <span class="tag">Смелост 8+</span>.</p>
     <p class="formula">коцка + коцка + особина ≥ тежина → успех</p>
     <ul>
       <li><strong>Две шестице</strong> — врхунски успех, увек пролази и понекад отвара посебан исход.</li>
@@ -76,22 +74,36 @@
       <li>Неки предмети у ранцу дају <strong>бонус</strong> на бацање.</li>
     </ul>
 
-    <h3>⭐ Особине</h3>
-    <p>Особине су твој бонус на коцке — што је особина већа, то лакше успеваш у том типу изазова.
-      Поступци у причи их дижу или спуштају.</p>
-    <ul class="stat-legend">
-      <li><span class="stat-icon">📘</span> <strong>Знање</strong> — задатак на табли, микроскоп, права реч у право време.</li>
-      <li><span class="stat-icon">🔥</span> <strong>Смелост</strong> — дићи руку, читати наглас, залетети се на козлић.</li>
-      <li><span class="stat-icon">🤝</span> <strong>Другарство</strong> — помоћи, поделити, добити шапат из треће клупе.</li>
-      <li><span class="stat-icon">😌</span> <strong>Живци</strong> — колико још издржаваш. Ако падну на 0, правиш паузу код педагога.</li>
-    </ul>
+    <section data-story="peti">
+      <h3>🎒 Први дан петог разреда</h3>
+      <p>Особине су твој бонус на коцке — што је особина већа, то лакше успеваш у том типу изазова.
+        Поступци у причи их дижу или спуштају.</p>
+      <ul class="stat-legend">
+        <li><span class="stat-icon">📘</span> <strong>Знање</strong> — задатак на табли, микроскоп, права реч у право време.</li>
+        <li><span class="stat-icon">🔥</span> <strong>Смелост</strong> — дићи руку, читати наглас, залетети се на козлић.</li>
+        <li><span class="stat-icon">🤝</span> <strong>Другарство</strong> — помоћи, поделити, добити шапат из треће клупе.</li>
+        <li><span class="stat-icon">😌</span> <strong>Живци</strong> — колико још издржаваш. Ако падну на 0, правиш паузу код педагога.</li>
+      </ul>
+      <p>Данас имаш пет часова: математику, српски, енглески, биологију и физичко. На сваком
+        можеш да зарадиш <strong>добру оцену ⭐</strong>, да прођеш без оцене или да покупиш
+        <strong>лошу оцену 💢</strong>. Оцене и ствари из ранца видиш на дну екрана.</p>
+    </section>
 
-    <h3>🏆 Циљ дана</h3>
-    <p>Данас имаш пет часова: математику, српски, енглески, биологију и физичко. На сваком
-      можеш да зарадиш <strong>добру оцену ⭐</strong>, да прођеш без оцене или да покупиш
-      <strong>лошу оцену 💢</strong>. Оцене и ствари из ранца видиш на дну екрана.</p>
-    <p>Неуспех <em>није</em> крај игре — прича скреће у страну и увек постоји начин да се
-      дан поправи. Има више завршетака, а који ћеш добити зависи од оцена, другова и избора.</p>
+    <section data-story="prvi">
+      <h3>🎀 Први дан првог разреда</h3>
+      <p>Играш Милу, седмогодишњакињу којој данас почиње први разред. Особине су њен бонус на коцке:</p>
+      <ul class="stat-legend">
+        <li><span class="stat-icon">🔤</span> <strong>Слова</strong> — оно што већ знаш: бројеви, слова, песмице.</li>
+        <li><span class="stat-icon">🔥</span> <strong>Смелост</strong> — дићи руку, стати пред таблу, рећи наглас шта мислиш.</li>
+        <li><span class="stat-icon">🤝</span> <strong>Другарство</strong> — поделити ужину, помоћи, добити помоћ.</li>
+        <li><span class="stat-icon">⏰</span> <strong>Минути</strong> — колико ти је још остало до 8:00. Свака ситница на путу троши минуте.</li>
+        <li><span class="stat-icon">💢</span> <strong>Минуси</strong> — сакупиш ли <strong>пет минуса</strong>, дан се завршава разговором са учитељицом.</li>
+        <li><span class="stat-icon">⭐</span> <strong>Плусеви</strong> — за сваки добар избор на часу.</li>
+      </ul>
+      <p>Будиш се у 7:00, звоно звони у 8:00, а онда те чекају четири часа: математика, српски,
+        свет око нас и ликовно, плус велики одмор. Ниједан завршетак није страшан — и најгори
+        дан се завршава код куће, уз чај.</p>
+    </section>
 
     <h3>🖼️ Слике и текст</h3>
     <p>Свака страна прво покаже <strong>слику</strong>, па се онда прича исписује
@@ -108,8 +120,11 @@
   </div>
 </div>
 
+<script src="js/stories.js"></script>
 <script src="js/story.js"></script>
+<script src="js/story-prvi.js"></script>
 <script src="js/art.js"></script>
+<script src="js/art-prvi.js"></script>
 <script src="js/engine.js"></script>
 </body>
 </html>
