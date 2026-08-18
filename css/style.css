@@ -204,17 +204,18 @@ html, body {
 .stat-bar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: .35rem;
   flex: 1 1 auto;
   min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 2px;
 }
-.stat-bar::-webkit-scrollbar { display: none; }
 .stat { flex: 0 0 auto; }
 .stat-name { display: none; }
+@media (max-width: 26rem) {
+  .stat-bar { gap: .25rem; }
+  .stat { padding: .28rem .45rem; font-size: .88rem; gap: .15rem; }
+  .stat-icon { font-size: .92rem; }
+}
 @media (min-width: 34rem) {
   .stat-name { display: inline; font-weight: 600; color: var(--muted); font-size: .8rem; }
 }
