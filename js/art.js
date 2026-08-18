@@ -132,7 +132,7 @@ var ART = (function () {
       o += path('M-12 -6 q 12 8 24 0', 'none', { stroke: p.collar, 'stroke-width': 3.4, 'stroke-linecap': 'round' });
       o += circle(0, 0, 2.6, '#ffd76a');
     }
-    return g('translate(' + r2(0) + ',' + r2(0) + ') scale(' + r2(s) + ')', o);
+    return g('scale(' + r2(s) + ')', o);
   }
 
   var MIMI = { fur: '#3a3350', belly: '#4a4269', inner: '#8f7fb5', eye: '#8ef0a5', nose: '#ff9db1', blush: '#ff9db1', sock: '#f6f3ff', collar: '#6ee7d3', cheek: true };

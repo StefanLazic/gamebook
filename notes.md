@@ -179,3 +179,13 @@ Reviewed every rendered scene and fixed what read badly:
 - „Како се игра“ gained a „🖼️ Слике и текст“ section explaining the picture-then-words pace
   and how to skip it; README updated for the Cyrillic script, the art module and the new
   controls.
+
+## 2026-08-18 — Review follow-ups
+
+- `startReveal` no longer calls `finishReveal` on a queue it has not adopted yet; the new
+  queue is assigned first, so the reduced-motion / empty-passage path really does show the
+  whole passage.
+- The promised "picture first" beat is now real: the words start 550 ms after the passage is
+  built (matching the scene fade), instead of the first word slipping in after 10 ms. The
+  pending delay is cleared when the reader skips or navigates away.
+- Dropped an identity `translate(0,0)` from the cat drawing helper.

@@ -174,7 +174,7 @@
   }
 
   /* ---------- picture first, then the text, word by word ---------- */
-  var reveal = { timer: 0, queue: [], done: true };
+  var reveal = { timer: 0, startDelay: 0, queue: [], done: true };
 
   function reducedMotion() {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -182,6 +182,7 @@
 
   function finishReveal() {
     if (reveal.timer) { clearInterval(reveal.timer); reveal.timer = 0; }
+    if (reveal.startDelay) { clearTimeout(reveal.startDelay); reveal.startDelay = 0; }
     for (var i = 0; i < reveal.queue.length; i++) reveal.queue[i].classList.add('on');
     reveal.queue = [];
     reveal.done = true;
@@ -190,9 +191,8 @@
   }
 
   function startReveal(queue) {
-    finishReveal();
-    if (!queue.length || reducedMotion()) { finishReveal(); return; }
     reveal.queue = queue;
+    if (!queue.length || reducedMotion()) { finishReveal(); return; }
     reveal.done = false;
     el.choices.classList.add('waiting');
     el.skipBtn.classList.remove('hidden');
@@ -203,8 +203,11 @@
       i++;
     };
     // the picture gets a beat of its own before the words start arriving
-    reveal.timer = setInterval(step, 65);
-    setTimeout(function () { if (!reveal.done) step(); }, 10);
+    reveal.startDelay = setTimeout(function () {
+      reveal.startDelay = 0;
+      step();
+      reveal.timer = setInterval(step, 65);
+    }, 550);
   }
 
   function renderScene(id) {
