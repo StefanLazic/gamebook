@@ -35,7 +35,11 @@
     </header>
 
     <div id="passage-wrap">
+      <figure id="scene" aria-live="off">
+        <div id="scene-art"></div>
+      </figure>
       <article id="passage" tabindex="-1"></article>
+      <button id="skip-btn" class="skip-btn hidden" type="button">Додирни за цео текст ⏩</button>
       <div id="roll-area" class="hidden"></div>
       <nav id="choices" aria-label="Избори"></nav>
     </div>
@@ -96,6 +100,7 @@
 </div>
 
 <script src="js/story.js"></script>
+<script src="js/art.js"></script>
 <script src="js/engine.js"></script>
 </body>
 </html>

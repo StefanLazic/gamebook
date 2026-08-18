@@ -117,3 +117,35 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
   the Cyrillic story, whose item identifiers differ.
 - Validator: 73 passages, 17 items, every `to:` / roll target resolves, no dead ends, no
   Latin leftovers in player-visible text.
+
+## 2026-08-18 — Слике за сваку сцену + текст реч по реч
+
+**Pictures.** New `js/art.js` draws one illustration per passage as an SVG scene, in the
+browser. No image files and no network calls, so the static site stays a three-file drop.
+
+- *Consistent characters.* Every character is one drawing function with a fixed palette:
+  Мими is always the same dark-violet cat with one white sock, mint-green anime eyes and a
+  teal collar; Земичка is always the small cream kitten; the queen is the white cat with the
+  gold crown; the crows always wear the same red waistcoat; Брамблвика always has teal hair
+  and a cup. Because scenes only name characters (`['kid', 'mimi']`), the same character can
+  never come out as a different-looking animal in another passage.
+- *Anime-ish, never scary.* Big round eyes with two highlights, blush, round smiles, soft
+  round bodies. The troll is a smiling mossy dumpling; the Тихо-створ is a soft lilac cloud
+  with sleepy eyes, no teeth and no claws.
+- *Backgrounds* per location (porch, shed, village door, hedge, forest, brook, bridge,
+  mushroom ring, crow market, tea hut, thornway, hollow tree, court gate, court, three trial
+  rooms, bedroom, dawn, moss) with six sky palettes. Random details (stars, sparks, ash) come
+  from a seeded RNG keyed to the passage id, so a passage always looks identical on revisit.
+- All 73 passages are mapped; a check script asserts scene coverage in both directions.
+- Each `<svg>` carries `role="img"` and a Serbian `aria-label` describing the scene.
+
+**Reading.** The picture appears first (a 0.5s fade/zoom), then the words arrive one by one
+(65 ms apart, blur-to-sharp), and only when the passage has finished do the choices appear.
+Impatient readers can tap the picture, tap the text, tap the „Додирни за цео текст ⏩“ button
+or press Space/Enter/1–9 to show everything at once. `prefers-reduced-motion` shows the whole
+passage immediately.
+
+**Mobile.** The scene is a fluid 8:5 box (with a padding-box fallback for browsers without
+`aspect-ratio`), the skip button is a full-width 44px target, and the HUD now wraps so nothing
+overflows at 320px. Checked at 320 / 390 / 834 px: no horizontal scrolling, no console errors,
+choices stay ≥ 52px tall.

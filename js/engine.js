@@ -14,6 +14,9 @@
     startBtn: document.getElementById('start-btn'),
     continueBtn: document.getElementById('continue-btn'),
     passage: document.getElementById('passage'),
+    scene: document.getElementById('scene'),
+    sceneArt: document.getElementById('scene-art'),
+    skipBtn: document.getElementById('skip-btn'),
     choices: document.getElementById('choices'),
     rollArea: document.getElementById('roll-area'),
     pack: document.getElementById('pack'),
@@ -134,21 +137,82 @@
     }
   }
 
-  function paragraph(text, cls) {
+  // Every word gets its own <span> so the story can be read into view word by
+  // word; `into` collects them in reading order for the reveal timer.
+  function words(target, text, into) {
+    var chunks = String(text).split(/(\s+)/);
+    for (var i = 0; i < chunks.length; i++) {
+      if (!chunks[i]) continue;
+      if (/^\s+$/.test(chunks[i])) {
+        target.appendChild(document.createTextNode(chunks[i]));
+        continue;
+      }
+      var w = document.createElement('span');
+      w.className = 'w';
+      w.textContent = chunks[i];
+      target.appendChild(w);
+      if (into) into.push(w);
+    }
+  }
+
+  function paragraph(text, cls, into) {
     var p = document.createElement('p');
     if (cls) p.className = cls;
     // Very small inline markup: *emphasis*
     var parts = String(text).split(/\*/);
     for (var i = 0; i < parts.length; i++) {
+      if (!parts[i]) continue;
       if (i % 2 === 1) {
         var em = document.createElement('em');
-        em.textContent = parts[i];
+        words(em, parts[i], into);
         p.appendChild(em);
-      } else if (parts[i]) {
-        p.appendChild(document.createTextNode(parts[i]));
+      } else {
+        words(p, parts[i], into);
       }
     }
     return p;
+  }
+
+  /* ---------- picture first, then the text, word by word ---------- */
+  var reveal = { timer: 0, queue: [], done: true };
+
+  function reducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function finishReveal() {
+    if (reveal.timer) { clearInterval(reveal.timer); reveal.timer = 0; }
+    for (var i = 0; i < reveal.queue.length; i++) reveal.queue[i].classList.add('on');
+    reveal.queue = [];
+    reveal.done = true;
+    el.skipBtn.classList.add('hidden');
+    el.choices.classList.remove('waiting');
+  }
+
+  function startReveal(queue) {
+    finishReveal();
+    if (!queue.length || reducedMotion()) { finishReveal(); return; }
+    reveal.queue = queue;
+    reveal.done = false;
+    el.choices.classList.add('waiting');
+    el.skipBtn.classList.remove('hidden');
+    var i = 0;
+    var step = function () {
+      if (i >= queue.length) { finishReveal(); return; }
+      queue[i].classList.add('on');
+      i++;
+    };
+    // the picture gets a beat of its own before the words start arriving
+    reveal.timer = setInterval(step, 65);
+    setTimeout(function () { if (!reveal.done) step(); }, 10);
+  }
+
+  function renderScene(id) {
+    if (typeof ART === 'undefined') return;
+    el.sceneArt.innerHTML = ART.svg(id);
+    el.scene.classList.remove('appear');
+    void el.scene.offsetWidth;
+    el.scene.classList.add('appear');
   }
 
   function textOf(value) {
@@ -171,25 +235,30 @@
     renderPack();
     save();
 
+    finishReveal();
     el.rollArea.classList.add('hidden');
     el.rollArea.textContent = '';
     el.passage.textContent = '';
     el.choices.textContent = '';
     el.app.classList.toggle('ending', !!p.ending);
 
+    renderScene(id);
+
+    var queue = [];
     var h = document.createElement('h2');
-    h.textContent = textOf(p.title);
+    words(h, textOf(p.title), queue);
     el.passage.appendChild(h);
 
     var body = textOf(p.text) || [];
     for (var i = 0; i < body.length; i++) {
-      el.passage.appendChild(paragraph(textOf(body[i])));
+      el.passage.appendChild(paragraph(textOf(body[i]), null, queue));
     }
-    if (extraNote) el.passage.appendChild(paragraph(extraNote, 'note'));
+    if (extraNote) el.passage.appendChild(paragraph(extraNote, 'note', queue));
 
     renderChoices(p);
+    startReveal(queue);
 
-    el.passage.focus();
+    el.passage.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -357,6 +426,10 @@
   function openHowto() { el.howto.classList.remove('hidden'); el.howtoClose.focus(); }
   function closeHowto() { el.howto.classList.add('hidden'); }
 
+  el.skipBtn.addEventListener('click', finishReveal);
+  el.passage.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
+  el.scene.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
+
   el.startBtn.addEventListener('click', function () { clearSave(); startGame(null); });
   el.menuBtn.addEventListener('click', openMenu);
   el.menuResume.addEventListener('click', closeMenu);
@@ -371,6 +444,9 @@
     if (el.gameScreen.classList.contains('hidden') ||
         !el.menu.classList.contains('hidden') ||
         !el.howto.classList.contains('hidden')) return;
+    if (!reveal.done && (e.key === ' ' || e.key === 'Enter' || /^[1-9]$/.test(e.key))) {
+      finishReveal(); e.preventDefault(); return;
+    }
     if (/^[1-9]$/.test(e.key)) {
       var buttons = el.choices.querySelectorAll('.choice:not([disabled])');
       var target = buttons[parseInt(e.key, 10) - 1];
