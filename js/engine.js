@@ -1,12 +1,12 @@
-/* Whiskerlight — gamebook engine
+/* Први дан петог разреда — gamebook engine
  * Renders passages from STORY (js/story.js), handles choices, stats,
  * items, 2d6 dice checks and local save/restore.
  */
 (function () {
   'use strict';
 
-  var SAVE_KEY = 'whiskerlight.save.sr-cyr.v3';
-  var STAT_LABELS = { courage: 'Храброст', cunning: 'Лукавост', kindness: 'Доброта', health: 'Здравље' };
+  var SAVE_KEY = 'petirazred.save.sr-cyr.v1';
+  var STAT_LABELS = { knowledge: 'Знање', courage: 'Смелост', friends: 'Другарство', calm: 'Живци' };
 
   var el = {
     titleScreen: document.getElementById('title-screen'),
@@ -37,7 +37,7 @@
   function newState() {
     return {
       at: STORY.start,
-      stats: { courage: 3, cunning: 3, kindness: 3, health: 5 },
+      stats: { knowledge: 3, courage: 3, friends: 3, calm: 5 },
       items: [],
       flags: {},
       visited: {}
@@ -131,8 +131,11 @@
     el.pack.textContent = '';
     for (var i = 0; i < state.items.length; i++) {
       var span = document.createElement('span');
-      span.className = 'item';
-      span.textContent = state.items[i];
+      var text = state.items[i];
+      // добре и лоше оцене се разликују и бојом, не само знаком
+      span.className = 'item' + (text.indexOf('⭐') === 0 ? ' grade-good'
+        : text.indexOf('💢') === 0 ? ' grade-bad' : '');
+      span.textContent = text;
       el.pack.appendChild(span);
     }
   }
@@ -223,7 +226,7 @@
   }
 
   function goto(id, extraNote) {
-    if (state.stats.health <= 0 && id !== 'faint' && STORY.passages.faint) id = 'faint';
+    if (state.stats.calm <= 0 && id !== 'faint' && STORY.passages.faint) id = 'faint';
 
     var p = STORY.passages[id];
     if (!p) { console.error('Missing passage: ' + id); return; }
@@ -314,7 +317,7 @@
       var again = document.createElement('button');
       again.className = 'choice';
       again.type = 'button';
-      again.textContent = 'Почни нову ноћ ↺';
+      again.textContent = 'Почни дан изнова ↺';
       again.addEventListener('click', restart);
       el.choices.appendChild(again);
     }

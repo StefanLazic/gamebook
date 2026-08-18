@@ -1,14 +1,14 @@
-/* Бркосјај — art
+/* Први дан петог разреда — art
  *
  * Every passage gets its own illustration, drawn as an SVG scene right in the
  * browser (no image files, no network, works from any static host).
  *
  * Two rules the pictures follow:
  *   1. Nothing scary. This is a children's book: round shapes, soft colours,
- *      friendly faces, even for the troll and the Тихо-створ.
+ *      friendly faces, even for the PE teacher with the whistle.
  *   2. A character always looks the same. Characters live in CHARACTERS below,
- *      each with a fixed palette and fixed markings, so Мими is the same black
- *      cat with one white sock and green eyes in every scene she appears in.
+ *      each with a fixed palette and fixed hair, so Лука is the same boy in the
+ *      too-big green hoodie in every scene he appears in.
  *
  * Public API:  ART.svg(passageId)  ->  SVG markup string
  *              ART.altFor(passageId) -> short description for screen readers
@@ -71,11 +71,10 @@ var ART = (function () {
   }
 
   /* ---------- shared face parts (the "anime" look) ---------- */
-  /* Big round eye with a highlight; everything in the book uses these. */
   function eye(x, y, r, colour, look) {
     var dx = (look === 'left' ? -0.2 : look === 'right' ? 0.2 : 0) * r;
     return circle(x, y, r, '#231d33') +
-      circle(x + dx, y + r * 0.05, r * 0.72, colour || '#8ef0a5') +
+      circle(x + dx, y + r * 0.05, r * 0.72, colour || '#6ec6ff') +
       circle(x + dx, y + r * 0.1, r * 0.34, '#231d33') +
       circle(x + dx - r * 0.25, y - r * 0.3, r * 0.26, '#ffffff', { opacity: 0.95 }) +
       circle(x + dx + r * 0.2, y + r * 0.32, r * 0.13, '#ffffff', { opacity: 0.6 });
@@ -93,307 +92,289 @@ var ART = (function () {
   }
 
   /* ---------- the cast ----------
-   * Each cat is drawn by one function; only the palette and the markings change,
-   * so the same character is recognisably the same in every scene.
+   * Everybody in the school is drawn by one function; only the palette, the
+   * hair and the props change, so a character is recognisably the same person
+   * in every scene they appear in.
    */
-  function catBody(p, s, opts) {
-    opts = opts || {};
-    var o = '';
-    o += ellipse(0, -8, 26, 30, p.inner, { opacity: 0.22 });
-    var tail = opts.tailUp
-      ? 'M18 6 q 16 -2 14 -22 q -1 -9 -8 -9'
-      : 'M18 8 q 18 2 20 -12 q 1 -8 -6 -9';
-    o += path(tail, 'none', { stroke: p.fur, 'stroke-width': 7, 'stroke-linecap': 'round' });
-    /* body */
-    o += ellipse(0, 0, 20, 17, p.fur);
-    o += ellipse(0, 5, 12, 10, p.belly);
-    /* front paws — Мими's white sock is always the left one */
-    o += ellipse(-9, 15, 6.4, 4.6, p.fur);
-    o += ellipse(8, 15, 6.4, 4.6, opts.noSock ? p.fur : (p.sock || p.fur));
-    /* head */
-    o += g('translate(0,-20)',
-      path('M-16 -2 l -3 -16 l 14 7 z', p.fur) +
-      path('M16 -2 l 3 -16 l -14 7 z', p.fur) +
-      path('M-13 -3 l -1.6 -9 l 8 4 z', p.inner) +
-      path('M13 -3 l 1.6 -9 l -8 4 z', p.inner) +
-      ellipse(0, 0, 17, 15, p.fur) +
-      (p.cheek ? ellipse(0, 5, 12, 9, p.belly, { opacity: 0.85 }) : '') +
-      eye(-6.6, -1, 4.4, p.eye, opts.look) +
-      eye(6.6, -1, 4.4, p.eye, opts.look) +
-      path('M-2.6 4.4 l 5.2 0 l -2.6 3 z', p.nose) +
-      smile(-4, 7.6, 4) + smile(1.4, 7.6, 3) +
-      blush(-11, 5, 3.6, p.blush) + blush(11, 5, 3.6, p.blush) +
-      path('M-14 3 l -9 -2 M-14 6 l -9 3 M14 3 l 9 -2 M14 6 l 9 3', 'none',
-        { stroke: '#ffffff', 'stroke-width': 0.9, opacity: 0.8, 'stroke-linecap': 'round' }) +
-      (p.crown ? path('M-9 -13 l 3 -8 l 3 5 l 3 -7 l 3 7 l 3 -5 l 3 8 z', '#ffd76a',
-        { stroke: '#c99a2e', 'stroke-width': 1 }) : '') +
-      '');
-    if (p.collar) {
-      o += path('M-12 -6 q 12 8 24 0', 'none', { stroke: p.collar, 'stroke-width': 3.4, 'stroke-linecap': 'round' });
-      o += circle(0, 0, 2.6, '#ffd76a');
+  function hairShape(style, hair, hair2) {
+    switch (style) {
+      case 'pony':
+        return path('M22 -4 q 14 4 10 22 q -4 12 -14 12 q 10 -14 4 -34 z', hair) +
+          path('M-17 -2 q 0 -19 17 -19 q 17 0 17 19 q -7 -11 -17 -10 q -10 -1 -17 10 z', hair);
+      case 'bun':
+        return circle(0, -20, 8.5, hair) +
+          path('M-16 -2 q 0 -18 16 -18 q 16 0 16 18 q -6 -12 -16 -11 q -10 -1 -16 11 z', hair);
+      case 'bob':
+        return path('M-18 6 q -3 -28 18 -28 q 21 0 18 28 q -5 -14 -18 -13 q -13 -1 -18 13 z', hair);
+      case 'curly':
+        return circle(-11, -10, 8, hair) + circle(0, -15, 8.5, hair) + circle(11, -10, 8, hair) +
+          path('M-17 -1 q 1 -17 17 -17 q 16 0 17 17 q -7 -10 -17 -9 q -10 -1 -17 9 z', hair);
+      case 'short':
+      default:
+        return path('M-17 -1 q -1 -20 17 -20 q 18 0 17 20 q -4 -10 -9 -9 q -3 -6 -9 -3 q -7 -1 -9 5 q -4 0 -7 7 z', hair) +
+          path('M-14 -5 q 2 -8 6 -10', 'none', { stroke: hair2 || hair, 'stroke-width': 2, 'stroke-linecap': 'round' });
     }
-    return g('scale(' + r2(s) + ')', o);
   }
 
-  var MIMI = { fur: '#3a3350', belly: '#4a4269', inner: '#8f7fb5', eye: '#8ef0a5', nose: '#ff9db1', blush: '#ff9db1', sock: '#f6f3ff', collar: '#6ee7d3', cheek: true };
-  var KITTEN = { fur: '#f0d9a8', belly: '#fbeed2', inner: '#f2b6a0', eye: '#7fd0ff', nose: '#ff9db1', blush: '#ffb0a8', cheek: true };
-  var QUEEN = { fur: '#efeaff', belly: '#ffffff', inner: '#e0b7d8', eye: '#ffcf6b', nose: '#e08fa6', blush: '#f2a9c0', crown: true, cheek: true };
-  var COURT_CAT = { fur: '#a99ad6', belly: '#c7bce8', inner: '#e0b7d8', eye: '#ffd66b', nose: '#e08fa6', blush: '#f2a9c0', cheek: true };
-
-  function drawMimi(o) { return catBody(MIMI, 1, o); }
-  function drawKitten(o) { o = o || {}; o.noSock = true; return catBody(KITTEN, 0.62, o); }
-  function drawQueen(o) { o = o || {}; o.noSock = true; o.tailUp = true; return catBody(QUEEN, 1.1, o); }
-  function drawCourtCat(o) { o = o || {}; o.noSock = true; return catBody(COURT_CAT, 0.8, o); }
-
-  /* The kid: eleven years old, striped pyjama bottoms, sleepy hair, freckles. */
-  function drawKid(opts) {
+  /* One body for everyone: children are simply drawn smaller (see CHARACTERS). */
+  function person(p, opts) {
     opts = opts || {};
-    var skin = '#f7d3ae', skinDark = '#e5b98f', hair = '#4a3324', py = '#7fa7f0', pyDark = '#5f83c9';
+    var skin = p.skin || '#f7d3ae';
+    var top = p.top, bottom = p.bottom, shoes = p.shoes || '#3a3550';
     var o = '';
-    /* legs */
-    o += rect(-11, 8, 9, 26, py, 4.5) + rect(2, 8, 9, 26, py, 4.5);
-    o += path('M-11 16 h9 M-11 24 h9 M2 16 h9 M2 24 h9', 'none', { stroke: pyDark, 'stroke-width': 2, opacity: 0.8 });
-    o += ellipse(-6.5, 35, 6.5, 4, '#ffd76a') + ellipse(6.5, 35, 6.5, 4, '#ffd76a');
-    /* torso */
-    o += path('M-14 -14 q 14 -6 28 0 l 3 26 q -17 6 -34 0 z', py);
-    o += path('M-3 -16 l 0 30', 'none', { stroke: pyDark, 'stroke-width': 1.6, opacity: 0.7 });
+
+    /* ранац се црта иза тела, да се увек види да неко иде у школу */
+    if (p.bag && !opts.noBag) o += drawBackpack(p.reversed ? 20 : -20, -6, p.bag);
+
+    /* legs + shoes */
+    o += rect(-11, 8, 9, 26, bottom, 4.5) + rect(2, 8, 9, 26, bottom, 4.5);
+    if (p.stripes) {
+      o += path('M-10.5 10 v24 M10.5 10 v24', 'none', { stroke: '#ffffff', 'stroke-width': 1.6, opacity: 0.85 });
+    }
+    o += ellipse(-6.5, 35, 6.8, 4, shoes) + ellipse(6.5, 35, 6.8, 4, shoes);
+
+    /* skirt / coat / torso */
+    if (p.skirt) o += path('M-13 -2 l -6 22 q 19 6 38 0 l -6 -22 z', p.skirt);
+    o += path('M-14 -14 q 14 -6 28 0 l 3 26 q -17 6 -34 0 z', top);
+    if (p.coat) {
+      o += path('M-15 -13 q -4 20 -2 30 q -6 2 -9 0 l 4 -30 z', p.coat) +
+        path('M15 -13 q 4 20 2 30 q 6 2 9 0 l -4 -30 z', p.coat);
+      o += path('M-6 -14 q 6 4 12 0 l -2 30 q -4 1 -8 0 z', p.coat);
+    }
+    if (p.tie) o += path('M0 -12 l 4 5 l -4 12 l -4 -12 z', p.tie);
+
     /* arms */
-    if (opts.reach) {
-      o += path('M-13 -8 q -12 -6 -16 -16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+    if (opts.raise) {
+      o += path('M-13 -8 q -10 6 -10 16', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += circle(-23, 9, 4.6, skin);
+      o += path('M13 -8 q 12 -14 10 -28', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += circle(23, -38, 4.8, skin);
+    } else if (opts.reach) {
+      o += path('M-13 -8 q -12 -6 -16 -16', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(-30, -25, 4.6, skin);
-      o += path('M13 -8 q 12 -6 16 -16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += path('M13 -8 q 12 -6 16 -16', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(30, -25, 4.6, skin);
     } else {
-      o += path('M-13 -8 q -10 6 -10 16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += path('M-13 -8 q -10 6 -10 16', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(-23, 9, 4.6, skin);
-      o += path('M13 -8 q 10 6 10 16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += path('M13 -8 q 10 6 10 16', 'none', { stroke: top, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(23, 9, 4.6, skin);
     }
+
     /* head */
     o += g('translate(0,-32)',
       ellipse(0, 0, 17, 17.5, skin) +
-      ellipse(0, 6, 12, 10, skinDark, { opacity: 0.18 }) +
-      /* hair: sleepy fringe */
-      path('M-17 -2 q -1 -20 17 -20 q 18 0 17 20 q -4 -10 -9 -9 q -3 -6 -9 -3 q -7 -1 -9 5 q -4 0 -7 7 z', hair) +
-      path('M-15 -6 q 2 -8 6 -10', 'none', { stroke: '#6b4a34', 'stroke-width': 2, 'stroke-linecap': 'round' }) +
-      eye(-6.4, 2, 4.3, '#6ec6ff', opts.look) +
-      eye(6.4, 2, 4.3, '#6ec6ff', opts.look) +
-      (opts.mouth === 'open'
-        ? ellipse(0, 10, 3.4, 4.2, '#c9576f')
-        : smile(-3, 9.5, 3)) +
+      ellipse(0, 6, 12, 10, '#e5b98f', { opacity: 0.16 }) +
+      hairShape(p.hairStyle, p.hair, p.hair2) +
+      (opts.sleepy
+        ? sleepyEye(-6.4, 2, 4) + sleepyEye(6.4, 2, 4)
+        : eye(-6.4, 2, 4.3, p.eye, opts.look) + eye(6.4, 2, 4.3, p.eye, opts.look)) +
+      (opts.mouth === 'open' ? ellipse(0, 10, 3.4, 4.2, '#c9576f') : smile(-3, 9.5, 3)) +
       blush(-11, 7, 4, '#ff9db1') + blush(11, 7, 4, '#ff9db1') +
-      circle(-9, 4.5, 0.7, '#c98d63') + circle(-6, 6.5, 0.6, '#c98d63') +
-      circle(9, 4.5, 0.7, '#c98d63') + circle(6, 6.5, 0.6, '#c98d63'));
-    if (opts.lantern) o += drawLantern(28, 4, 0.85);
-    if (opts.bell) o += drawBell(-34, -32, 0.9);
+      (p.freckles
+        ? circle(-9, 4.5, 0.7, '#c98d63') + circle(-6, 6.5, 0.6, '#c98d63') +
+          circle(9, 4.5, 0.7, '#c98d63') + circle(6, 6.5, 0.6, '#c98d63')
+        : '') +
+      (p.glasses
+        ? circle(-6.4, 2, 6.2, 'none', { stroke: p.glasses, 'stroke-width': 1.4 }) +
+          circle(6.4, 2, 6.2, 'none', { stroke: p.glasses, 'stroke-width': 1.4 }) +
+          path('M-0.2 2 h0.4 M-12.6 2 h-4 M12.6 2 h4', 'none', { stroke: p.glasses, 'stroke-width': 1.4 })
+        : ''));
+
+    if (p.whistle) {
+      o += path('M0 -18 q -9 8 -10 16', 'none', { stroke: '#e8e2ff', 'stroke-width': 1.6 });
+      o += rect(-14, -3, 11, 5, '#ffd76a', 2) + circle(-4, -0.5, 1.4, '#c9a227');
+    }
+    if (opts.chalk) o += rect(opts.raise ? 21 : 26, opts.raise ? -46 : -2, 4, 10, '#fdf6e6', 2);
+    if (opts.book) o += rect(16, 0, 16, 12, '#f0b45a', 2) + rect(16, 0, 16, 3, '#c98a3a', 1);
+    if (opts.cup) o += g('translate(26,2) scale(0.8)', drawCup());
     return o;
   }
 
-  function drawBell(x, y, s) {
-    return g('translate(' + x + ',' + y + ') scale(' + s + ')',
-      circle(0, 0, 13, '#ffe9a8', { opacity: 0.25 }) +
-      path('M-7 4 q 0 -12 7 -12 q 7 0 7 12 z', '#e8b53d') +
-      rect(-8, 4, 16, 3, '#c9a227', 1.5) +
-      circle(0, 8.6, 2.4, '#c9a227') +
-      circle(0, -13, 2, '#c9a227') +
-      path('M-14 -6 q -4 -4 -3 -9 M14 -6 q 4 -4 3 -9', 'none',
-        { stroke: '#ffe9a8', 'stroke-width': 1.6, opacity: 0.8, 'stroke-linecap': 'round' }));
-  }
-
-  function drawLantern(x, y, s) {
-    return g('translate(' + x + ',' + y + ') scale(' + s + ')',
-      path('M0 -14 q 6 0 6 6', 'none', { stroke: '#c9a227', 'stroke-width': 1.6 }) +
-      circle(0, 6, 12, '#ffe9a8', { opacity: 0.35 }) +
-      rect(-6, -8, 12, 16, '#ffd76a', 3) +
-      rect(-7, -10, 14, 3, '#c9a227', 1.5) +
-      rect(-7, 7, 14, 3, '#c9a227', 1.5));
-  }
-
-  /* Госпођа Пел — ninety-one, white bun, lavender shawl, endless knitting. */
-  function drawPell() {
-    var o = '';
-    o += path('M-16 -8 q 16 -8 32 0 l 5 40 q -21 7 -42 0 z', '#b9a3e3');
-    o += path('M-16 -8 q 16 12 32 0 l 3 14 q -19 10 -38 0 z', '#cfc0f0');
-    o += path('M-15 0 q -10 10 -8 22', 'none', { stroke: '#b9a3e3', 'stroke-width': 7, 'stroke-linecap': 'round' });
-    o += path('M15 0 q 10 10 8 22', 'none', { stroke: '#b9a3e3', 'stroke-width': 7, 'stroke-linecap': 'round' });
-    o += circle(-23, 23, 4.4, '#f7d3ae') + circle(23, 23, 4.4, '#f7d3ae');
-    o += path('M-24 20 l 20 8 M24 20 l -18 10', 'none', { stroke: '#e8e2ff', 'stroke-width': 1.4 });
-    o += ellipse(0, 30, 12, 7, '#f0c6d8');
-    o += g('translate(0,-28)',
-      ellipse(0, 0, 15, 15.5, '#f7d3ae') +
-      path('M-15 -3 q 0 -18 15 -18 q 15 0 15 18 q -6 -12 -15 -10 q -9 -2 -15 10 z', '#f2efff') +
-      circle(-12, -10, 6, '#f2efff') + circle(12, -10, 6, '#f2efff') +
-      sleepyEye(-6.5, 2, 3.6) + sleepyEye(6.5, 2, 3.6) +
-      smile(-3, 9, 3) + blush(-10, 6, 3.6, '#ff9db1') + blush(10, 6, 3.6, '#ff9db1'));
-    return o;
-  }
-
-  /* Мостарски трол: mossy, round, shy, absolutely not scary. */
-  function drawTroll() {
-    var o = '';
-    o += ellipse(0, 6, 34, 30, '#6ea86a');
-    o += ellipse(0, 14, 22, 18, '#8cc487');
-    o += ellipse(-30, 26, 11, 8, '#6ea86a') + ellipse(30, 26, 11, 8, '#6ea86a');
-    o += g('translate(0,-24)',
-      ellipse(0, 0, 26, 23, '#6ea86a') +
-      path('M-26 -4 q 6 -16 26 -16 q 20 0 26 16 q -10 -6 -26 -6 q -16 0 -26 6 z', '#4f8c55') +
-      circle(-14, -16, 6, '#8ec98a') + circle(6, -20, 5, '#8ec98a') +
-      path('M-24 -12 q 4 -12 12 -12 q -2 8 -4 12 z', '#f0a6b6') +
-      eye(-9, 1, 5.6, '#ffd76a') + eye(9, 1, 5.6, '#ffd76a') +
-      smile(-6, 11, 6) +
-      blush(-17, 7, 5, '#f2947f') + blush(17, 7, 5, '#f2947f') +
-      path('M-4 12 l 3 5 M5 12 l -2 5', 'none', { stroke: '#ffffff', 'stroke-width': 2, 'stroke-linecap': 'round' }));
-    return o;
-  }
-
-  /* Гавран у прслуку — the market crows, always the same waistcoat red. */
-  function drawCrow(opts) {
-    opts = opts || {};
-    var o = '';
-    o += path('M4 2 q 18 4 22 -8 q -4 14 -20 14', '#2b3a55');
-    o += ellipse(0, 0, 16, 18, '#33456b');
-    o += ellipse(0, 4, 10, 12, '#b8434a');
-    o += path('M-6 -4 l 12 0 l -6 12 z', '#d4737a');
-    o += ellipse(-12, -2, 7, 12, '#2b3a55');
-    o += g('translate(0,-18)',
-      ellipse(0, 0, 12, 11, '#33456b') +
-      path('M10 2 l 14 3 l -13 4 z', '#f5a623') +
-      eye(-2, -1, 4.2, '#ffd76a', 'right') +
-      (opts.hat ? path('M-12 -8 q 12 -6 24 0 l -2 -8 q -10 -4 -20 0 z', '#231d33') : ''));
-    o += path('M-4 17 l 0 6 M5 17 l 0 6', 'none', { stroke: '#f5a623', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
-    return o;
-  }
-
-  /* Брамблвика, чајна вештица — teal hair, freckles, always a cup in hand. */
-  function drawWitch() {
-    var o = '';
-    o += path('M-15 -10 q 15 -8 30 0 l 8 44 q -23 8 -46 0 z', '#5b4b8a');
-    o += path('M-8 -6 q 8 26 3 44', 'none', { stroke: '#7a68b0', 'stroke-width': 3, opacity: 0.7 });
-    o += path('M-14 -2 q -12 10 -10 20', 'none', { stroke: '#5b4b8a', 'stroke-width': 7, 'stroke-linecap': 'round' });
-    o += path('M14 -2 q 12 8 9 18', 'none', { stroke: '#5b4b8a', 'stroke-width': 7, 'stroke-linecap': 'round' });
-    o += circle(-24, 20, 4.4, '#f7d3ae');
-    o += circle(23, 17, 4.4, '#f7d3ae');
-    o += g('translate(30,12) scale(0.9)', drawCup());
-    o += g('translate(0,-30)',
-      path('M-17 6 q -6 22 4 26 q 6 -14 13 -18 z', '#57c4b0') +
-      path('M17 6 q 6 22 -4 26 q -6 -14 -13 -18 z', '#57c4b0') +
-      ellipse(0, 0, 15, 15.5, '#f7d3ae') +
-      path('M-16 -2 q 1 -18 16 -18 q 15 0 16 18 q -6 -10 -16 -9 q -10 -1 -16 9 z', '#57c4b0') +
-      eye(-6.2, 2, 4.2, '#a8e6a3') + eye(6.2, 2, 4.2, '#a8e6a3') +
-      smile(-3, 9, 3) + blush(-10, 6, 3.8, '#ff9db1') + blush(10, 6, 3.8, '#ff9db1') +
-      circle(-9, 4, 0.7, '#c98d63') + circle(9, 4, 0.7, '#c98d63') +
-      path('M-20 -14 q 20 -18 40 0 q -20 -8 -40 0 z', '#3f3468') +
-      path('M-8 -14 q 8 -26 20 -6 q -8 -6 -20 6 z', '#3f3468'));
-    return o;
+  function drawBackpack(x, y, colour) {
+    return g('translate(' + x + ',' + y + ')',
+      rect(-10, -13, 20, 30, colour, 8) +
+      rect(-10, 0, 20, 9, '#ffffff', 4, { opacity: 0.3 }) +
+      circle(0, 5, 2.4, '#ffffff', { opacity: 0.65 }) +
+      path('M-5 -13 q 5 -7 10 0', 'none', { stroke: colour, 'stroke-width': 2.6 }));
   }
 
   function drawCup() {
     return ellipse(0, 0, 8, 6, '#fdf6e6') + rect(-8, -6, 16, 8, '#fdf6e6', 2) +
       path('M8 -4 q 6 2 0 6', 'none', { stroke: '#fdf6e6', 'stroke-width': 2 }) +
-      ellipse(0, -6, 8, 3, '#e2a35d') +
-      path('M-3 -12 q 3 -5 0 -9 M3 -12 q 3 -5 0 -9', 'none', { stroke: '#ffffff', 'stroke-width': 1.4, opacity: 0.6, 'stroke-linecap': 'round' });
+      ellipse(0, -6, 8, 3, '#e2a35d');
   }
 
-  /* Мољац — the very organised moths of the mushroom ring. */
-  function drawMoth() {
-    return path('M0 0 q -16 -14 -20 2 q 2 12 20 4 z', '#f3e6c8') +
-      path('M0 0 q 16 -14 20 2 q -2 12 -20 4 z', '#f3e6c8') +
-      circle(-12, 2, 2.6, '#d9c39a') + circle(12, 2, 2.6, '#d9c39a') +
-      ellipse(0, 2, 4, 8, '#c9b48f') +
-      circle(0, -6, 3.6, '#c9b48f') +
-      circle(-1.4, -6.6, 1, '#231d33') + circle(1.4, -6.6, 1, '#231d33') +
-      path('M-2 -9 q -3 -5 -6 -6 M2 -9 q 3 -5 6 -6', 'none', { stroke: '#c9b48f', 'stroke-width': 1.2, 'stroke-linecap': 'round' });
-  }
-
-  /* Тихо-створ: a shy, soft, voiceless thing. Sleepy eyes, no teeth, no claws. */
-  function drawHush() {
+  /* Мими, риђа школска мачка: увек иста, са белом брадицом и зеленим очима. */
+  function drawCat(opts) {
+    opts = opts || {};
+    var fur = '#e2915a', belly = '#f6dcb4', inner = '#f2b6a0';
     var o = '';
-    o += path('M-30 20 q -6 -46 30 -46 q 36 0 30 46 q -30 8 -60 0 z', '#cfc9e4', { opacity: 0.75 });
-    o += path('M-22 14 q -4 -32 22 -32 q 26 0 22 32 q -22 6 -44 0 z', '#e8e4f6', { opacity: 0.75 });
-    o += sleepyEye(-9, -6, 4.6) + sleepyEye(9, -6, 4.6);
-    o += smile(-6, 3, 6, '#6c6489');
-    o += blush(-16, 2, 5.4, '#ff9db1') + blush(16, 2, 5.4, '#ff9db1');
-    o += path('M-28 20 q 8 10 14 0 q 8 10 14 0 q 8 10 14 0', 'none', { stroke: '#c3bcd8', 'stroke-width': 3, opacity: 0.8, 'stroke-linecap': 'round' });
+    o += path(opts.tailUp ? 'M18 6 q 16 -2 14 -22 q -1 -9 -8 -9' : 'M18 8 q 18 2 20 -12 q 1 -8 -6 -9',
+      'none', { stroke: fur, 'stroke-width': 7, 'stroke-linecap': 'round' });
+    o += ellipse(0, 0, 20, 17, fur);
+    o += ellipse(0, 5, 12, 10, belly);
+    o += ellipse(-9, 15, 6.4, 4.6, fur) + ellipse(8, 15, 6.4, 4.6, belly);
+    o += g('translate(0,-20)',
+      path('M-16 -2 l -3 -16 l 14 7 z', fur) +
+      path('M16 -2 l 3 -16 l -14 7 z', fur) +
+      path('M-13 -3 l -1.6 -9 l 8 4 z', inner) +
+      path('M13 -3 l 1.6 -9 l -8 4 z', inner) +
+      ellipse(0, 0, 17, 15, fur) +
+      ellipse(0, 5, 12, 9, belly, { opacity: 0.9 }) +
+      eye(-6.6, -1, 4.4, '#8ef0a5', opts.look) +
+      eye(6.6, -1, 4.4, '#8ef0a5', opts.look) +
+      path('M-2.6 4.4 l 5.2 0 l -2.6 3 z', '#c96f7e') +
+      smile(-4, 7.6, 4) + smile(1.4, 7.6, 3) +
+      blush(-11, 5, 3.6, '#ff9db1') + blush(11, 5, 3.6, '#ff9db1') +
+      path('M-14 3 l -9 -2 M-14 6 l -9 3 M14 3 l 9 -2 M14 6 l 9 3', 'none',
+        { stroke: '#ffffff', 'stroke-width': 0.9, opacity: 0.85, 'stroke-linecap': 'round' }));
     return o;
+  }
+
+  function drawPigeon() {
+    return path('M2 0 q 14 2 16 -6 q -2 10 -14 10', '#8b93a8') +
+      ellipse(0, 0, 12, 10, '#9aa2b8') +
+      ellipse(-3, 2, 7, 6, '#c3c9d8') +
+      g('translate(-9,-9)',
+        circle(0, 0, 6.5, '#9aa2b8') +
+        path('M-6 1 l -6 2 l 6 2 z', '#f5a623') +
+        circle(1, -1, 2, '#231d33') + circle(0.4, -1.6, 0.7, '#ffffff')) +
+      path('M-2 9 l 0 4 M4 9 l 0 4', 'none', { stroke: '#f5a623', 'stroke-width': 2, 'stroke-linecap': 'round' });
+  }
+
+  /* palettes — fixed per character */
+  var P_KID = { skin: '#f7d3ae', hair: '#4a3324', hair2: '#6b4a34', hairStyle: 'short', eye: '#6ec6ff', top: '#4fa3e3', bottom: '#35406b', shoes: '#ffd76a', bag: '#e2565f', freckles: true };
+  var P_LUKA = { skin: '#eec49b', hair: '#2f2a25', hairStyle: 'curly', eye: '#8a6a3a', top: '#7cc47a', bottom: '#4a4a5e', shoes: '#f2f2f2', bag: '#3f8ad8' };
+  var P_ANA = { skin: '#f8dcc0', hair: '#6b3f2a', hairStyle: 'pony', eye: '#7fd0ff', top: '#f2a0c0', skirt: '#6b4a8c', bottom: '#8a6ea8', shoes: '#ffffff', bag: '#f0b45a' };
+  var P_SOFIJA = { skin: '#f7d3ae', hair: '#f0c86a', hairStyle: 'bob', eye: '#8ef0a5', top: '#7ce7c8', bottom: '#4a5a7a', shoes: '#ff9db1', freckles: true };
+  var P_MATH = { skin: '#f0cba6', hair: '#b9b3c9', hairStyle: 'short', eye: '#7a86a8', top: '#dfe4f0', bottom: '#3a3f52', shoes: '#2f2b40', tie: '#c96f7e' };
+  var P_MIRA = { skin: '#f7d3ae', hair: '#8c6b57', hairStyle: 'bun', eye: '#8a6a3a', top: '#c98fbb', bottom: '#4a3f60', shoes: '#3a3550', glasses: '#5b4b8a' };
+  var P_ENG = { skin: '#e8bb92', hair: '#3a2f4a', hairStyle: 'bob', eye: '#6ec6ff', top: '#f0b45a', bottom: '#35406b', shoes: '#ffffff' };
+  var P_BIO = { skin: '#f7d3ae', hair: '#7a5b8c', hairStyle: 'bun', eye: '#8ef0a5', top: '#eef0f8', bottom: '#5b6a8a', shoes: '#dfe4f0', coat: '#f7f8fc', glasses: '#4a5a7a' };
+  var P_RASA = { skin: '#e0b184', hair: '#35302b', hairStyle: 'short', eye: '#8a6a3a', top: '#3f5bd8', bottom: '#3f5bd8', shoes: '#ffffff', stripes: true, whistle: true };
+  var P_VERA = { skin: '#f7d3ae', hair: '#d8d3e0', hairStyle: 'bob', eye: '#7fd0ff', top: '#7ce7c8', bottom: '#4a4a6e', shoes: '#3a3550', glasses: '#c96f7e' };
+  var P_MILICA = { skin: '#f0cba6', hair: '#4a3324', hairStyle: 'pony', eye: '#8ef0a5', top: '#b9a3e3', bottom: '#4a3f60', shoes: '#f2e6c8' };
+  var P_MOM = { skin: '#f7d3ae', hair: '#5b3a2a', hairStyle: 'bun', eye: '#8a6a3a', top: '#e2856f', bottom: '#3f4a6b', shoes: '#c98d63' };
+  var P_KIOSK = { skin: '#e0b184', hair: '#6b6257', hairStyle: 'short', eye: '#7a86a8', top: '#f0d18a', bottom: '#4a4a5e', shoes: '#3a3550', glasses: '#4a4a5e' };
+
+  function ch(p, opts, name, foot, size) {
+    return {
+      draw: function () { return person(p, opts || {}); },
+      foot: foot || 39, size: size || 1, name: name
+    };
   }
 
   var CHARACTERS = {
-    kid: { draw: drawKid, foot: 39, name: 'дете у пиџами' },
-    kidLantern: { draw: function () { return drawKid({ lantern: true }); }, foot: 39, name: 'дете са лампом' },
-    kidReach: { draw: function () { return drawKid({ reach: true, mouth: 'open' }); }, foot: 39, name: 'дете које се пружа' },
-    kidBell: { draw: function () { return drawKid({ reach: true, bell: true }); }, foot: 39, name: 'дете које звони звонцетом' },
-    mimi: { draw: function () { return drawMimi({}); }, foot: 20, size: 1.25, name: 'Мими, црна мачка са белом чарапицом' },
-    mimiUp: { draw: function () { return drawMimi({ tailUp: true }); }, foot: 20, size: 1.25, name: 'Мими' },
-    kitten: { draw: function () { return drawKitten({ tailUp: true }); }, foot: 13, size: 1.25, name: 'маче Земичка' },
-    queen: { draw: function () { return drawQueen({}); }, foot: 22, size: 1.2, name: 'мачја краљица' },
-    courtCat: { draw: function () { return drawCourtCat({}); }, foot: 17, size: 1.2, name: 'дворска мачка' },
-    pell: { draw: drawPell, foot: 38, name: 'госпођа Пел' },
-    troll: { draw: drawTroll, foot: 36, size: 0.85, name: 'маховински трол' },
-    crow: { draw: drawCrow, foot: 24, name: 'гавран у прслуку' },
-    crowHat: { draw: function () { return drawCrow({ hat: true }); }, foot: 24, name: 'гавран са шеширом' },
-    witch: { draw: drawWitch, foot: 40, name: 'чајна вештица' },
-    moth: { draw: drawMoth, foot: 10, size: 1.4, name: 'мољац' },
-    hush: { draw: drawHush, foot: 22, size: 1, name: 'Тихо-створ' }
+    kid: ch(P_KID, {}, 'дете из петог разреда', 39),
+    kidHand: ch(P_KID, { raise: true, mouth: 'open' }, 'дете које диже руку', 39),
+    kidChalk: ch(P_KID, { raise: true, chalk: true }, 'дете са кредом', 39),
+    kidReach: ch(P_KID, { reach: true, mouth: 'open' }, 'дете у скоку', 39),
+    kidSleepy: ch(P_KID, { sleepy: true }, 'поспано дете', 39),
+    kidBook: ch(P_KID, { book: true }, 'дете са свеском', 39),
+    kidNoBag: ch(P_KID, { noBag: true }, 'дете без ранца', 39),
+    luka: ch(P_LUKA, {}, 'Лука, друг из одељења', 39),
+    lukaHand: ch(P_LUKA, { raise: true }, 'Лука диже руку', 39),
+    ana: ch(P_ANA, {}, 'Ана из одељења', 39),
+    sofija: ch(P_SOFIJA, {}, 'Софија из одељења', 39),
+    teacherMath: ch(P_MATH, { chalk: true }, 'наставник Ђорђевић', 41, 1.16),
+    teacherSerbian: ch(P_MIRA, { book: true }, 'наставница Мира', 40, 1.12),
+    teacherEnglish: ch(P_ENG, { book: true }, 'наставница Ана', 40, 1.12),
+    teacherBio: ch(P_BIO, {}, 'наставница Даница', 40, 1.14),
+    teacherPe: ch(P_RASA, { raise: true }, 'наставник Раша', 41, 1.18),
+    vera: ch(P_VERA, { book: true }, 'наставница Вера', 40, 1.12),
+    milica: ch(P_MILICA, { cup: true }, 'педагог Милица', 40, 1.12),
+    mom: ch(P_MOM, {}, 'мама', 40, 1.14),
+    kiosk: ch(P_KIOSK, {}, 'продавац на киоску', 40, 1.12),
+    cat: { draw: function () { return drawCat({}); }, foot: 20, size: 1.25, name: 'Мими, риђа школска мачка' },
+    catUp: { draw: function () { return drawCat({ tailUp: true }); }, foot: 20, size: 1.25, name: 'Мими' },
+    pigeon: { draw: drawPigeon, foot: 13, size: 1.2, name: 'голуб' }
   };
 
-  /* ---------- backgrounds ---------- */
-  function starField(rnd, n, top) {
+  /* ---------- background pieces ---------- */
+  function sun(x, y, r) {
+    return circle(x, y, r * 2.2, '#fff3c4', { opacity: 0.18 }) +
+      circle(x, y, r * 1.5, '#fff3c4', { opacity: 0.22 }) +
+      circle(x, y, r, '#fff6d8');
+  }
+  function cloud(x, y, s, op) {
+    return g('translate(' + r2(x) + ',' + r2(y) + ') scale(' + r2(s) + ')',
+      ellipse(0, 0, 26, 13, '#ffffff', { opacity: op || 0.7 }) +
+      ellipse(-16, 3, 15, 9, '#ffffff', { opacity: op || 0.7 }) +
+      ellipse(16, 3, 17, 10, '#ffffff', { opacity: op || 0.7 }));
+  }
+  function clouds(rnd, n) {
     var o = '';
-    for (var i = 0; i < n; i++) {
-      var x = rnd() * W, y = rnd() * (top || 150), r = 0.6 + rnd() * 1.5;
-      o += circle(x, y, r, '#fff6d8', { opacity: r2(0.35 + rnd() * 0.55) });
+    for (var i = 0; i < n; i++) o += cloud(rnd() * W, 20 + rnd() * 50, 0.6 + rnd() * 0.6, 0.45 + rnd() * 0.35);
+    return o;
+  }
+  /* Belgrade block of flats: plaster, balconies, a satellite dish or two. */
+  function block(x, y, w, h, wall, rnd) {
+    var o = rect(x, y, w, h, wall, 4);
+    var cols = Math.max(2, Math.floor(w / 26));
+    var rows = Math.max(2, Math.floor(h / 30));
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var wx = x + 8 + c * ((w - 16) / cols);
+        var wy = y + 10 + r * ((h - 20) / rows);
+        var lit = rnd() > 0.6;
+        o += rect(wx, wy, 13, 11, lit ? '#ffe9a8' : '#9fb2d8', 2, { opacity: lit ? 0.9 : 0.75 });
+      }
+    }
+    o += rect(x - 2, y - 5, w + 4, 6, '#8a93b8', 2);
+    return o;
+  }
+  function treeGreen(x, baseY, s) {
+    return path('M' + (x - 4 * s) + ' ' + baseY + ' l ' + 8 * s + ' 0 l -2 -' + 34 * s + ' l -4 0 z', '#7a5b42') +
+      ellipse(x, baseY - 44 * s, 26 * s, 22 * s, '#5aa864') +
+      ellipse(x - 16 * s, baseY - 32 * s, 16 * s, 13 * s, '#4d9758') +
+      ellipse(x + 17 * s, baseY - 34 * s, 15 * s, 12 * s, '#66b56f');
+  }
+  function floorTiles(y, a, b) {
+    var o = rect(0, y, W, H - y, a);
+    for (var i = 0; i < 9; i++) {
+      o += path('M' + (i * 50 - 40) + ' ' + H + ' L' + (i * 46 + 30) + ' ' + y, 'none',
+        { stroke: b, 'stroke-width': 2, opacity: 0.5 });
+    }
+    o += path('M0 ' + (y + 22) + ' h400 M0 ' + (y + 44) + ' h400', 'none', { stroke: b, 'stroke-width': 2, opacity: 0.35 });
+    return o;
+  }
+  function desk(x, y, s, top, legs) {
+    return rect(x - 26 * s, y - 4 * s, 52 * s, 6 * s, top, 3) +
+      rect(x - 22 * s, y + 2 * s, 4 * s, 18 * s, legs) +
+      rect(x + 18 * s, y + 2 * s, 4 * s, 18 * s, legs);
+  }
+  function board(x, y, w, h, colour, chalkLines) {
+    var o = rect(x - 5, y - 5, w + 10, h + 10, '#8a6a4e', 4) + rect(x, y, w, h, colour || '#2f5a45', 2);
+    if (chalkLines) o += chalkLines;
+    o += rect(x, y + h, w, 5, '#a8845e', 2);
+    return o;
+  }
+  function windowWall(rnd, y, h) {
+    var o = '';
+    for (var i = 0; i < 3; i++) {
+      var x = 22 + i * 130;
+      o += rect(x, y, 96, h, '#bcd8f2', 4) +
+        rect(x, y, 96, h, 'none', 4, { stroke: '#e8e2ff', 'stroke-width': 4 }) +
+        path('M' + (x + 48) + ' ' + y + ' v' + h + ' M' + x + ' ' + (y + h / 2) + ' h96', 'none',
+          { stroke: '#e8e2ff', 'stroke-width': 3 }) +
+        path('M' + (x + 10) + ' ' + (y + h - 12) + ' l 28 -' + (h - 24), 'none',
+          { stroke: '#ffffff', 'stroke-width': 8, opacity: 0.35 });
     }
     return o;
   }
-  /* The moon sits somewhere different in every passage (seeded), so scenes that
-     share a background still do not look like the same drawing twice. */
-  function moonAt(rnd, xMin, xMax) {
-    return moon(xMin + rnd() * (xMax - xMin), 30 + rnd() * 26, 14 + rnd() * 7);
-  }
-  function moon(x, y, r) {
-    return circle(x, y, r * 2.1, '#ffe9a8', { opacity: 0.12 }) +
-      circle(x, y, r * 1.5, '#ffe9a8', { opacity: 0.14 }) +
-      circle(x, y, r, '#fff3c4') +
-      circle(x - r * 0.35, y - r * 0.2, r * 0.18, '#f2e0a6', { opacity: 0.7 }) +
-      circle(x + r * 0.3, y + r * 0.3, r * 0.12, '#f2e0a6', { opacity: 0.7 });
-  }
-  function tree(x, baseY, s, dark) {
-    var trunk = path('M' + (x - 5 * s) + ' ' + baseY + ' q ' + 4 * s + ' -' + 30 * s + ' 0 -' + 52 * s +
-      ' l ' + 10 * s + ' 0 q -' + 4 * s + ' ' + 22 * s + ' 0 ' + 52 * s + ' z', dark ? '#2a2340' : '#3b3158');
-    var crown = ellipse(x, baseY - 62 * s, 30 * s, 24 * s, dark ? '#33305c' : '#48468a', { opacity: 0.95 }) +
-      ellipse(x - 18 * s, baseY - 48 * s, 20 * s, 15 * s, dark ? '#2e2b52' : '#413f7d') +
-      ellipse(x + 19 * s, baseY - 50 * s, 18 * s, 14 * s, dark ? '#2e2b52' : '#413f7d');
-    return trunk + crown;
-  }
-  function mushroom(x, y, s, cap) {
-    return rect(x - 2.6 * s, y - 9 * s, 5.2 * s, 10 * s, '#f3e6c8', 2) +
-      ellipse(x, y - 9 * s, 9 * s, 6 * s, cap || '#e2718a') +
-      circle(x - 3 * s, y - 10 * s, 1.6 * s, '#fff2f4') +
-      circle(x + 3 * s, y - 11 * s, 1.2 * s, '#fff2f4');
-  }
-  function grassLine(y, colour) {
-    return path('M0 ' + y + ' q 40 -8 80 0 q 40 8 80 0 q 40 -8 80 0 q 40 8 80 0 q 40 -8 80 0 L400 ' + H + ' L0 ' + H + ' z', colour);
-  }
-  function pawGlow(x, y, s) {
-    return g('translate(' + x + ',' + y + ') scale(' + s + ')',
-      circle(0, 0, 9, '#9df5c6', { opacity: 0.18 }) +
-      ellipse(0, 1.5, 4, 3, '#9df5c6', { opacity: 0.9 }) +
-      circle(-3.4, -3, 1.5, '#9df5c6', { opacity: 0.9 }) +
-      circle(0, -4.4, 1.5, '#9df5c6', { opacity: 0.9 }) +
-      circle(3.4, -3, 1.5, '#9df5c6', { opacity: 0.9 }));
-  }
 
   var SKIES = {
-    night: ['#241a44', '#3c2a63', '#5a3f7e'],
-    deep: ['#141230', '#241a44', '#3a2a5c'],
-    warm: ['#3a2247', '#6b3a5a', '#a8586a'],
-    dawn: ['#5c4a86', '#c47a8a', '#ffc48a'],
-    indoor: ['#3a2a4e', '#5b3f5f', '#7d5768'],
-    ember: ['#2c1636', '#6b2545', '#b8563f']
+    morning: ['#7fc3f0', '#a9dcf5', '#ffe6bd'],
+    day: ['#5fb0ec', '#8fd0f2', '#d9f0ff'],
+    indoor: ['#cfe0f5', '#e6eefb', '#f6f2e8'],
+    warm: ['#f7c98a', '#f9dcb0', '#fff1d8'],
+    gym: ['#dfe7f5', '#eef2fa', '#f8e9cf'],
+    dusk: ['#f0a05a', '#f7c07a', '#ffe2b0']
   };
 
   function sky(kind) {
-    var c = SKIES[kind] || SKIES.night;
+    var c = SKIES[kind] || SKIES.day;
     return el('linearGradient', { id: 'sky', x1: '0', y1: '0', x2: '0', y2: '1' },
       el('stop', { offset: '0', 'stop-color': c[0] }) +
       el('stop', { offset: '0.6', 'stop-color': c[1] }) +
@@ -401,333 +382,321 @@ var ART = (function () {
   }
 
   var BACKGROUNDS = {
-    porch: function (rnd) {
-      return starField(rnd, 40) + moonAt(rnd, 292, 348) +
-        rect(0, 60, 250, 140, '#3b2c53', 6) +
-        path('M-10 62 L125 6 L262 62 z', '#4c3a68') +
-        rect(150, 108, 46, 92, '#6b4a3c', 4) +
-        circle(188, 156, 3, '#ffd76a') +
-        rect(40, 96, 40, 34, '#ffe9a8', 4, { opacity: 0.85 }) +
-        path('M60 96 v34 M40 113 h40', 'none', { stroke: '#6b4a3c', 'stroke-width': 3 }) +
-        rect(120, 190, 180, 12, '#5b4433', 3) +
-        grassLine(GROUND + 6, '#2f5a45') +
-        pawGlow(250, 188, 1) + pawGlow(288, 196, 0.9) + pawGlow(322, 186, 0.8);
-    },
-    shed: function (rnd) {
-      return starField(rnd, 26) +
-        rect(60, 66, 280, 136, '#4a3a2e', 6) +
-        path('M44 70 L200 20 L356 70 z', '#5e4a3a') +
-        rect(150, 110, 100, 92, '#6b5442', 4) +
-        path('M200 110 v92', 'none', { stroke: '#4a3a2e', 'stroke-width': 3 }) +
-        rect(80, 120, 46, 40, '#2e2440', 3) +
-        rect(276, 120, 44, 40, '#2e2440', 3) +
-        path('M96 168 l 6 -40 l 8 0 l 6 40 z', '#9aa7b8') +
-        grassLine(GROUND + 8, '#2f5a45');
-    },
-    villageDoor: function (rnd) {
-      return starField(rnd, 34) + moonAt(rnd, 30, 96) +
-        rect(70, 40, 270, 162, '#4a3a5e', 6) +
-        path('M56 46 L205 4 L354 46 z', '#5c4874') +
-        rect(170, 96, 74, 106, '#7a5540', 6) +
-        circle(232, 152, 3.4, '#ffd76a') +
-        rect(86, 96, 54, 44, '#ffe9a8', 4, { opacity: 0.9 }) +
-        path('M113 96 v44 M86 118 h54', 'none', { stroke: '#7a5540', 'stroke-width': 3 }) +
-        rect(268, 96, 52, 44, '#ffe9a8', 4, { opacity: 0.5 }) +
-        grassLine(GROUND + 8, '#2f5a45');
-    },
-    hedge: function (rnd) {
-      var o = starField(rnd, 34) + moonAt(rnd, 30, 100);
-      o += path('M0 210 q 40 -110 110 -104 q 60 6 80 -10 q 60 -46 120 4 q 50 40 90 6 L400 210 z', '#2f6b4c');
-      for (var i = 0; i < 24; i++) {
-        o += circle(rnd() * W, 110 + rnd() * 80, 8 + rnd() * 12, '#38805a', { opacity: 0.65 });
-      }
-      o += ellipse(212, 172, 26, 30, '#141a2c');
-      o += ellipse(212, 172, 20, 24, '#1d2b4a');
-      o += pawGlow(150, 200, 1) + pawGlow(180, 190, 0.9) + pawGlow(200, 182, 0.8);
-      o += grassLine(GROUND + 12, '#2f5a45');
+    /* ---------- кућа и улица ---------- */
+    kitchen: function (rnd) {
+      var o = rect(0, 0, W, H, '#f3e2c8');
+      o += rect(0, 0, W, 150, '#f7d9ae');
+      o += rect(240, 24, 130, 100, '#bcd8f2', 6) +
+        rect(240, 24, 130, 100, 'none', 6, { stroke: '#ffffff', 'stroke-width': 5 }) +
+        path('M305 24 v100 M240 74 h130', 'none', { stroke: '#ffffff', 'stroke-width': 4 });
+      o += rect(252, 60, 40, 64, '#c9a87e', 2) + rect(318, 48, 44, 76, '#b9987a', 2);
+      o += rect(10, 30, 96, 70, '#dfa06a', 5) + path('M58 30 v70 M10 65 h96', 'none', { stroke: '#c9834e', 'stroke-width': 3 });
+      o += rect(120, 44, 90, 46, '#e8b9c9', 5) + circle(146, 67, 7, '#fdf6e6') + circle(184, 67, 7, '#fdf6e6');
+      o += rect(0, 150, W, 20, '#c98d63');
+      o += rect(0, 170, W, 80, '#a86b46');
+      o += rect(30, 128, 120, 24, '#f7f2e2', 4);
+      o += g('translate(70,120) scale(1.1)', drawCup());
+      o += rect(190, 120, 34, 30, '#e2565f', 6) + rect(190, 130, 34, 8, '#ffffff', 2, { opacity: 0.3 });
       return o;
     },
-    forest: function (rnd) {
-      var o = starField(rnd, 44) + moonAt(rnd, 250, 350);
-      o += tree(40, 210, 1.1, true) + tree(360, 214, 1, true) + tree(120, 200, 0.7, true) + tree(280, 202, 0.8, true);
-      o += grassLine(GROUND + 10, '#26523f');
-      for (var i = 0; i < 10; i++) o += circle(rnd() * W, 160 + rnd() * 70, 1.6 + rnd() * 2, '#9df5c6', { opacity: 0.5 });
-      o += mushroom(56, 226, 0.9) + mushroom(348, 232, 1, '#8fa8f0');
+    street: function (rnd) {
+      var o = clouds(rnd, 3) + sun(340, 40, 20);
+      o += block(0, 60, 110, 130, '#e4d6c0', rnd) + block(120, 40, 96, 150, '#d8c3ae', rnd) +
+        block(228, 72, 84, 118, '#e8dcc6', rnd) + block(320, 54, 90, 136, '#d3c0ac', rnd);
+      o += treeGreen(60, 190, 0.7) + treeGreen(300, 192, 0.6);
+      o += rect(0, 190, W, 20, '#c3bcb0');
+      o += rect(0, 210, W, 40, '#6b6870');
+      o += path('M0 232 h40 M70 232 h40 M140 232 h40 M210 232 h40 M280 232 h40 M350 232 h40', 'none',
+        { stroke: '#f2e6c8', 'stroke-width': 3, opacity: 0.8 });
+      o += path('M0 46 q 200 14 400 0', 'none', { stroke: '#7a7a8a', 'stroke-width': 1.4, opacity: 0.7 });
       return o;
     },
-    brook: function (rnd) {
-      var o = starField(rnd, 30) + moonAt(rnd, 40, 130) + tree(30, 200, 0.9, true) + tree(370, 204, 0.9, true);
-      o += grassLine(170, '#26523f');
-      o += rect(0, 186, W, 64, '#20406b');
-      o += path('M0 186 q 60 12 120 0 q 60 -12 120 0 q 60 12 160 0 L400 250 L0 250 z', '#2b5a91', { opacity: 0.8 });
-      for (var i = 0; i < 5; i++) {
-        o += ellipse(50 + i * 78, 200 + (i % 2) * 12, 20, 9, '#6f7b96');
-        o += ellipse(50 + i * 78, 197 + (i % 2) * 12, 18, 7, '#8b96ad');
-      }
-      o += path('M20 216 q 40 6 90 0 M240 232 q 50 6 110 0', 'none', { stroke: '#a8c6ef', 'stroke-width': 2, opacity: 0.5 });
+    kiosk: function (rnd) {
+      var o = clouds(rnd, 2) + sun(60, 34, 16);
+      o += block(230, 40, 170, 150, '#ddc9b2', rnd);
+      o += rect(0, 190, W, 60, '#8f8a92');
+      o += rect(40, 80, 190, 112, '#5fa8c9', 6);
+      o += rect(30, 68, 210, 18, '#3f7f9c', 4);
+      o += rect(56, 96, 158, 60, '#e8f4fb', 3);
+      o += rect(56, 96, 158, 60, 'none', 3, { stroke: '#3f7f9c', 'stroke-width': 3 });
+      o += rect(66, 104, 32, 44, '#f0b45a', 2) + rect(104, 104, 32, 44, '#c96f7e', 2) +
+        rect(142, 104, 32, 44, '#7cc47a', 2) + rect(180, 104, 26, 44, '#8fa8f0', 2);
+      o += rect(56, 160, 158, 8, '#3f7f9c', 2);
+      o += path('M250 190 l 6 -26 l 10 0 l 6 26 z', '#7a5b42');
       return o;
     },
-    bridge: function (rnd) {
-      var o = starField(rnd, 30) + moonAt(rnd, 250, 344) + tree(24, 206, 0.9, true);
-      o += rect(0, 196, W, 54, '#20406b');
-      o += path('M40 190 q 160 -120 320 0 z', '#6b6484');
-      o += path('M40 190 q 160 -120 320 0 l -14 14 q -146 -96 -292 0 z', '#8a83a6');
-      o += path('M120 158 q 80 -46 160 0 q -80 -22 -160 0 z', '#241a3c');
-      o += grassLine(GROUND + 14, '#26523f');
-      return o;
-    },
-    ring: function (rnd) {
-      var o = starField(rnd, 40) + moonAt(rnd, 36, 120) + tree(360, 208, 1, true) + tree(30, 212, 0.8, true);
-      o += grassLine(GROUND - 6, '#26523f');
-      o += ellipse(200, 224, 150, 34, '#2f6b4c', { opacity: 0.6 });
-      for (var i = 0; i < 9; i++) {
-        var a = Math.PI * (i / 8);
-        o += mushroom(200 + Math.cos(a) * 150, 226 + Math.sin(a) * 26, 0.9, i % 2 ? '#e2718a' : '#f0b46a');
-      }
-      return o;
-    },
-    market: function (rnd) {
-      var o = starField(rnd, 34);
-      o += tree(20, 210, 0.8, true) + tree(384, 210, 0.8, true);
-      o += grassLine(GROUND + 6, '#3b3158');
-      var stalls = [[60, '#c96f7e'], [190, '#6fb0c9'], [318, '#c9a86f']];
-      for (var i = 0; i < stalls.length; i++) {
-        var x = stalls[i][0];
-        o += rect(x - 42, 132, 84, 62, '#4a3a5e', 4);
-        o += path('M' + (x - 52) + ' 132 l 20 -30 l 64 0 l 20 30 z', stalls[i][1]);
-        o += path('M' + (x - 52) + ' 132 q 13 14 26 0 q 13 14 26 0 q 13 14 26 0 q 13 14 26 0', 'none',
-          { stroke: stalls[i][1], 'stroke-width': 6 });
-        o += circle(x, 108, 4, '#ffd76a');
-      }
-      for (var j = 0; j < 8; j++) o += circle(rnd() * W, 80 + rnd() * 40, 2.4, '#ffd76a', { opacity: 0.8 });
-      return o;
-    },
-    hut: function (rnd) {
-      var o = starField(rnd, 30) + moonAt(rnd, 30, 90) + tree(370, 210, 0.9, true);
-      o += rect(96, 92, 210, 110, '#5b4b3a', 8);
-      o += path('M74 96 q 130 -78 254 0 z', '#7a5b8c');
-      o += path('M240 40 q 6 -18 -4 -26 q 16 6 12 26 z', '#cfc0f0', { opacity: 0.6 });
-      o += rect(232, 34, 18, 26, '#5b4b3a', 3);
-      o += rect(180, 128, 56, 74, '#8a6a4e', 5) + circle(226, 168, 3.4, '#ffd76a');
-      o += rect(112, 122, 48, 42, '#ffe9a8', 4, { opacity: 0.9 });
-      o += rect(254, 122, 42, 40, '#ffe9a8', 4, { opacity: 0.7 });
-      o += grassLine(GROUND + 10, '#2f5a45');
-      o += mushroom(60, 224, 1.1, '#e2718a') + mushroom(340, 230, 0.9, '#8fa8f0');
-      return o;
-    },
-    thorns: function (rnd) {
-      var o = starField(rnd, 26, 120);
-      o += rect(0, 0, W, H, '#1c1733', 0, { opacity: 0.2 });
-      var i;
-      for (i = 0; i < 7; i++) {
-        var x0 = rnd() * W;
-        o += path('M' + r2(x0) + ' 250 q ' + r2(-30 + rnd() * 60) + ' -110 ' + r2(-20 + rnd() * 40) + ' -230',
-          'none', { stroke: '#453a63', 'stroke-width': 4 + rnd() * 4, 'stroke-linecap': 'round' });
-      }
-      for (i = 0; i < 22; i++) {
-        var tx = rnd() * W, ty = rnd() * H;
-        o += path('M' + r2(tx) + ' ' + r2(ty) + ' l 6 -3 l -1 7 z', '#5e5183');
-      }
-      /* a moonlit path through the thorns, so there is always a way out */
-      o += path('M140 250 q 40 -50 60 -104 q 12 -30 8 -56', 'none',
-        { stroke: '#e8e2ff', 'stroke-width': 16, opacity: 0.12, 'stroke-linecap': 'round' });
-      for (i = 0; i < 14; i++) {
-        o += circle(rnd() * W, 120 + rnd() * 120, 1.4 + rnd() * 2, '#ffe9a8', { opacity: 0.45 });
-      }
-      o += grassLine(GROUND + 16, '#243a33');
-      return o;
-    },
-    tree: function (rnd) {
-      var o = starField(rnd, 34) + moonAt(rnd, 34, 96);
-      o += tree(330, 214, 0.8, true) + tree(40, 216, 0.7, true);
-      o += path('M150 210 q -22 -70 0 -120 q 20 -46 60 -30 q 44 18 34 62 q -10 50 6 88 z', '#4a3a2e');
-      o += ellipse(196, 128, 30, 38, '#241a2c');
-      o += ellipse(196, 128, 24, 31, '#2f2340');
-      o += ellipse(170, 66, 46, 30, '#3b3158') + ellipse(232, 74, 40, 26, '#3b3158');
-      o += grassLine(GROUND + 12, '#26523f');
-      return o;
-    },
-    gate: function (rnd) {
-      var o = starField(rnd, 30);
-      o += rect(0, 150, W, 100, '#2b2447');
-      o += rect(20, 60, 60, 150, '#4a3f70', 6) + rect(320, 60, 60, 150, '#4a3f70', 6);
-      o += path('M80 210 q 120 -190 240 0 z', '#372e5c');
-      o += path('M100 210 q 100 -160 200 0 z', '#241d42');
-      o += circle(200, 96, 20, '#ffd76a', { opacity: 0.2 }) + circle(200, 96, 11, '#ffd76a');
-      var i;
-      for (i = 0; i < 9; i++) {
-        o += path('M' + (110 + i * 22) + ' 150 q 10 -14 22 -4', 'none',
-          { stroke: '#e8e2ff', 'stroke-width': 1.6, opacity: 0.75, 'stroke-linecap': 'round' });
-      }
-      return o;
-    },
-    court: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += rect(0, 176, W, 74, '#3a2a4e');
-      o += path('M0 176 h400', 'none', { stroke: '#5b3f5f', 'stroke-width': 3 });
+    bus: function (rnd) {
+      var o = rect(0, 0, W, H, '#d8dce8');
+      o += rect(0, 0, W, 26, '#b9becf');
+      o += rect(20, 34, 110, 76, '#bcd8f2', 6) + rect(150, 34, 110, 76, '#bcd8f2', 6) + rect(280, 34, 100, 76, '#bcd8f2', 6);
+      o += path('M30 100 l 40 -56 M170 100 l 40 -56 M296 100 l 40 -56', 'none', { stroke: '#ffffff', 'stroke-width': 8, opacity: 0.4 });
+      o += rect(0, 110, W, 10, '#9aa2b8');
       var i;
       for (i = 0; i < 5; i++) {
-        var x = 24 + i * 88;
-        o += rect(x, 30, 26, 148, '#4c3a68', 4) + rect(x - 5, 24, 36, 10, '#6b4a7a', 3);
+        o += rect(24 + i * 84, 118, 8, 60, '#8f97ad', 4);
+        o += path('M' + (28 + i * 84) + ' 118 q -10 -8 0 -14', 'none', { stroke: '#c3c9d8', 'stroke-width': 3 });
       }
-      for (i = 0; i < 9; i++) {
-        o += circle(40 + i * 40, 60 + (i % 2) * 16, 8, '#ffb469', { opacity: 0.25 });
-        o += circle(40 + i * 40, 60 + (i % 2) * 16, 4.4, '#ffd76a');
+      o += rect(0, 178, W, 72, '#7f8699');
+      o += path('M0 190 h400', 'none', { stroke: '#6b7183', 'stroke-width': 3 });
+      o += rect(300, 120, 90, 70, '#c96f7e', 6, { opacity: 0.55 });
+      return o;
+    },
+    park: function (rnd) {
+      var o = clouds(rnd, 3) + sun(70, 36, 18);
+      o += rect(0, 150, W, 100, '#8ec98a');
+      o += treeGreen(50, 190, 1) + treeGreen(340, 194, 0.9) + treeGreen(200, 176, 0.6);
+      o += path('M0 214 q 120 -22 400 -4 L400 250 L0 250 z', '#d9c9a2');
+      o += rect(250, 150, 76, 10, '#a8845e', 3) + rect(256, 160, 6, 22, '#6b6870') + rect(314, 160, 6, 22, '#6b6870');
+      var i;
+      for (i = 0; i < 12; i++) o += circle(rnd() * W, 150 + rnd() * 96, 1.6 + rnd() * 2, '#ffe9a8', { opacity: 0.5 });
+      return o;
+    },
+    /* ---------- школа ---------- */
+    yard: function (rnd) {
+      var o = clouds(rnd, 3) + sun(48, 34, 18);
+      o += rect(180, 30, 220, 160, '#f0dcc0', 4);
+      o += rect(180, 30, 220, 14, '#c98d63', 3);
+      var i;
+      for (i = 0; i < 4; i++) o += rect(196 + i * 50, 56, 34, 30, '#bcd8f2', 3, { stroke: '#ffffff', 'stroke-width': 3 });
+      for (i = 0; i < 4; i++) o += rect(196 + i * 50, 100, 34, 30, '#bcd8f2', 3, { stroke: '#ffffff', 'stroke-width': 3 });
+      o += rect(250, 142, 44, 48, '#c96f7e', 4) + circle(286, 168, 3, '#ffd76a');
+      o += treeGreen(70, 186, 0.85);
+      o += rect(0, 186, W, 64, '#b9b4ab');
+      o += rect(96, 60, 8, 126, '#8f97ad') + rect(70, 54, 60, 8, '#8f97ad', 3);
+      o += rect(84, 62, 32, 22, 'none', 2, { stroke: '#ffffff', 'stroke-width': 2 });
+      o += path('M0 214 h400', 'none', { stroke: '#f2e6c8', 'stroke-width': 3, opacity: 0.7 });
+      return o;
+    },
+    hallway: function (rnd) {
+      var o = rect(0, 0, W, H, '#f2e8d8');
+      o += rect(0, 0, W, 118, '#e8dcc6');
+      o += rect(0, 112, W, 12, '#c9a87e');
+      o += floorTiles(160, '#d8c9b0', '#bfae94');
+      var i;
+      for (i = 0; i < 3; i++) {
+        var x = 30 + i * 130;
+        o += rect(x, 40, 62, 120, '#a8785a', 4) + circle(x + 52, 106, 3.4, '#ffd76a');
+        o += rect(x + 12, 52, 38, 26, '#bcd8f2', 2);
+        o += rect(x + 20, 30, 22, 10, '#f7f2e2', 2);
       }
-      o += ellipse(200, 190, 110, 16, '#7d5768', { opacity: 0.5 });
+      o += rect(300, 44, 76, 54, '#f7f2e2', 3) + path('M306 56 h64 M306 68 h64 M306 80 h44', 'none',
+        { stroke: '#b9aa92', 'stroke-width': 3 });
       return o;
     },
-    trialFire: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += rect(0, 180, W, 70, '#3a2036');
-      o += path('M120 200 q 0 -80 80 -110 q 80 30 80 110 z', '#7c2d3e');
+    classroom: function (rnd) {
+      var o = rect(0, 0, W, H, '#f6efdf');
+      o += rect(0, 0, W, 130, '#efe3cb');
+      o += board(28, 26, 200, 92, '#2f5a45',
+        path('M46 50 h60 M46 66 h96 M46 82 h44', 'none', { stroke: '#f7f4e8', 'stroke-width': 3, opacity: 0.9 }) +
+        path('M170 46 q 16 10 0 22', 'none', { stroke: '#ffe9a8', 'stroke-width': 3 }));
+      o += rect(256, 24, 122, 96, '#bcd8f2', 4) + rect(256, 24, 122, 96, 'none', 4, { stroke: '#ffffff', 'stroke-width': 5 }) +
+        path('M317 24 v96 M256 72 h122', 'none', { stroke: '#ffffff', 'stroke-width': 4 });
+      o += rect(0, 130, W, 10, '#c9a87e');
+      o += floorTiles(160, '#dfd0b4', '#c3b294');
+      o += desk(70, 210, 1, '#e8c9a0', '#a8845e') + desk(330, 214, 1, '#e8c9a0', '#a8845e');
+      return o;
+    },
+    langroom: function (rnd) {
+      var o = rect(0, 0, W, H, '#f4eee2');
+      o += rect(0, 0, W, 132, '#e6e8f2');
+      /* мапа Лондона већа од табле */
+      o += rect(30, 20, 180, 108, '#cfe4d8', 4) + rect(30, 20, 180, 108, 'none', 4, { stroke: '#8a93b8', 'stroke-width': 3 });
+      o += path('M40 96 q 40 -14 60 4 q 30 16 66 -6', 'none', { stroke: '#5fa8c9', 'stroke-width': 5 });
+      o += circle(120, 70, 5, '#c96f7e') + rect(146, 44, 8, 40, '#b9a98a', 2) + rect(142, 38, 16, 10, '#e8c98a', 2);
+      o += rect(240, 30, 130, 88, '#2f4a6b', 3) + path('M252 48 h60 M252 64 h96 M252 80 h50', 'none',
+        { stroke: '#f7f4e8', 'stroke-width': 3, opacity: 0.85 });
+      o += rect(0, 132, W, 10, '#b9a98a');
+      o += floorTiles(162, '#d6d2c4', '#bab5a4');
+      o += desk(60, 216, 0.9, '#dfe4f0', '#8a93b8') + desk(340, 214, 0.9, '#dfe4f0', '#8a93b8');
+      return o;
+    },
+    biolab: function (rnd) {
+      var o = rect(0, 0, W, H, '#eef4ec');
+      o += rect(0, 0, W, 128, '#dfeee0');
+      o += windowWall(rnd, 22, 78);
+      o += rect(0, 128, W, 10, '#a8bda8');
+      o += floorTiles(158, '#cfdccd', '#b2c3b1');
+      /* скелет у ћошку, са шкољком на глави */
+      o += g('translate(356,150) scale(0.8)',
+        rect(-3, -60, 6, 60, '#f2f2f0', 3) +
+        path('M-14 -46 h28 M-12 -36 h24 M-10 -26 h20', 'none', { stroke: '#f2f2f0', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+        circle(0, -70, 10, '#f7f7f4') + circle(-3.5, -71, 2, '#8a93b8') + circle(3.5, -71, 2, '#8a93b8') +
+        path('M-10 -80 q 10 -10 20 0 q -10 4 -20 0 z', '#f0a6b6'));
+      /* микроскоп на клупи */
+      o += desk(120, 206, 1.15, '#dfe4f0', '#8a93b8');
+      o += g('translate(120,182)',
+        rect(-14, 14, 28, 6, '#4a5a7a', 3) +
+        path('M0 14 q -12 -14 0 -26', 'none', { stroke: '#4a5a7a', 'stroke-width': 6 }) +
+        rect(-3, -22, 10, 22, '#5b6a8a', 3) + circle(6, -24, 4, '#bcd8f2'));
+      o += rect(276, 176, 44, 26, '#cfe4d8', 3) + circle(298, 189, 8, '#8ec98a');
+      return o;
+    },
+    gym: function (rnd) {
+      var o = rect(0, 0, W, H, '#f5e9d2');
+      o += rect(0, 0, W, 120, '#e8dfc8');
       var i;
-      for (i = 0; i < 12; i++) {
-        var x = 130 + rnd() * 140, y = 120 + rnd() * 76;
-        o += ellipse(x, y, 5 + rnd() * 6, 9 + rnd() * 10, '#ffb469', { opacity: 0.55 });
-      }
-      o += ellipse(200, 176, 40, 20, '#ffd76a', { opacity: 0.55 });
+      for (i = 0; i < 6; i++) o += rect(12 + i * 66, 18, 44, 74, '#bcd8f2', 3, { stroke: '#e8e2ff', 'stroke-width': 3 });
+      o += rect(0, 120, W, 12, '#c9a87e');
+      o += rect(0, 132, W, 118, '#e8c294');
+      for (i = 0; i < 6; i++) o += path('M0 ' + (150 + i * 18) + ' h400', 'none', { stroke: '#d8ab78', 'stroke-width': 2, opacity: 0.6 });
+      o += path('M40 236 q 160 -40 320 0', 'none', { stroke: '#c96f7e', 'stroke-width': 3, opacity: 0.8 });
+      o += path('M20 200 q 180 -30 360 0', 'none', { stroke: '#5fa8c9', 'stroke-width': 3, opacity: 0.7 });
+      /* козлић и струњача */
+      o += rect(268, 158, 74, 26, '#a8785a', 8) + rect(276, 184, 8, 30, '#8a6a4e') + rect(326, 184, 8, 30, '#8a6a4e');
+      o += rect(250, 214, 120, 14, '#5b8ad8', 6);
+      /* кош */
+      o += rect(44, 40, 8, 90, '#8f97ad') + rect(20, 34, 56, 8, '#8f97ad', 3) + circle(48, 52, 12, 'none', { stroke: '#f07a4e', 'stroke-width': 3 });
       return o;
     },
-    trialMirror: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += rect(0, 182, W, 68, '#332a52');
+    buffet: function (rnd) {
+      var o = rect(0, 0, W, H, '#f7ecd8');
+      o += rect(0, 0, W, 124, '#f0dfc0');
+      o += rect(30, 22, 200, 84, '#c9563f', 5) + path('M44 44 h80 M44 62 h120 M44 80 h60', 'none',
+        { stroke: '#ffe9a8', 'stroke-width': 4, opacity: 0.9 });
+      o += rect(250, 30, 128, 74, '#f7f2e2', 4);
+      o += circle(280, 56, 12, '#f0b45a') + circle(312, 56, 12, '#e2856f') + circle(344, 56, 12, '#c9a87e');
+      o += rect(262, 76, 104, 18, '#e8c294', 3);
+      o += rect(0, 124, W, 10, '#c9a87e');
+      o += floorTiles(158, '#e0cfae', '#c6b28e');
+      o += rect(20, 168, 360, 22, '#b9885e', 5) + rect(20, 190, 360, 10, '#a8785a', 3);
+      return o;
+    },
+    office: function (rnd) {
+      var o = rect(0, 0, W, H, '#f6efe4');
+      o += rect(0, 0, W, 126, '#efe0d0');
+      o += rect(232, 20, 130, 96, '#bcd8f2', 5) + rect(232, 20, 130, 96, 'none', 5, { stroke: '#ffffff', 'stroke-width': 5 }) +
+        path('M297 20 v96 M232 68 h130', 'none', { stroke: '#ffffff', 'stroke-width': 4 });
+      o += rect(24, 30, 88, 86, '#b9885e', 3);
       var i;
-      for (i = 0; i < 4; i++) {
-        var x = 34 + i * 96;
-        o += rect(x, 44, 68, 140, '#6f6aa6', 30);
-        o += rect(x + 5, 50, 58, 128, '#b7d4ee', 26, { opacity: 0.85 });
-        o += path('M' + (x + 12) + ' 160 l 22 -80', 'none', { stroke: '#ffffff', 'stroke-width': 6, opacity: 0.35 });
-      }
+      for (i = 0; i < 3; i++) o += rect(30, 38 + i * 26, 76, 18, i % 2 ? '#7cc47a' : '#c96f7e', 2);
+      o += rect(0, 126, W, 10, '#c9a87e');
+      o += floorTiles(158, '#dccbb2', '#c0ad92');
+      /* фикус */
+      o += rect(150, 176, 24, 26, '#c96f7e', 4);
+      o += ellipse(162, 160, 12, 20, '#5aa864') + ellipse(148, 150, 11, 15, '#66b56f') + ellipse(176, 152, 10, 14, '#4d9758');
+      o += rect(210, 170, 90, 8, '#b9885e', 3) + rect(216, 178, 6, 22, '#8a6a4e') + rect(288, 178, 6, 22, '#8a6a4e');
+      o += g('translate(255,162) scale(0.9)', drawCup());
       return o;
     },
-    trialAsh: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += rect(0, 180, W, 70, '#332a3e');
-      o += ellipse(200, 190, 84, 26, '#4a3f4e');
-      o += ellipse(200, 186, 60, 17, '#5e5260');
+    stairs: function (rnd) {
+      var o = clouds(rnd, 2) + sun(320, 34, 16);
+      o += rect(150, 20, 250, 170, '#f0dcc0', 4);
       var i;
-      for (i = 0; i < 16; i++) o += circle(rnd() * W, 60 + rnd() * 120, 1.4 + rnd() * 1.6, '#d8d2e4', { opacity: 0.55 });
-      o += circle(200, 178, 7, '#ffb469', { opacity: 0.85 });
-      o += circle(200, 178, 15, '#ffb469', { opacity: 0.2 });
+      for (i = 0; i < 3; i++) o += rect(176 + i * 62, 44, 40, 34, '#bcd8f2', 3, { stroke: '#ffffff', 'stroke-width': 3 });
+      o += rect(0, 186, W, 64, '#b9b4ab');
+      for (i = 0; i < 4; i++) o += rect(0, 150 + i * 14, 190 - i * 10, 16, i % 2 ? '#d8cdbc' : '#cbbfaa', 2);
+      o += treeGreen(360, 190, 0.6);
       return o;
     },
-    bedroom: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += rect(0, 0, W, 200, '#4a3a68');
-      o += rect(232, 26, 116, 96, '#1f1a3c', 8);
-      o += moon(300, 60, 14) + starField(rnd, 12, 110);
-      o += rect(226, 20, 128, 108, 'none', 8, { stroke: '#6b5a8c', 'stroke-width': 6 });
-      o += rect(0, 150, 250, 100, '#7a5b8c', 10);
-      o += rect(-10, 138, 260, 28, '#c9a8d8', 12);
-      o += ellipse(60, 152, 46, 18, '#f2e6f8');
-      o += grassLine(232, '#5b4b7a');
-      return o;
-    },
-    dawn: function (rnd) {
-      var o = rect(0, 0, W, H, 'url(#sky)');
-      o += circle(320, 96, 30, '#fff3c4', { opacity: 0.35 }) + circle(320, 96, 20, '#fff6d8');
-      o += tree(50, 210, 1, true) + tree(360, 214, 0.9, true) + tree(140, 200, 0.6, true);
-      o += grassLine(GROUND + 8, '#3f7a52');
-      o += mushroom(70, 228, 0.9) + mushroom(320, 232, 0.8, '#f0b46a');
-      return o;
-    },
-    moss: function (rnd) {
-      var o = starField(rnd, 30) + moonAt(rnd, 40, 120);
-      o += tree(350, 214, 0.9, true) + tree(24, 210, 0.8, true);
-      o += grassLine(160, '#2f6b4c');
-      o += ellipse(200, 208, 130, 40, '#3f8a5e');
-      o += ellipse(200, 202, 100, 28, '#4fa06c');
+    duskStreet: function (rnd) {
+      var o = clouds(rnd, 2) + sun(70, 60, 24);
+      o += block(0, 70, 110, 120, '#c9a888', rnd) + block(122, 52, 92, 138, '#bb9a7c', rnd) +
+        block(226, 80, 84, 110, '#caa98a', rnd) + block(318, 60, 92, 130, '#b5947a', rnd);
+      o += treeGreen(56, 190, 0.7) + treeGreen(300, 192, 0.6);
+      o += rect(0, 190, W, 20, '#b3a898');
+      o += rect(0, 210, W, 40, '#6b6470');
+      o += path('M0 232 h40 M70 232 h40 M140 232 h40 M210 232 h40 M280 232 h40 M350 232 h40', 'none',
+        { stroke: '#ffe6bd', 'stroke-width': 3, opacity: 0.8 });
       var i;
-      for (i = 0; i < 14; i++) o += circle(rnd() * W, 150 + rnd() * 90, 1.6 + rnd() * 2.4, '#9df5c6', { opacity: 0.5 });
+      for (i = 0; i < 10; i++) o += circle(rnd() * W, 60 + rnd() * 120, 1.4 + rnd() * 1.6, '#fff3c4', { opacity: 0.5 });
       return o;
     }
   };
 
   /* ---------- passage -> scene map ---------- */
-  function s(bg, cast, sky, note) {
-    return { bg: bg, cast: cast || [], sky: sky || 'night', note: note || '' };
+  function s(bg, cast, skyKind, note) {
+    return { bg: bg, cast: cast || [], sky: skyKind || 'day', note: note || '' };
   }
 
   var SCENES = {
-    porch: s('porch', ['kid'], 'night', 'дете на трему прати светлуцаве отиске шапа'),
-    shed: s('shed', ['kidLantern'], 'night', 'дете у шупи са лименом лампом'),
-    pell: s('villageDoor', ['kid', 'pell'], 'night', 'госпођа Пел на вратима'),
-    pell_lore: s('villageDoor', ['pell', 'kid'], 'night', 'госпођа Пел прича о Шупљој ноћи'),
-    garden: s('hedge', ['kid'], 'night', 'живица која дише'),
-    garden_shout: s('hedge', ['kidReach'], 'night', 'дете дозива Мими'),
-    gap_fail: s('hedge', ['kid'], 'deep', 'дете пада кроз трње'),
-    hollowwood: s('forest', ['kid'], 'night', 'Шупља шума'),
-    brook: s('brook', ['kid'], 'night', 'поток са камењем за гажење'),
-    brook_win: s('brook', ['kid'], 'night', 'дете прелази поток'),
-    brook_crit: s('brook', ['kid', 'mimiUp'], 'night', 'савршен прелазак'),
-    brook_fail: s('brook', ['kid'], 'deep', 'мокро дете у потоку'),
-    brook_wade: s('brook', ['kid'], 'deep', 'дете гази кроз хладну воду'),
-    bridge: s('bridge', ['kid', 'troll'], 'night', 'трол испод моста'),
-    troll_riddle: s('bridge', ['troll', 'kid'], 'night', 'тролова загонетка'),
-    troll_right: s('bridge', ['troll', 'kid'], 'night', 'тачан одговор'),
-    troll_wrong: s('bridge', ['troll', 'kid'], 'night', 'весео погрешан одговор'),
-    troll_gift: s('bridge', ['kid', 'troll'], 'night', 'риба на поклон тролу'),
-    troll_kind: s('bridge', ['troll', 'kid'], 'night', 'дете теши трола'),
-    ring: s('ring', ['kid', 'moth', 'moth'], 'night', 'круг мољаца'),
-    ring_win: s('ring', ['moth', 'kidReach', 'moth'], 'night', 'плес са мољцима'),
-    ring_fail: s('ring', ['kid', 'moth'], 'night', 'спотицање у плесу'),
-    ring_watch: s('ring', ['moth', 'kid', 'moth'], 'night', 'мољци глуме причу'),
-    crow_market: s('market', ['kid', 'crowHat', 'crow'], 'night', 'гаврања пијаца'),
-    market_trade: s('market', ['crowHat', 'kid'], 'night', 'трампа именом'),
-    market_haggle: s('market', ['kid', 'crowHat'], 'night', 'ценкање са гавраном'),
-    market_token: s('market', ['crow', 'kid'], 'night', 'знак пријатеља моста'),
-    market_stolen: s('market', ['kid', 'crow'], 'night', 'мапа у џепу'),
-    market_caught: s('market', ['kid', 'crow', 'crowHat'], 'night', 'гаврани не промашују'),
-    thornway: s('thorns', ['kidLantern'], 'deep', 'трновити пут'),
-    hush_seen: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ у трњу'),
-    hush_bell: s('thorns', ['kidBell', 'hush'], 'deep', 'звоно против тишине'),
-    hush_caught: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ узима нешто'),
-    witch_hut: s('hut', ['kid', 'witch'], 'night', 'чајна колиба'),
-    witch_talk: s('hut', ['witch', 'kid', 'mimi'], 'night', 'вештица прича о Мими'),
-    tea_red: s('hut', ['kid', 'witch'], 'warm', 'црвени чај'),
-    tea_green: s('hut', ['witch', 'kid'], 'night', 'зелени чај'),
-    tea_gold: s('hut', ['kid', 'witch'], 'warm', 'златни чај'),
-    hollow_tree: s('tree', ['kid'], 'night', 'шупље дрво'),
-    behind_tree: s('tree', ['kid', 'kitten'], 'night', 'маче иза дрвета'),
-    kitten_flask: s('tree', ['kid', 'kitten'], 'night', 'храњење мачета'),
-    kitten_carry: s('forest', ['kid', 'kitten'], 'night', 'дете носи маче'),
-    court_gate: s('gate', ['kid'], 'deep', 'капија девет бркова'),
-    gate_bell: s('gate', ['kidBell'], 'deep', 'звоњава пред капијом'),
-    gate_kitten: s('gate', ['kid', 'kitten'], 'deep', 'маче отвара капију'),
-    gate_thrown: s('gate', ['kid', 'courtCat'], 'deep', 'напоље, па унутра'),
-    court: s('court', ['kid', 'queen', 'courtCat'], 'indoor', 'Двор деветоструког огњишта'),
-    mochi_talk: s('court', ['mimiUp', 'kid'], 'indoor', 'Мими проговара'),
-    kitten_evidence: s('court', ['kid', 'kitten', 'queen'], 'indoor', 'маче као доказ'),
-    trial_offer: s('court', ['kid', 'queen'], 'indoor', 'понуда Двору'),
-    trials: s('court', ['kid', 'queen', 'courtCat'], 'indoor', 'искушење три шапе'),
-    trial_courage: s('trialFire', ['kid'], 'ember', 'врата ватре'),
-    trial_c_win: s('trialFire', ['kidReach'], 'ember', 'жар узет'),
-    trial_c_fail: s('trialFire', ['kid'], 'ember', 'корак уназад'),
-    trial_cunning: s('trialMirror', ['kid'], 'indoor', 'врата огледала'),
-    trial_m_win: s('trialMirror', ['kid', 'mimi'], 'indoor', 'нађено у погледу'),
-    trial_m_fail: s('trialMirror', ['kid'], 'indoor', 'осам погрешних покушаја'),
-    trial_kindness: s('trialAsh', ['kid'], 'indoor', 'врата пепела'),
-    trial_k_ember: s('trialAsh', ['kidReach'], 'ember', 'огњиште поново гори'),
-    trial_k_win: s('trialAsh', ['kid', 'courtCat'], 'ember', 'ништа за освојити'),
-    trial_k_leave: s('trialAsh', ['kid'], 'indoor', 'одлазак из собе пепела'),
-    hunt: s('thorns', ['kid', 'mimi', 'hush'], 'deep', 'тишина долази сама'),
-    end_bell: s('thorns', ['kidBell', 'hush', 'mimi'], 'deep', 'звук са корењем'),
-    end_shard: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ виђен'),
-    end_shield_win: s('thorns', ['kid', 'mimi', 'hush'], 'deep', 'дете штити Мими'),
-    end_shield_fail: s('thorns', ['kid', 'hush'], 'deep', 'није довољно, сам'),
-    end_ask_win: s('thorns', ['kid', 'hush'], 'deep', 'питање упућено тишини'),
-    aftermath: s('moss', ['kid', 'mimi', 'kitten'], 'night', 'мачје свођење рачуна'),
-    end_home: s('bedroom', ['kid', 'mimi'], 'indoor', 'удубљење у јоргану'),
-    end_stay: s('forest', ['mimiUp', 'kid'], 'night', 'стални позив'),
-    end_both: s('bedroom', ['kid', 'mimi', 'kitten'], 'indoor', 'две мачке, једна Чуварка'),
-    end_wild: s('dawn', ['kid', 'mimi'], 'dawn', 'дете које је остало до јутра'),
-    faint: s('moss', ['kid', 'mimi'], 'night', 'шума те задржи још мало')
+    /* јутро */
+    kitchen: s('kitchen', ['kidSleepy', 'mom'], 'morning', 'јутро у кухињи пре школе'),
+    pack: s('kitchen', ['kidBook'], 'morning', 'паковање ранца'),
+    snack: s('kitchen', ['mom', 'kid'], 'morning', 'бурек умотан у фолију'),
+    street: s('street', ['kid'], 'morning', 'београдска улица ујутру'),
+    kiosk: s('kiosk', ['kid', 'kiosk'], 'morning', 'киоск и нове сличице'),
+    bus: s('bus', ['kid'], 'day', 'гужва у аутобусу'),
+    bus_win: s('street', ['kidReach'], 'morning', 'излазак тачно на станици'),
+    bus_crit: s('street', ['kid', 'ana'], 'morning', 'нова другарица са виолином'),
+    bus_fail: s('street', ['kidReach'], 'morning', 'трчање назад уз брдо'),
+    bus_kind: s('bus', ['kid'], 'day', 'уступљено место у аутобусу'),
+    park: s('park', ['kid', 'catUp'], 'morning', 'пречица кроз парк'),
+    park_cat: s('park', ['kid', 'cat', 'pigeon'], 'morning', 'мачка те прати до школе'),
+
+    /* школа */
+    schoolyard: s('yard', ['kid'], 'day', 'школско двориште пуно ђака'),
+    yard_ask: s('yard', ['kid', 'luka'], 'day', 'упознавање са Луком'),
+    yard_lost: s('hallway', ['kid'], 'indoor', 'тражење учионице 12'),
+    yard_breathe: s('yard', ['kid'], 'day', 'три удаха поред коша'),
+    homeroom: s('classroom', ['vera', 'kid'], 'indoor', 'одељењска наставница Вера'),
+    hall: s('hallway', ['kid', 'luka'], 'indoor', 'ходник између часова'),
+
+    /* математика */
+    math: s('classroom', ['teacherMath', 'kid'], 'indoor', 'задатак на табли'),
+    math_win: s('classroom', ['kidChalk', 'teacherMath'], 'indoor', 'тачан одговор на табли'),
+    math_crit: s('classroom', ['kidChalk', 'teacherMath', 'luka'], 'indoor', 'два начина решавања'),
+    math_slip: s('classroom', ['kid', 'teacherMath'], 'indoor', 'сломљена креда'),
+    math_save: s('classroom', ['kidChalk', 'luka'], 'indoor', 'шапат из треће клупе'),
+    math_honest: s('classroom', ['kid', 'teacherMath'], 'indoor', 'друга шанса на табли'),
+    math_bad: s('classroom', ['teacherMath', 'kid'], 'indoor', 'уписана лоша оцена'),
+    math_called: s('classroom', ['teacherMath', 'kid'], 'indoor', 'прозван из клупе'),
+    math_lucky: s('classroom', ['kid', 'teacherMath'], 'indoor', 'погођен тачан број'),
+
+    /* српски */
+    serbian: s('classroom', ['teacherSerbian', 'kid'], 'indoor', 'читање наглас'),
+    serbian_win: s('classroom', ['kidBook', 'teacherSerbian'], 'indoor', 'прочитана строфа'),
+    serbian_crit: s('classroom', ['kidBook', 'teacherSerbian', 'ana'], 'indoor', 'позив на приредбу'),
+    serbian_fail: s('classroom', ['kid', 'teacherSerbian'], 'indoor', 'реч која се брани'),
+    serbian_extra: s('classroom', ['teacherSerbian', 'kidBook'], 'indoor', 'вежба после часа'),
+
+    /* енглески */
+    english: s('langroom', ['teacherEnglish', 'kid'], 'indoor', 'кабинет за енглески'),
+    english_win: s('langroom', ['kid', 'teacherEnglish'], 'indoor', 'кратка јасна реченица'),
+    english_crit: s('langroom', ['kidReach', 'teacherEnglish', 'luka'], 'indoor', 'сјајна сличица као доказ'),
+    english_fail: s('langroom', ['kid', 'teacherEnglish'], 'indoor', 'реченица која се заглави'),
+    english_help: s('langroom', ['luka', 'kid', 'teacherEnglish'], 'indoor', 'Лука почиње са тобом'),
+    english_bad: s('langroom', ['teacherEnglish', 'kid'], 'indoor', 'час без петице'),
+
+    /* биологија */
+    bio: s('biolab', ['teacherBio', 'kid'], 'indoor', 'кабинет са скелетом и микроскопима'),
+    bio_win: s('biolab', ['kidBook'], 'indoor', 'ћелије под микроскопом'),
+    bio_kind: s('biolab', ['kid', 'sofija', 'teacherBio'], 'indoor', 'помоћ другарици'),
+    bio_fail: s('biolab', ['kid', 'teacherBio'], 'indoor', 'мутно светло у микроскопу'),
+    bio_extra: s('biolab', ['teacherBio', 'kidBook'], 'indoor', 'пет минута после часа'),
+
+    /* физичко */
+    pe: s('gym', ['teacherPe', 'kidNoBag'], 'gym', 'фискултурна сала'),
+    pe_borrow: s('gym', ['luka', 'kidNoBag'], 'gym', 'позајмљена мајица'),
+    pe_chance: s('gym', ['kidNoBag', 'teacherPe'], 'gym', 'шанса без опреме'),
+    pe_helper: s('gym', ['kidNoBag', 'teacherPe'], 'gym', 'помоћник са струњачама'),
+    pe_vault: s('gym', ['kidNoBag', 'teacherPe'], 'gym', 'козлић и одскочна даска'),
+    pe_win: s('gym', ['kidReach', 'teacherPe'], 'gym', 'прескочен козлић'),
+    pe_crit: s('gym', ['kidReach', 'teacherPe', 'luka'], 'gym', 'сала аплаудира'),
+    pe_ok: s('gym', ['kidNoBag'], 'gym', 'уредан прескок у два дела'),
+    pe_stuck: s('gym', ['kidNoBag', 'teacherPe'], 'gym', 'заглављен на козлићу'),
+    pe_bench: s('gym', ['kidNoBag'], 'gym', 'клупа поред радијатора'),
+
+    /* велики одмор */
+    breaktime: s('yard', ['kid', 'cat', 'pigeon'], 'day', 'велики одмор у дворишту'),
+    break_ball: s('yard', ['kidReach', 'luka'], 'day', 'фудбал на бетону'),
+    break_food: s('stairs', ['kid'], 'day', 'бурек на степеницама'),
+    break_share: s('stairs', ['kid', 'sofija'], 'day', 'подељен бурек'),
+    break_buffet: s('buffet', ['kid'], 'indoor', 'ред за буфет'),
+    break_cat: s('yard', ['kid', 'catUp', 'pigeon'], 'day', 'мачка која зна распоред'),
+    break_study: s('hallway', ['kidBook'], 'indoor', 'понављање на прозорској дасци'),
+
+    /* пауза и крај */
+    faint: s('office', ['milica', 'kid'], 'indoor', 'чаша воде код педагога'),
+    end_day: s('hallway', ['kid', 'vera'], 'indoor', 'последње звоно'),
+    end_cat: s('yard', ['kid', 'cat'], 'dusk', 'испраћај на школској капији'),
+    end_star: s('duskStreet', ['kid'], 'dusk', 'пут кући после савршеног дана'),
+    end_friends: s('yard', ['luka', 'kid', 'ana'], 'dusk', 'екипа испред школе'),
+    end_clean: s('duskStreet', ['kid'], 'dusk', 'чист картон првог дана'),
+    end_ok: s('kitchen', ['mom', 'kid'], 'warm', 'свеска на кухињском столу'),
+    end_rough: s('kitchen', ['kidSleepy', 'mom'], 'warm', 'чај после тешког дана')
   };
 
   /* ---------- layout ---------- */
-  /* Characters stand on the ground line, spread across the frame, the biggest
-     one slightly forward so the group never looks like a police line-up. */
   var SLOTS = {
     1: [[200, 1]],
     2: [[132, 1], [278, 0.92]],
@@ -741,41 +710,39 @@ var ART = (function () {
     var out = '';
     for (var i = 0; i < n; i++) {
       var name = cast[i];
-      var ch = CHARACTERS[name];
-      if (!ch) continue;
+      var c = CHARACTERS[name];
+      if (!c) continue;
       var x = slots[i][0];
       var scale = slots[i][1];
       var y = GROUND + 14 + (i === 1 && n === 3 ? 10 : 0);
-      /* moths and small things float a little above the ground */
-      if (name === 'moth') y -= 60 + rnd() * 30;
-      if (name === 'hush') y -= 6;
-      var sc = scale * (ch.size || 1);
+      if (name === 'pigeon') { y -= 2; x += 26; }
+      var sc = scale * (c.size || 1);
       out += el('ellipse', {
         cx: r2(x), cy: r2(y - 26 * sc), rx: r2(40 * sc), ry: r2(46 * sc),
-        fill: '#ffe9a8', opacity: 0.09
+        fill: '#fff6d8', opacity: 0.14
       });
       out += el('ellipse', {
         cx: r2(x), cy: r2(y + 2), rx: r2(26 * sc), ry: r2(6 * sc),
-        fill: '#000000', opacity: 0.22
+        fill: '#000000', opacity: 0.16
       });
-      out += g('translate(' + r2(x) + ',' + r2(y - ch.foot * sc) + ') scale(' + r2(sc) + ')', ch.draw());
+      out += g('translate(' + r2(x) + ',' + r2(y - c.foot * sc) + ') scale(' + r2(sc) + ')', c.draw());
     }
     return out;
   }
 
   function sceneFor(id) {
-    return SCENES[id] || s('forest', ['kid'], 'night', 'шума');
+    return SCENES[id] || s('hallway', ['kid'], 'indoor', 'школски ходник');
   }
 
   function svg(id) {
     var scene = sceneFor(id);
     var rnd = rngFrom(seedOf(id));
-    var bg = (BACKGROUNDS[scene.bg] || BACKGROUNDS.forest)(rnd);
+    var bg = (BACKGROUNDS[scene.bg] || BACKGROUNDS.hallway)(rnd);
     var defs = el('defs', null,
       sky(scene.sky) +
       el('radialGradient', { id: 'vig', cx: '0.5', cy: '0.5', r: '0.75' },
-        el('stop', { offset: '0.55', 'stop-color': '#000000', 'stop-opacity': '0' }) +
-        el('stop', { offset: '1', 'stop-color': '#000000', 'stop-opacity': '0.4' })));
+        el('stop', { offset: '0.55', 'stop-color': '#3a2a1e', 'stop-opacity': '0' }) +
+        el('stop', { offset: '1', 'stop-color': '#3a2a1e', 'stop-opacity': '0.28' })));
     var inner = defs +
       rect(0, 0, W, H, 'url(#sky)') +
       bg +
@@ -794,8 +761,8 @@ var ART = (function () {
     var scene = sceneFor(id);
     var who = [];
     for (var i = 0; i < scene.cast.length; i++) {
-      var ch = CHARACTERS[scene.cast[i]];
-      if (ch && who.indexOf(ch.name) === -1) who.push(ch.name);
+      var c = CHARACTERS[scene.cast[i]];
+      if (c && who.indexOf(c.name) === -1) who.push(c.name);
     }
     var base = 'Слика: ' + (scene.note || 'сцена из приче');
     return who.length ? base + ' (' + who.join(', ') + ')' : base;
