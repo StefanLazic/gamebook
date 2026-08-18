@@ -149,3 +149,19 @@ passage immediately.
 `aspect-ratio`), the skip button is a full-width 44px target, and the HUD now wraps so nothing
 overflows at 320px. Checked at 320 / 390 / 834 px: no horizontal scrolling, no console errors,
 choices stay ≥ 52px tall.
+
+## 2026-08-18 — Art polish pass
+
+Reviewed every rendered scene and fixed what read badly:
+
+- A soft warm light pool now sits behind each character, so Мими's dark fur and the kid's
+  blue pyjamas stay readable on the night backgrounds.
+- The moon is placed by the passage seed inside a safe band per background, so scenes that
+  share a location no longer look like the same drawing twice.
+- The troll is drawn smaller than the child's eyeline — friendly, not looming.
+- A reaching child now raises both arms (it read as lopsided), and there is a `kidBell`
+  pose holding Барнабијево звонце for the three passages where the bell is rung.
+- The Тихо-створ is lighter, more translucent, with a wider smile and rosier cheeks; it is
+  also drawn smaller, and it no longer stands between the reader and the child.
+- The trnoviti пут got brighter thorns, fireflies and a moonlit path through the middle, so
+  the darkest scene in the book still shows a way out.

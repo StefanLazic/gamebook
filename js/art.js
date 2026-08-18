@@ -161,12 +161,14 @@ var ART = (function () {
     if (opts.reach) {
       o += path('M-13 -8 q -12 -6 -16 -16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(-30, -25, 4.6, skin);
+      o += path('M13 -8 q 12 -6 16 -16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += circle(30, -25, 4.6, skin);
     } else {
       o += path('M-13 -8 q -10 6 -10 16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
       o += circle(-23, 9, 4.6, skin);
+      o += path('M13 -8 q 10 6 10 16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
+      o += circle(23, 9, 4.6, skin);
     }
-    o += path('M13 -8 q 10 6 10 16', 'none', { stroke: py, 'stroke-width': 8, 'stroke-linecap': 'round' });
-    o += circle(23, 9, 4.6, skin);
     /* head */
     o += g('translate(0,-32)',
       ellipse(0, 0, 17, 17.5, skin) +
@@ -183,7 +185,19 @@ var ART = (function () {
       circle(-9, 4.5, 0.7, '#c98d63') + circle(-6, 6.5, 0.6, '#c98d63') +
       circle(9, 4.5, 0.7, '#c98d63') + circle(6, 6.5, 0.6, '#c98d63'));
     if (opts.lantern) o += drawLantern(28, 4, 0.85);
+    if (opts.bell) o += drawBell(-34, -32, 0.9);
     return o;
+  }
+
+  function drawBell(x, y, s) {
+    return g('translate(' + x + ',' + y + ') scale(' + s + ')',
+      circle(0, 0, 13, '#ffe9a8', { opacity: 0.25 }) +
+      path('M-7 4 q 0 -12 7 -12 q 7 0 7 12 z', '#e8b53d') +
+      rect(-8, 4, 16, 3, '#c9a227', 1.5) +
+      circle(0, 8.6, 2.4, '#c9a227') +
+      circle(0, -13, 2, '#c9a227') +
+      path('M-14 -6 q -4 -4 -3 -9 M14 -6 q 4 -4 3 -9', 'none',
+        { stroke: '#ffe9a8', 'stroke-width': 1.6, opacity: 0.8, 'stroke-linecap': 'round' }));
   }
 
   function drawLantern(x, y, s) {
@@ -294,11 +308,11 @@ var ART = (function () {
   /* Тихо-створ: a shy, soft, voiceless thing. Sleepy eyes, no teeth, no claws. */
   function drawHush() {
     var o = '';
-    o += path('M-30 20 q -6 -46 30 -46 q 36 0 30 46 q -30 8 -60 0 z', '#c3bcd8', { opacity: 0.85 });
-    o += path('M-22 14 q -4 -32 22 -32 q 26 0 22 32 q -22 6 -44 0 z', '#dcd7ee', { opacity: 0.8 });
-    o += sleepyEye(-9, -6, 4.4) + sleepyEye(9, -6, 4.4);
-    o += smile(-4, 4, 4, '#6c6489');
-    o += blush(-16, 2, 4.5, '#b4a8d8') + blush(16, 2, 4.5, '#b4a8d8');
+    o += path('M-30 20 q -6 -46 30 -46 q 36 0 30 46 q -30 8 -60 0 z', '#cfc9e4', { opacity: 0.75 });
+    o += path('M-22 14 q -4 -32 22 -32 q 26 0 22 32 q -22 6 -44 0 z', '#e8e4f6', { opacity: 0.75 });
+    o += sleepyEye(-9, -6, 4.6) + sleepyEye(9, -6, 4.6);
+    o += smile(-6, 3, 6, '#6c6489');
+    o += blush(-16, 2, 5.4, '#ff9db1') + blush(16, 2, 5.4, '#ff9db1');
     o += path('M-28 20 q 8 10 14 0 q 8 10 14 0 q 8 10 14 0', 'none', { stroke: '#c3bcd8', 'stroke-width': 3, opacity: 0.8, 'stroke-linecap': 'round' });
     return o;
   }
@@ -307,18 +321,19 @@ var ART = (function () {
     kid: { draw: drawKid, foot: 39, name: 'дете у пиџами' },
     kidLantern: { draw: function () { return drawKid({ lantern: true }); }, foot: 39, name: 'дете са лампом' },
     kidReach: { draw: function () { return drawKid({ reach: true, mouth: 'open' }); }, foot: 39, name: 'дете које се пружа' },
+    kidBell: { draw: function () { return drawKid({ reach: true, bell: true }); }, foot: 39, name: 'дете које звони звонцетом' },
     mimi: { draw: function () { return drawMimi({}); }, foot: 20, size: 1.25, name: 'Мими, црна мачка са белом чарапицом' },
     mimiUp: { draw: function () { return drawMimi({ tailUp: true }); }, foot: 20, size: 1.25, name: 'Мими' },
     kitten: { draw: function () { return drawKitten({ tailUp: true }); }, foot: 13, size: 1.25, name: 'маче Земичка' },
     queen: { draw: function () { return drawQueen({}); }, foot: 22, size: 1.2, name: 'мачја краљица' },
     courtCat: { draw: function () { return drawCourtCat({}); }, foot: 17, size: 1.2, name: 'дворска мачка' },
     pell: { draw: drawPell, foot: 38, name: 'госпођа Пел' },
-    troll: { draw: drawTroll, foot: 36, name: 'маховински трол' },
+    troll: { draw: drawTroll, foot: 36, size: 0.85, name: 'маховински трол' },
     crow: { draw: drawCrow, foot: 24, name: 'гавран у прслуку' },
     crowHat: { draw: function () { return drawCrow({ hat: true }); }, foot: 24, name: 'гавран са шеширом' },
     witch: { draw: drawWitch, foot: 40, name: 'чајна вештица' },
     moth: { draw: drawMoth, foot: 10, size: 1.4, name: 'мољац' },
-    hush: { draw: drawHush, foot: 22, size: 1.15, name: 'Тихо-створ' }
+    hush: { draw: drawHush, foot: 22, size: 1, name: 'Тихо-створ' }
   };
 
   /* ---------- backgrounds ---------- */
@@ -329,6 +344,11 @@ var ART = (function () {
       o += circle(x, y, r, '#fff6d8', { opacity: r2(0.35 + rnd() * 0.55) });
     }
     return o;
+  }
+  /* The moon sits somewhere different in every passage (seeded), so scenes that
+     share a background still do not look like the same drawing twice. */
+  function moonAt(rnd, xMin, xMax) {
+    return moon(xMin + rnd() * (xMax - xMin), 30 + rnd() * 26, 14 + rnd() * 7);
   }
   function moon(x, y, r) {
     return circle(x, y, r * 2.1, '#ffe9a8', { opacity: 0.12 }) +
@@ -382,7 +402,7 @@ var ART = (function () {
 
   var BACKGROUNDS = {
     porch: function (rnd) {
-      return starField(rnd, 40) + moon(320, 46, 22) +
+      return starField(rnd, 40) + moonAt(rnd, 292, 348) +
         rect(0, 60, 250, 140, '#3b2c53', 6) +
         path('M-10 62 L125 6 L262 62 z', '#4c3a68') +
         rect(150, 108, 46, 92, '#6b4a3c', 4) +
@@ -405,7 +425,7 @@ var ART = (function () {
         grassLine(GROUND + 8, '#2f5a45');
     },
     villageDoor: function (rnd) {
-      return starField(rnd, 34) + moon(60, 40, 16) +
+      return starField(rnd, 34) + moonAt(rnd, 30, 96) +
         rect(70, 40, 270, 162, '#4a3a5e', 6) +
         path('M56 46 L205 4 L354 46 z', '#5c4874') +
         rect(170, 96, 74, 106, '#7a5540', 6) +
@@ -416,7 +436,7 @@ var ART = (function () {
         grassLine(GROUND + 8, '#2f5a45');
     },
     hedge: function (rnd) {
-      var o = starField(rnd, 34) + moon(52, 40, 17);
+      var o = starField(rnd, 34) + moonAt(rnd, 30, 100);
       o += path('M0 210 q 40 -110 110 -104 q 60 6 80 -10 q 60 -46 120 4 q 50 40 90 6 L400 210 z', '#2f6b4c');
       for (var i = 0; i < 24; i++) {
         o += circle(rnd() * W, 110 + rnd() * 80, 8 + rnd() * 12, '#38805a', { opacity: 0.65 });
@@ -428,7 +448,7 @@ var ART = (function () {
       return o;
     },
     forest: function (rnd) {
-      var o = starField(rnd, 44) + moon(340, 40, 18);
+      var o = starField(rnd, 44) + moonAt(rnd, 250, 350);
       o += tree(40, 210, 1.1, true) + tree(360, 214, 1, true) + tree(120, 200, 0.7, true) + tree(280, 202, 0.8, true);
       o += grassLine(GROUND + 10, '#26523f');
       for (var i = 0; i < 10; i++) o += circle(rnd() * W, 160 + rnd() * 70, 1.6 + rnd() * 2, '#9df5c6', { opacity: 0.5 });
@@ -436,7 +456,7 @@ var ART = (function () {
       return o;
     },
     brook: function (rnd) {
-      var o = starField(rnd, 30) + moon(70, 40, 15) + tree(30, 200, 0.9, true) + tree(370, 204, 0.9, true);
+      var o = starField(rnd, 30) + moonAt(rnd, 40, 130) + tree(30, 200, 0.9, true) + tree(370, 204, 0.9, true);
       o += grassLine(170, '#26523f');
       o += rect(0, 186, W, 64, '#20406b');
       o += path('M0 186 q 60 12 120 0 q 60 -12 120 0 q 60 12 160 0 L400 250 L0 250 z', '#2b5a91', { opacity: 0.8 });
@@ -448,7 +468,7 @@ var ART = (function () {
       return o;
     },
     bridge: function (rnd) {
-      var o = starField(rnd, 30) + moon(330, 38, 16) + tree(24, 206, 0.9, true);
+      var o = starField(rnd, 30) + moonAt(rnd, 250, 344) + tree(24, 206, 0.9, true);
       o += rect(0, 196, W, 54, '#20406b');
       o += path('M40 190 q 160 -120 320 0 z', '#6b6484');
       o += path('M40 190 q 160 -120 320 0 l -14 14 q -146 -96 -292 0 z', '#8a83a6');
@@ -457,7 +477,7 @@ var ART = (function () {
       return o;
     },
     ring: function (rnd) {
-      var o = starField(rnd, 40) + moon(56, 44, 15) + tree(360, 208, 1, true) + tree(30, 212, 0.8, true);
+      var o = starField(rnd, 40) + moonAt(rnd, 36, 120) + tree(360, 208, 1, true) + tree(30, 212, 0.8, true);
       o += grassLine(GROUND - 6, '#26523f');
       o += ellipse(200, 224, 150, 34, '#2f6b4c', { opacity: 0.6 });
       for (var i = 0; i < 9; i++) {
@@ -483,7 +503,7 @@ var ART = (function () {
       return o;
     },
     hut: function (rnd) {
-      var o = starField(rnd, 30) + moon(48, 38, 14) + tree(370, 210, 0.9, true);
+      var o = starField(rnd, 30) + moonAt(rnd, 30, 90) + tree(370, 210, 0.9, true);
       o += rect(96, 92, 210, 110, '#5b4b3a', 8);
       o += path('M74 96 q 130 -78 254 0 z', '#7a5b8c');
       o += path('M240 40 q 6 -18 -4 -26 q 16 6 12 26 z', '#cfc0f0', { opacity: 0.6 });
@@ -497,22 +517,28 @@ var ART = (function () {
     },
     thorns: function (rnd) {
       var o = starField(rnd, 26, 120);
-      o += rect(0, 0, W, H, '#1c1733', { opacity: 0.25 });
+      o += rect(0, 0, W, H, '#1c1733', { opacity: 0.2 });
       var i;
       for (i = 0; i < 7; i++) {
         var x0 = rnd() * W;
         o += path('M' + r2(x0) + ' 250 q ' + r2(-30 + rnd() * 60) + ' -110 ' + r2(-20 + rnd() * 40) + ' -230',
-          'none', { stroke: '#2b2340', 'stroke-width': 4 + rnd() * 4, 'stroke-linecap': 'round' });
+          'none', { stroke: '#453a63', 'stroke-width': 4 + rnd() * 4, 'stroke-linecap': 'round' });
       }
       for (i = 0; i < 22; i++) {
         var tx = rnd() * W, ty = rnd() * H;
-        o += path('M' + r2(tx) + ' ' + r2(ty) + ' l 6 -3 l -1 7 z', '#3c3358');
+        o += path('M' + r2(tx) + ' ' + r2(ty) + ' l 6 -3 l -1 7 z', '#5e5183');
+      }
+      /* a moonlit path through the thorns, so there is always a way out */
+      o += path('M140 250 q 40 -50 60 -104 q 12 -30 8 -56', 'none',
+        { stroke: '#e8e2ff', 'stroke-width': 16, opacity: 0.12, 'stroke-linecap': 'round' });
+      for (i = 0; i < 14; i++) {
+        o += circle(rnd() * W, 120 + rnd() * 120, 1.4 + rnd() * 2, '#ffe9a8', { opacity: 0.45 });
       }
       o += grassLine(GROUND + 16, '#243a33');
       return o;
     },
     tree: function (rnd) {
-      var o = starField(rnd, 34) + moon(48, 38, 15);
+      var o = starField(rnd, 34) + moonAt(rnd, 34, 96);
       o += tree(330, 214, 0.8, true) + tree(40, 216, 0.7, true);
       o += path('M150 210 q -22 -70 0 -120 q 20 -46 60 -30 q 44 18 34 62 q -10 50 6 88 z', '#4a3a2e');
       o += ellipse(196, 128, 30, 38, '#241a2c');
@@ -607,7 +633,7 @@ var ART = (function () {
       return o;
     },
     moss: function (rnd) {
-      var o = starField(rnd, 30) + moon(60, 44, 16);
+      var o = starField(rnd, 30) + moonAt(rnd, 40, 120);
       o += tree(350, 214, 0.9, true) + tree(24, 210, 0.8, true);
       o += grassLine(160, '#2f6b4c');
       o += ellipse(200, 208, 130, 40, '#3f8a5e');
@@ -652,11 +678,11 @@ var ART = (function () {
     market_haggle: s('market', ['kid', 'crowHat'], 'night', 'ценкање са гавраном'),
     market_token: s('market', ['crow', 'kid'], 'night', 'знак пријатеља моста'),
     market_stolen: s('market', ['kid', 'crow'], 'night', 'мапа у џепу'),
-    market_caught: s('market', ['crow', 'kid', 'crowHat'], 'night', 'гаврани не промашују'),
+    market_caught: s('market', ['kid', 'crow', 'crowHat'], 'night', 'гаврани не промашују'),
     thornway: s('thorns', ['kidLantern'], 'deep', 'трновити пут'),
     hush_seen: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ у трњу'),
-    hush_bell: s('thorns', ['kidReach', 'hush'], 'deep', 'звоно против тишине'),
-    hush_caught: s('thorns', ['hush', 'kid'], 'deep', 'Тихо-створ узима нешто'),
+    hush_bell: s('thorns', ['kidBell', 'hush'], 'deep', 'звоно против тишине'),
+    hush_caught: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ узима нешто'),
     witch_hut: s('hut', ['kid', 'witch'], 'night', 'чајна колиба'),
     witch_talk: s('hut', ['witch', 'kid', 'mimi'], 'night', 'вештица прича о Мими'),
     tea_red: s('hut', ['kid', 'witch'], 'warm', 'црвени чај'),
@@ -667,7 +693,7 @@ var ART = (function () {
     kitten_flask: s('tree', ['kid', 'kitten'], 'night', 'храњење мачета'),
     kitten_carry: s('forest', ['kid', 'kitten'], 'night', 'дете носи маче'),
     court_gate: s('gate', ['kid'], 'deep', 'капија девет бркова'),
-    gate_bell: s('gate', ['kidReach'], 'deep', 'звоњава пред капијом'),
+    gate_bell: s('gate', ['kidBell'], 'deep', 'звоњава пред капијом'),
     gate_kitten: s('gate', ['kid', 'kitten'], 'deep', 'маче отвара капију'),
     gate_thrown: s('gate', ['kid', 'courtCat'], 'deep', 'напоље, па унутра'),
     court: s('court', ['kid', 'queen', 'courtCat'], 'indoor', 'Двор деветоструког огњишта'),
@@ -686,7 +712,7 @@ var ART = (function () {
     trial_k_win: s('trialAsh', ['kid', 'courtCat'], 'ember', 'ништа за освојити'),
     trial_k_leave: s('trialAsh', ['kid'], 'indoor', 'одлазак из собе пепела'),
     hunt: s('thorns', ['kid', 'mimi', 'hush'], 'deep', 'тишина долази сама'),
-    end_bell: s('thorns', ['kidReach', 'hush', 'mimi'], 'deep', 'звук са корењем'),
+    end_bell: s('thorns', ['kidBell', 'hush', 'mimi'], 'deep', 'звук са корењем'),
     end_shard: s('thorns', ['kid', 'hush'], 'deep', 'Тихо-створ виђен'),
     end_shield_win: s('thorns', ['kid', 'mimi', 'hush'], 'deep', 'дете штити Мими'),
     end_shield_fail: s('thorns', ['kid', 'hush'], 'deep', 'није довољно, сам'),
@@ -724,6 +750,10 @@ var ART = (function () {
       if (name === 'moth') y -= 60 + rnd() * 30;
       if (name === 'hush') y -= 6;
       var sc = scale * (ch.size || 1);
+      out += el('ellipse', {
+        cx: r2(x), cy: r2(y - 26 * sc), rx: r2(40 * sc), ry: r2(46 * sc),
+        fill: '#ffe9a8', opacity: 0.09
+      });
       out += el('ellipse', {
         cx: r2(x), cy: r2(y + 2), rx: r2(26 * sc), ry: r2(6 * sc),
         fill: '#000000', opacity: 0.22
