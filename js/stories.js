@@ -5,6 +5,7 @@
  *
  * Story shape:
  *   { id, title, subtitle, emoji, blurb, tags: [..], cover, howtoId, legacySaveKey,
+ *     playText, replayText, continueText,
  *     statDefs: [{ key, icon, label, start, min, max }],
  *     guard: function (state, id) -> id | null,
  *     start, passages }

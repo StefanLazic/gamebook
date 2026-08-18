@@ -530,7 +530,7 @@
       var cont = document.createElement('button');
       cont.className = 'btn btn-ghost';
       cont.type = 'button';
-      cont.textContent = 'Настави где си стао';
+      cont.textContent = st.continueText || 'Настави где си стао';
       cont.addEventListener('click', function () { startGame(st, saved); });
       body.appendChild(cont);
     }

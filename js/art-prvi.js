@@ -284,7 +284,7 @@
     likovno: s('ucionicaPrvi', ['milaBook', 'tara'], 'indoor', 'бојице и празан папир'),
     lik_klupa: s('ucionicaPrvi', ['milaBook', 'taraBook', 'jovana'], 'indoor', 'цртеж две девојчице у клупи'),
     lik_macka: s('ucionicaPrvi', ['milaBook', 'jovana'], 'indoor', 'цртеж риђе мачке за пано'),
-    lik_ulica: s('ucionicaPrvi', ['milaBook', 'jovana'], 'indoor', 'цртеж семафора и мaме'),
+    lik_ulica: s('ucionicaPrvi', ['milaBook', 'jovana'], 'indoor', 'цртеж семафора и маме'),
     lik_voda: s('ucionicaPrvi', ['mila', 'vuk'], 'indoor', 'просута чаша воде за бојење'),
     lik_voda_izvini: s('ucionicaPrvi', ['mila', 'vuk', 'jovana'], 'indoor', 'заједничко брисање клупе'),
     lik_voda_krije: s('ucionicaPrvi', ['jovana', 'mila', 'vuk'], 'indoor', 'мокри папири испод клупе'),

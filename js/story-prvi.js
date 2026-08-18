@@ -86,6 +86,7 @@ var STORY_PRVI = (function () {
     cover: 'dvoriste',
     playText: 'Пробуди Милу',
     replayText: 'Пробуди Милу поново ↺',
+    continueText: 'Настави где си стала',
     statDefs: [
       { key: 'letters', icon: '🔤', label: 'Слова', start: 3 },
       { key: 'courage', icon: '🔥', label: 'Смелост', start: 3 },
