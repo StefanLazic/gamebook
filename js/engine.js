@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  var SAVE_KEY = 'whiskerlight.save.sr.v2';
-  var STAT_LABELS = { courage: 'Hrabrost', cunning: 'Lukavost', kindness: 'Dobrota', health: 'Zdravlje' };
+  var SAVE_KEY = 'whiskerlight.save.sr-cyr.v3';
+  var STAT_LABELS = { courage: 'Храброст', cunning: 'Лукавост', kindness: 'Доброта', health: 'Здравље' };
 
   var el = {
     titleScreen: document.getElementById('title-screen'),
@@ -14,6 +14,9 @@
     startBtn: document.getElementById('start-btn'),
     continueBtn: document.getElementById('continue-btn'),
     passage: document.getElementById('passage'),
+    scene: document.getElementById('scene'),
+    sceneArt: document.getElementById('scene-art'),
+    skipBtn: document.getElementById('skip-btn'),
     choices: document.getElementById('choices'),
     rollArea: document.getElementById('roll-area'),
     pack: document.getElementById('pack'),
@@ -134,21 +137,85 @@
     }
   }
 
-  function paragraph(text, cls) {
+  // Every word gets its own <span> so the story can be read into view word by
+  // word; `into` collects them in reading order for the reveal timer.
+  function words(target, text, into) {
+    var chunks = String(text).split(/(\s+)/);
+    for (var i = 0; i < chunks.length; i++) {
+      if (!chunks[i]) continue;
+      if (/^\s+$/.test(chunks[i])) {
+        target.appendChild(document.createTextNode(chunks[i]));
+        continue;
+      }
+      var w = document.createElement('span');
+      w.className = 'w';
+      w.textContent = chunks[i];
+      target.appendChild(w);
+      if (into) into.push(w);
+    }
+  }
+
+  function paragraph(text, cls, into) {
     var p = document.createElement('p');
     if (cls) p.className = cls;
     // Very small inline markup: *emphasis*
     var parts = String(text).split(/\*/);
     for (var i = 0; i < parts.length; i++) {
+      if (!parts[i]) continue;
       if (i % 2 === 1) {
         var em = document.createElement('em');
-        em.textContent = parts[i];
+        words(em, parts[i], into);
         p.appendChild(em);
-      } else if (parts[i]) {
-        p.appendChild(document.createTextNode(parts[i]));
+      } else {
+        words(p, parts[i], into);
       }
     }
     return p;
+  }
+
+  /* ---------- picture first, then the text, word by word ---------- */
+  var reveal = { timer: 0, startDelay: 0, queue: [], done: true };
+
+  function reducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  function finishReveal() {
+    if (reveal.timer) { clearInterval(reveal.timer); reveal.timer = 0; }
+    if (reveal.startDelay) { clearTimeout(reveal.startDelay); reveal.startDelay = 0; }
+    for (var i = 0; i < reveal.queue.length; i++) reveal.queue[i].classList.add('on');
+    reveal.queue = [];
+    reveal.done = true;
+    el.skipBtn.classList.add('hidden');
+    el.choices.classList.remove('waiting');
+  }
+
+  function startReveal(queue) {
+    reveal.queue = queue;
+    if (!queue.length || reducedMotion()) { finishReveal(); return; }
+    reveal.done = false;
+    el.choices.classList.add('waiting');
+    el.skipBtn.classList.remove('hidden');
+    var i = 0;
+    var step = function () {
+      if (i >= queue.length) { finishReveal(); return; }
+      queue[i].classList.add('on');
+      i++;
+    };
+    // the picture gets a beat of its own before the words start arriving
+    reveal.startDelay = setTimeout(function () {
+      reveal.startDelay = 0;
+      step();
+      reveal.timer = setInterval(step, 65);
+    }, 550);
+  }
+
+  function renderScene(id) {
+    if (typeof ART === 'undefined') return;
+    el.sceneArt.innerHTML = ART.svg(id);
+    el.scene.classList.remove('appear');
+    void el.scene.offsetWidth;
+    el.scene.classList.add('appear');
   }
 
   function textOf(value) {
@@ -171,25 +238,30 @@
     renderPack();
     save();
 
+    finishReveal();
     el.rollArea.classList.add('hidden');
     el.rollArea.textContent = '';
     el.passage.textContent = '';
     el.choices.textContent = '';
     el.app.classList.toggle('ending', !!p.ending);
 
+    renderScene(id);
+
+    var queue = [];
     var h = document.createElement('h2');
-    h.textContent = textOf(p.title);
+    words(h, textOf(p.title), queue);
     el.passage.appendChild(h);
 
     var body = textOf(p.text) || [];
     for (var i = 0; i < body.length; i++) {
-      el.passage.appendChild(paragraph(textOf(body[i])));
+      el.passage.appendChild(paragraph(textOf(body[i]), null, queue));
     }
-    if (extraNote) el.passage.appendChild(paragraph(extraNote, 'note'));
+    if (extraNote) el.passage.appendChild(paragraph(extraNote, 'note', queue));
 
     renderChoices(p);
+    startReveal(queue);
 
-    el.passage.focus();
+    el.passage.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -227,7 +299,7 @@
           if (choice.needItem) {
             var need = document.createElement('span');
             need.className = 'tag';
-            need.textContent = 'treba: ' + choice.needItem;
+            need.textContent = 'треба: ' + choice.needItem;
             btn.appendChild(need);
           }
         } else {
@@ -242,7 +314,7 @@
       var again = document.createElement('button');
       again.className = 'choice';
       again.type = 'button';
-      again.textContent = 'Počni novu noć ↺';
+      again.textContent = 'Почни нову ноћ ↺';
       again.addEventListener('click', restart);
       el.choices.appendChild(again);
     }
@@ -282,7 +354,7 @@
 
     var caption = document.createElement('p');
     caption.className = 'roll-math';
-    caption.textContent = 'Bacam 2k6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') protiv ' + roll.dc;
+    caption.textContent = 'Бацам 2к6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') против ' + roll.dc;
     el.rollArea.appendChild(caption);
     el.rollArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -308,13 +380,13 @@
     var fumble = (a === 1 && b === 1);
     var win = crit || (!fumble && total >= roll.dc);
 
-    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' protiv ' + roll.dc;
+    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' против ' + roll.dc;
 
     var line = document.createElement('p');
     line.className = 'roll-line ' + (win ? 'success' : 'fail');
-    line.textContent = crit ? 'Dve šestice \u2014 savršeno bacanje!'
-      : fumble ? 'Dve jedinice. Ma nemoj\u2026'
-      : win ? 'Uspeh!' : 'Ne ide ti naruku\u2026';
+    line.textContent = crit ? 'Две шестице \u2014 савршено бацање!'
+      : fumble ? 'Две јединице. Ма немој\u2026'
+      : win ? 'Успех!' : 'Не иде ти наруку\u2026';
     el.rollArea.appendChild(line);
 
     var target = win ? roll.success : roll.fail;
@@ -328,7 +400,7 @@
     cont.className = 'btn btn-primary';
     cont.type = 'button';
     cont.style.marginTop = '.75rem';
-    cont.textContent = 'Dalje';
+    cont.textContent = 'Даље';
     cont.addEventListener('click', function () {
       busy = false;
       goto(target);
@@ -357,6 +429,10 @@
   function openHowto() { el.howto.classList.remove('hidden'); el.howtoClose.focus(); }
   function closeHowto() { el.howto.classList.add('hidden'); }
 
+  el.skipBtn.addEventListener('click', finishReveal);
+  el.passage.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
+  el.scene.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
+
   el.startBtn.addEventListener('click', function () { clearSave(); startGame(null); });
   el.menuBtn.addEventListener('click', openMenu);
   el.menuResume.addEventListener('click', closeMenu);
@@ -371,6 +447,9 @@
     if (el.gameScreen.classList.contains('hidden') ||
         !el.menu.classList.contains('hidden') ||
         !el.howto.classList.contains('hidden')) return;
+    if (!reveal.done && (e.key === ' ' || e.key === 'Enter' || /^[1-9]$/.test(e.key))) {
+      finishReveal(); e.preventDefault(); return;
+    }
     if (/^[1-9]$/.test(e.key)) {
       var buttons = el.choices.querySelectorAll('.choice:not([disabled])');
       var target = buttons[parseInt(e.key, 10) - 1];

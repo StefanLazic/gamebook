@@ -98,3 +98,94 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
   stuck screens, and all five endings still reachable — *Udubljenje u jorganu*, *Stalni
   poziv*, *Dve mačke, jedna Čuvarka, bez objašnjenja*, *Šuma te zadrži još malo*, *Dete koje
   je ostalo do jutra*.
+
+## 2026-08-18 — Ćirilica (Serbian Cyrillic)
+
+- Younger readers learn **ћирилица** first, so every player-visible string was transliterated
+  from Serbian Latin to Cyrillic: `js/story.js` (all 73 passages, choices and item names),
+  `index.html` (title screen, how-to-play sheet, HUD tooltips, menu) and the engine's runtime
+  strings (dice captions, "Успех!", "треба: …", "Даље", stat labels
+  Храброст / Лукавост / Доброта / Здравље).
+- Transliteration was done with a script rather than by hand so digraphs (`nj → њ`,
+  `lj → љ`, `dž → џ`) are handled uniformly; the whole corpus was checked for false digraphs
+  (e.g. *надживети*-type words) and there were none.
+- Only prose was converted: passage ids, flags and stat keys stay ASCII, so the engine code
+  is unchanged. Item names double as identifiers, so they were converted everywhere at once
+  and re-verified by the link validator.
+- The game title is now **Бркосјај** (was *Whiskerlight*).
+- Save key moved to `whiskerlight.save.sr-cyr.v3` — a Latin-era save cannot half-load into
+  the Cyrillic story, whose item identifiers differ.
+- Validator: 73 passages, 17 items, every `to:` / roll target resolves, no dead ends, no
+  Latin leftovers in player-visible text.
+
+## 2026-08-18 — Слике за сваку сцену + текст реч по реч
+
+**Pictures.** New `js/art.js` draws one illustration per passage as an SVG scene, in the
+browser. No image files and no network calls, so the static site stays a three-file drop.
+
+- *Consistent characters.* Every character is one drawing function with a fixed palette:
+  Мими is always the same dark-violet cat with one white sock, mint-green anime eyes and a
+  teal collar; Земичка is always the small cream kitten; the queen is the white cat with the
+  gold crown; the crows always wear the same red waistcoat; Брамблвика always has teal hair
+  and a cup. Because scenes only name characters (`['kid', 'mimi']`), the same character can
+  never come out as a different-looking animal in another passage.
+- *Anime-ish, never scary.* Big round eyes with two highlights, blush, round smiles, soft
+  round bodies. The troll is a smiling mossy dumpling; the Тихо-створ is a soft lilac cloud
+  with sleepy eyes, no teeth and no claws.
+- *Backgrounds* per location (porch, shed, village door, hedge, forest, brook, bridge,
+  mushroom ring, crow market, tea hut, thornway, hollow tree, court gate, court, three trial
+  rooms, bedroom, dawn, moss) with six sky palettes. Random details (stars, sparks, ash) come
+  from a seeded RNG keyed to the passage id, so a passage always looks identical on revisit.
+- All 73 passages are mapped; a check script asserts scene coverage in both directions.
+- Each `<svg>` carries `role="img"` and a Serbian `aria-label` describing the scene.
+
+**Reading.** The picture appears first (a 0.5s fade/zoom), then the words arrive one by one
+(65 ms apart, blur-to-sharp), and only when the passage has finished do the choices appear.
+Impatient readers can tap the picture, tap the text, tap the „Додирни за цео текст ⏩“ button
+or press Space/Enter/1–9 to show everything at once. `prefers-reduced-motion` shows the whole
+passage immediately.
+
+**Mobile.** The scene is a fluid 8:5 box (with a padding-box fallback for browsers without
+`aspect-ratio`), the skip button is a full-width 44px target, and the HUD now wraps so nothing
+overflows at 320px. Checked at 320 / 390 / 834 px: no horizontal scrolling, no console errors,
+choices stay ≥ 52px tall.
+
+## 2026-08-18 — Art polish pass
+
+Reviewed every rendered scene and fixed what read badly:
+
+- A soft warm light pool now sits behind each character, so Мими's dark fur and the kid's
+  blue pyjamas stay readable on the night backgrounds.
+- The moon is placed by the passage seed inside a safe band per background, so scenes that
+  share a location no longer look like the same drawing twice.
+- The troll is drawn smaller than the child's eyeline — friendly, not looming.
+- A reaching child now raises both arms (it read as lopsided), and there is a `kidBell`
+  pose holding Барнабијево звонце for the three passages where the bell is rung.
+- The Тихо-створ is lighter, more translucent, with a wider smile and rosier cheeks; it is
+  also drawn smaller, and it no longer stands between the reader and the child.
+- The trnoviti пут got brighter thorns, fireflies and a moonlit path through the middle, so
+  the darkest scene in the book still shows a way out.
+
+## 2026-08-18 — Validation and docs
+
+- Fixed one bad `rect()` call in the thornway background (options object landed in the `rx`
+  slot and Chromium logged an SVG attribute error).
+- 25 randomised playthroughs driven through the real page in headless Chromium at 390×780:
+  64 passages visited, four endings reached (`end_home`, `end_stay`, `end_wild`, `end_both`;
+  `faint` only triggers when Здравље hits 0), every passage rendered an `<svg>` scene, zero
+  console errors.
+- Layout asserted at 320 / 390 / 834 px: no horizontal scrolling, choices ≥ 52 px tall,
+  the scene box keeps its 8:5 ratio, choices stay hidden until the text has been read in.
+- „Како се игра“ gained a „🖼️ Слике и текст“ section explaining the picture-then-words pace
+  and how to skip it; README updated for the Cyrillic script, the art module and the new
+  controls.
+
+## 2026-08-18 — Review follow-ups
+
+- `startReveal` no longer calls `finishReveal` on a queue it has not adopted yet; the new
+  queue is assigned first, so the reduced-motion / empty-passage path really does show the
+  whole passage.
+- The promised "picture first" beat is now real: the words start 550 ms after the passage is
+  built (matching the scene fade), instead of the first word slipping in after 10 ms. The
+  pending delay is cleared when the reader skips or navigates away.
+- Dropped an identity `translate(0,0)` from the cat drawing helper.
