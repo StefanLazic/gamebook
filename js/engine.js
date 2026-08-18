@@ -5,8 +5,8 @@
 (function () {
   'use strict';
 
-  var SAVE_KEY = 'whiskerlight.save.sr.v2';
-  var STAT_LABELS = { courage: 'Hrabrost', cunning: 'Lukavost', kindness: 'Dobrota', health: 'Zdravlje' };
+  var SAVE_KEY = 'whiskerlight.save.sr-cyr.v3';
+  var STAT_LABELS = { courage: 'Храброст', cunning: 'Лукавост', kindness: 'Доброта', health: 'Здравље' };
 
   var el = {
     titleScreen: document.getElementById('title-screen'),
@@ -227,7 +227,7 @@
           if (choice.needItem) {
             var need = document.createElement('span');
             need.className = 'tag';
-            need.textContent = 'treba: ' + choice.needItem;
+            need.textContent = 'треба: ' + choice.needItem;
             btn.appendChild(need);
           }
         } else {
@@ -242,7 +242,7 @@
       var again = document.createElement('button');
       again.className = 'choice';
       again.type = 'button';
-      again.textContent = 'Počni novu noć ↺';
+      again.textContent = 'Почни нову ноћ ↺';
       again.addEventListener('click', restart);
       el.choices.appendChild(again);
     }
@@ -282,7 +282,7 @@
 
     var caption = document.createElement('p');
     caption.className = 'roll-math';
-    caption.textContent = 'Bacam 2k6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') protiv ' + roll.dc;
+    caption.textContent = 'Бацам 2к6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') против ' + roll.dc;
     el.rollArea.appendChild(caption);
     el.rollArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -308,13 +308,13 @@
     var fumble = (a === 1 && b === 1);
     var win = crit || (!fumble && total >= roll.dc);
 
-    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' protiv ' + roll.dc;
+    caption.textContent = a + ' + ' + b + ' + ' + bonus + ' = ' + total + ' против ' + roll.dc;
 
     var line = document.createElement('p');
     line.className = 'roll-line ' + (win ? 'success' : 'fail');
-    line.textContent = crit ? 'Dve šestice \u2014 savršeno bacanje!'
-      : fumble ? 'Dve jedinice. Ma nemoj\u2026'
-      : win ? 'Uspeh!' : 'Ne ide ti naruku\u2026';
+    line.textContent = crit ? 'Две шестице \u2014 савршено бацање!'
+      : fumble ? 'Две јединице. Ма немој\u2026'
+      : win ? 'Успех!' : 'Не иде ти наруку\u2026';
     el.rollArea.appendChild(line);
 
     var target = win ? roll.success : roll.fail;
@@ -328,7 +328,7 @@
     cont.className = 'btn btn-primary';
     cont.type = 'button';
     cont.style.marginTop = '.75rem';
-    cont.textContent = 'Dalje';
+    cont.textContent = 'Даље';
     cont.addEventListener('click', function () {
       busy = false;
       goto(target);

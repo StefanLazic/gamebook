@@ -98,3 +98,22 @@ phones, bottom sheet menu, `prefers-reduced-motion` support.
   stuck screens, and all five endings still reachable — *Udubljenje u jorganu*, *Stalni
   poziv*, *Dve mačke, jedna Čuvarka, bez objašnjenja*, *Šuma te zadrži još malo*, *Dete koje
   je ostalo do jutra*.
+
+## 2026-08-18 — Ćirilica (Serbian Cyrillic)
+
+- Younger readers learn **ћирилица** first, so every player-visible string was transliterated
+  from Serbian Latin to Cyrillic: `js/story.js` (all 73 passages, choices and item names),
+  `index.html` (title screen, how-to-play sheet, HUD tooltips, menu) and the engine's runtime
+  strings (dice captions, "Успех!", "треба: …", "Даље", stat labels
+  Храброст / Лукавост / Доброта / Здравље).
+- Transliteration was done with a script rather than by hand so digraphs (`nj → њ`,
+  `lj → љ`, `dž → џ`) are handled uniformly; the whole corpus was checked for false digraphs
+  (e.g. *надживети*-type words) and there were none.
+- Only prose was converted: passage ids, flags and stat keys stay ASCII, so the engine code
+  is unchanged. Item names double as identifiers, so they were converted everywhere at once
+  and re-verified by the link validator.
+- The game title is now **Бркосјај** (was *Whiskerlight*).
+- Save key moved to `whiskerlight.save.sr-cyr.v3` — a Latin-era save cannot half-load into
+  the Cyrillic story, whose item identifiers differ.
+- Validator: 73 passages, 17 items, every `to:` / roll target resolves, no dead ends, no
+  Latin leftovers in player-visible text.

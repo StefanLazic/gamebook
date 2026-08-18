@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1b1033">
-<meta name="description" content="Whiskerlight — mala fantastična knjiga-igra o detetu koje traži nestalu mačku Mimi.">
-<title>Whiskerlight — knjiga-igra</title>
+<meta name="description" content="Бркосјај — мала фантастична књига-игра о детету које тражи несталу мачку Мими.">
+<title>Бркосјај — књига-игра</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
 </head>
@@ -15,83 +15,83 @@
 <main id="app">
   <!-- Naslovni ekran -->
   <section id="title-screen" class="screen">
-    <button id="howto-btn" class="btn btn-ghost howto-top">❓ Kako se igra — kocke i osobine</button>
+    <button id="howto-btn" class="btn btn-ghost howto-top">❓ Како се игра — коцке и особине</button>
     <div class="title-art" aria-hidden="true">🐈‍⬛</div>
-    <h1 class="title">Whisker<span>light</span></h1>
-    <p class="subtitle">Mala fantastična knjiga-igra o izgubljenoj mački,<br>hrabrom detetu i jednoj vrlo čudnoj noći.</p>
-    <button id="start-btn" class="btn btn-primary">Počni potragu</button>
-    <button id="continue-btn" class="btn btn-ghost hidden">Nastavi</button>
-    <p class="credits">Baci kocke. Biraj. Pronađi Mimi.</p>
+    <h1 class="title">Брко<span>сјај</span></h1>
+    <p class="subtitle">Мала фантастична књига-игра о изгубљеној мачки,<br>храбром детету и једној врло чудној ноћи.</p>
+    <button id="start-btn" class="btn btn-primary">Почни потрагу</button>
+    <button id="continue-btn" class="btn btn-ghost hidden">Настави</button>
+    <p class="credits">Баци коцке. Бирај. Пронађи Мими.</p>
   </section>
 
   <!-- Ekran igre -->
   <section id="game-screen" class="screen hidden">
     <header id="hud">
-      <div class="stat" title="Hrabrost"><span class="stat-icon">🔥</span><span id="stat-courage">3</span></div>
-      <div class="stat" title="Lukavost"><span class="stat-icon">🦊</span><span id="stat-cunning">3</span></div>
-      <div class="stat" title="Dobrota"><span class="stat-icon">💛</span><span id="stat-kindness">3</span></div>
-      <div class="stat" title="Zdravlje"><span class="stat-icon">❤️</span><span id="stat-health">5</span></div>
-      <button id="menu-btn" class="icon-btn" aria-label="Meni">☰</button>
+      <div class="stat" title="Храброст"><span class="stat-icon">🔥</span><span id="stat-courage">3</span></div>
+      <div class="stat" title="Лукавост"><span class="stat-icon">🦊</span><span id="stat-cunning">3</span></div>
+      <div class="stat" title="Доброта"><span class="stat-icon">💛</span><span id="stat-kindness">3</span></div>
+      <div class="stat" title="Здравље"><span class="stat-icon">❤️</span><span id="stat-health">5</span></div>
+      <button id="menu-btn" class="icon-btn" aria-label="Мени">☰</button>
     </header>
 
     <div id="passage-wrap">
       <article id="passage" tabindex="-1"></article>
       <div id="roll-area" class="hidden"></div>
-      <nav id="choices" aria-label="Izbori"></nav>
+      <nav id="choices" aria-label="Избори"></nav>
     </div>
 
-    <footer id="pack" aria-label="Predmeti"></footer>
+    <footer id="pack" aria-label="Предмети"></footer>
   </section>
 </main>
 
-<div id="menu" class="sheet hidden" role="dialog" aria-modal="true" aria-label="Meni">
+<div id="menu" class="sheet hidden" role="dialog" aria-modal="true" aria-label="Мени">
   <div class="sheet-inner">
-    <h2>Meni</h2>
-    <button id="menu-resume" class="btn btn-ghost">Nastavi igru</button>
-    <button id="menu-howto" class="btn btn-ghost">Kako se igra</button>
-    <button id="menu-restart" class="btn btn-ghost">Počni noć iznova</button>
-    <p class="menu-note">Napredak se automatski čuva na ovom uređaju.</p>
+    <h2>Мени</h2>
+    <button id="menu-resume" class="btn btn-ghost">Настави игру</button>
+    <button id="menu-howto" class="btn btn-ghost">Како се игра</button>
+    <button id="menu-restart" class="btn btn-ghost">Почни ноћ изнова</button>
+    <p class="menu-note">Напредак се аутоматски чува на овом уређају.</p>
   </div>
 </div>
 
 <div id="howto" class="sheet hidden" role="dialog" aria-modal="true" aria-labelledby="howto-title">
   <div class="sheet-inner sheet-scroll">
-    <h2 id="howto-title">Kako se igra</h2>
+    <h2 id="howto-title">Како се игра</h2>
 
-    <p>Ovo je knjiga-igra: čitaš deo priče i biraš šta ćeš da uradiš. Neki izbori su sigurni,
-      a neki traže <strong>bacanje kocki</strong>.</p>
+    <p>Ово је књига-игра: читаш део приче и бираш шта ћеш да урадиш. Неки избори су сигурни,
+      а неки траже <strong>бацање коцки</strong>.</p>
 
-    <h3>🎲 Kocke</h3>
-    <p>Bacaju se <strong>dve šestostrane kocke (2k6)</strong>, pa se njihov zbir sabira sa
-      osobinom koju izbor koristi. Rezultat se poredi sa <strong>težinom (TB)</strong> koja
-      piše na dugmetu, na primer <span class="tag">Hrabrost 8+</span>.</p>
-    <p class="formula">kocka + kocka + osobina ≥ težina → uspeh</p>
+    <h3>🎲 Коцке</h3>
+    <p>Бацају се <strong>две шестостране коцке (2к6)</strong>, па се њихов збир сабира са
+      особином коју избор користи. Резултат се пореди са <strong>тежином (ТБ)</strong> која
+      пише на дугмету, на пример <span class="tag">Храброст 8+</span>.</p>
+    <p class="formula">коцка + коцка + особина ≥ тежина → успех</p>
     <ul>
-      <li><strong>Dve šestice</strong> — vrhunski uspeh, uvek prolazi i ponekad otvara poseban ishod.</li>
-      <li><strong>Dve jedinice</strong> — uvek neuspeh, koliko god da si dobar.</li>
-      <li>Neki predmeti u rancu daju <strong>bonus</strong> na bacanje.</li>
+      <li><strong>Две шестице</strong> — врхунски успех, увек пролази и понекад отвара посебан исход.</li>
+      <li><strong>Две јединице</strong> — увек неуспех, колико год да си добар.</li>
+      <li>Неки предмети у ранцу дају <strong>бонус</strong> на бацање.</li>
     </ul>
 
-    <h3>⭐ Osobine</h3>
-    <p>Osobine su tvoj bonus na kocke — što je osobina veća, to lakše uspevaš u tom tipu izazova.
-      Postupci u priči ih dižu ili spuštaju.</p>
+    <h3>⭐ Особине</h3>
+    <p>Особине су твој бонус на коцке — што је особина већа, то лакше успеваш у том типу изазова.
+      Поступци у причи их дижу или спуштају.</p>
     <ul class="stat-legend">
-      <li><span class="stat-icon">🔥</span> <strong>Hrabrost</strong> — jurnuti, skočiti, suprotstaviti se.</li>
-      <li><span class="stat-icon">🦊</span> <strong>Lukavost</strong> — dosetiti se, prevariti, provući se.</li>
-      <li><span class="stat-icon">💛</span> <strong>Dobrota</strong> — pomoći, umiriti, steći prijatelja.</li>
-      <li><span class="stat-icon">❤️</span> <strong>Zdravlje</strong> — koliko još izdržavaš. Ako padne na 0, noć se završava na svoj način.</li>
+      <li><span class="stat-icon">🔥</span> <strong>Храброст</strong> — јурнути, скочити, супротставити се.</li>
+      <li><span class="stat-icon">🦊</span> <strong>Лукавост</strong> — досетити се, преварити, провући се.</li>
+      <li><span class="stat-icon">💛</span> <strong>Доброта</strong> — помоћи, умирити, стећи пријатеља.</li>
+      <li><span class="stat-icon">❤️</span> <strong>Здравље</strong> — колико још издржаваш. Ако падне на 0, ноћ се завршава на свој начин.</li>
     </ul>
 
-    <h3>🏆 Pobeda i poraz</h3>
-    <p>Uspeh vodi ka boljem, sigurnijem putu. Neuspeh <em>nije</em> kraj igre — priča skreće
-      u stranu, obično uz gubitak zdravlja ili predmeta, i ide dalje. Postoji više završetaka:
-      koji ćeš dobiti zavisi od tvojih izbora, osobina i predmeta koje si sakupio.</p>
+    <h3>🏆 Победа и пораз</h3>
+    <p>Успех води ка бољем, сигурнијем путу. Неуспех <em>није</em> крај игре — прича скреће
+      у страну, обично уз губитак здравља или предмета, и иде даље. Постоји више завршетака:
+      који ћеш добити зависи од твојих избора, особина и предмета које си сакупио.</p>
 
-    <h3>📱 Kontrole</h3>
-    <p>Dodirni izbor da ga odabereš. Na računaru možeš i tasterima <strong>1–9</strong>,
-      a <strong>Esc</strong> zatvara prozore. Napredak se čuva sam.</p>
+    <h3>📱 Контроле</h3>
+    <p>Додирни избор да га одабереш. На рачунару можеш и тастерима <strong>1–9</strong>,
+      а <strong>Есц</strong> затвара прозоре. Напредак се чува сам.</p>
 
-    <button id="howto-close" class="btn btn-primary">Jasno mi je!</button>
+    <button id="howto-close" class="btn btn-primary">Јасно ми је!</button>
   </div>
 </div>
 

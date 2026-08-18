@@ -14,842 +14,842 @@ var STORY = {
     /* ---------- Act I: Thimbledown ---------- */
 
     porch: {
-      title: 'Rupa u obliku mačke',
+      title: 'Рупа у облику мачке',
       text: [
-        'Mimi je nestala otkako je izašao mesec, a mesec je sada već baš, baš visoko.',
-        'Imaš jedanaest godina, još si u donjem delu pidžame i imaš tačno jedan plan: da pronađeš svoju mačku pre nego što se selo probudi i svi počnu da govore reč *verovatno*.',
-        'Njena činija za hranu stoji netaknuta. Udubljenje na jorganu gde spava je hladno. Na stepeniku trema vidi se jedan jedini čađavi otisak šape koji jedva primetno svetluca, kao da je neko prosuo zvezdu pa je loše počistio.'
+        'Мими је нестала откако је изашао месец, а месец је сада већ баш, баш високо.',
+        'Имаш једанаест година, још си у доњем делу пиџаме и имаш тачно један план: да пронађеш своју мачку пре него што се село пробуди и сви почну да говоре реч *вероватно*.',
+        'Њена чинија за храну стоји нетакнута. Удубљење на јоргану где спава је хладно. На степенику трема види се један једини чађави отисак шапе који једва приметно светлуца, као да је неко просуо звезду па је лоше почистио.'
       ],
       choices: [
-        { text: 'Najpre zgrabi potrepštine iz baštenske šupe.', to: 'shed' },
-        { text: 'Pokucaj na vrata gospođe Pel — ona nikad ne spava.', to: 'pell' },
-        { text: 'Prati svetlucave tragove pravo u baštu.', to: 'garden' }
+        { text: 'Најпре зграби потрепштине из баштенске шупе.', to: 'shed' },
+        { text: 'Покуцај на врата госпође Пел — она никад не спава.', to: 'pell' },
+        { text: 'Прати светлуцаве трагове право у башту.', to: 'garden' }
       ]
     },
 
     shed: {
-      title: 'Šupa puna korisnog đubreta',
+      title: 'Шупа пуна корисног ђубрета',
       text: [
-        'Šupa miriše na listove paradajza i staru kišu. Uzimaš limenu lampu sa klimavom drškom i trakicu sušene ribe iz paketića koji tata krije od tebe.',
-        'Na izlazu umalo ne zapneš za baštensku lopatu, koja *sigurno* nije tamo gde si je ostavio. Zemlja ispod vrata šupe raskopana je iznutra.'
+        'Шупа мирише на листове парадајза и стару кишу. Узимаш лимену лампу са климавом дршком и тракицу сушене рибе из пакетића који тата крије од тебе.',
+        'На излазу умало не запнеш за баштенску лопату, која *сигурно* није тамо где си је оставио. Земља испод врата шупе раскопана је изнутра.'
       ],
-      firstVisitEffects: { items: ['🏮 Limena lampa', '🐟 Suva riba'], flags: { supplied: true } },
+      firstVisitEffects: { items: ['🏮 Лимена лампа', '🐟 Сува риба'], flags: { supplied: true } },
       choices: [
-        { text: 'Prati tragove u baštu.', to: 'garden' },
-        { text: 'Usput skokni do vrata gospođe Pel.', to: 'pell', notFlag: 'metPell' }
+        { text: 'Прати трагове у башту.', to: 'garden' },
+        { text: 'Успут скокни до врата госпође Пел.', to: 'pell', notFlag: 'metPell' }
       ]
     },
 
     pell: {
-      title: 'Gospođa Pel, koja nikad ne spava',
+      title: 'Госпођа Пел, која никад не спава',
       text: [
-        'Gospođa Pel otvara vrata pre nego što stigneš da pokucaš. Ima devedeset i jednu godinu i plete nešto sa mnogo, mnogo previše rukava.',
-        '„Crna mačka, bela čarapica, puna mišljenja?“ kaže. „Da. Prošla je kroz živicu na dnu tvoje bašte. Mačke to rade, u Šupljim noćima. Većina se vrati.“',
-        'Utiskuje ti u ruku malo mesingano zvonce. „To je bilo od mog Barnabija. Pozvoni njime tamo gde zvonjava zvuči *pogrešno*, pa ćeš znati da si stigao.“'
+        'Госпођа Пел отвара врата пре него што стигнеш да покуцаш. Има деведесет и једну годину и плете нешто са много, много превише рукава.',
+        '„Црна мачка, бела чарапица, пуна мишљења?“ каже. „Да. Прошла је кроз живицу на дну твоје баште. Мачке то раде, у Шупљим ноћима. Већина се врати.“',
+        'Утискује ти у руку мало месингано звонце. „То је било од мог Барнабија. Позвони њиме тамо где звоњава звучи *погрешно*, па ћеш знати да си стигао.“'
       ],
-      firstVisitEffects: { items: ['🔔 Barnabijevo zvono'], flags: { metPell: true }, stats: { kindness: 1 } },
+      firstVisitEffects: { items: ['🔔 Барнабијево звоно'], flags: { metPell: true }, stats: { kindness: 1 } },
       choices: [
-        { text: '„Šta je to Šuplja noć?“', to: 'pell_lore' },
-        { text: 'Zahvali joj i potrči u baštu.', to: 'garden' }
+        { text: '„Шта је то Шупља ноћ?“', to: 'pell_lore' },
+        { text: 'Захвали јој и потрчи у башту.', to: 'garden' }
       ]
     },
 
     pell_lore: {
-      title: 'Šta zna gospođa Pel',
+      title: 'Шта зна госпођа Пел',
       text: [
-        '„Jednom godišnje živice se istanje“, kaže ona, „a šuma s druge strane seti se da je nekad bila veća od sveta. Mačke su pozvane. Deca se *trpe*.“',
-        '„Tri stvari čuvaju dete tamo napolju: hrabrost, lukavost i to da budeš iskreno fin prema stvarima sa previše očiju. Ponesi sve tri. Ne prihvataj prečice od bilo koga sa lampom sjajnijom od tvoje.“',
-        'Vraća se pletenju. Primećuješ da su dodatni rukavi mačje veličine.'
+        '„Једном годишње живице се истање“, каже она, „а шума с друге стране сети се да је некад била већа од света. Мачке су позване. Деца се *трпе*.“',
+        '„Три ствари чувају дете тамо напољу: храброст, лукавост и то да будеш искрено фин према стварима са превише очију. Понеси све три. Не прихватај пречице од било кога са лампом сјајнијом од твоје.“',
+        'Враћа се плетењу. Примећујеш да су додатни рукави мачје величине.'
       ],
       firstVisitEffects: { stats: { cunning: 1 }, flags: { warned: true } },
       choices: [
-        { text: 'Kreni ka baštenskoj živici.', to: 'garden' },
-        { text: 'Svraćaj do šupe po potrepštine.', to: 'shed', notFlag: 'supplied' }
+        { text: 'Крени ка баштенској живици.', to: 'garden' },
+        { text: 'Свраћај до шупе по потрепштине.', to: 'shed', notFlag: 'supplied' }
       ]
     },
 
     garden: {
-      title: 'Živica koja diše',
+      title: 'Живица која дише',
       text: [
-        'Na dnu bašte glogova živica radi nešto što živice nikako ne bi smele da rade: udiše.',
-        'Otisci šapa marširaju pravo do otvora koji je jedva dovoljno širok za mačku, a onda staju. Kroz njega vidiš travu koja je pogrešne nijanse srebra i čuješ kako šuma diše nazad.',
-        'Otvor je mačje veličine. Ti si, na veliku žalost, dečje veličine.'
+        'На дну баште глогова живица ради нешто што живице никако не би смеле да раде: удише.',
+        'Отисци шапа марширају право до отвора који је једва довољно широк за мачку, а онда стају. Кроз њега видиш траву која је погрешне нијансе сребра и чујеш како шума дише назад.',
+        'Отвор је мачје величине. Ти си, на велику жалост, дечје величине.'
       ],
       choices: [
-        { text: 'Provuci se kroz trnoviti otvor.',
+        { text: 'Провуци се кроз трновити отвор.',
           roll: { stat: 'cunning', dc: 7, success: 'hollowwood', fail: 'gap_fail', failEffects: { stats: { health: -1 } } } },
-        { text: 'Prvo vikni Mimino ime u tamu.', to: 'garden_shout' },
-        { text: 'Vrati se po potrepštine.', to: 'shed', notFlag: 'supplied' }
+        { text: 'Прво викни Мимино име у таму.', to: 'garden_shout' },
+        { text: 'Врати се по потрепштине.', to: 'shed', notFlag: 'supplied' }
       ]
     },
 
     garden_shout: {
-      title: 'Imena putuju',
+      title: 'Имена путују',
       text: [
-        '„MIMI!“',
-        'Šuma odgovara sa stotinu sitnih glasova, i svi ti glasovi ti učtivo vraćaju *Mimi*, kao razred koji ponavlja tešku reč za diktat. Negde daleko nešto ogromno prestaje da žvaće kako bi oslušnulo.',
-        'Imaš snažan osećaj da si upravo celoj šumi ispričao svoja posla. S vedrije strane, živica uzdahne i otvori se malo šire, kao da je impresionirana tvojom nepristojnošću.'
+        '„МИМИ!“',
+        'Шума одговара са стотину ситних гласова, и сви ти гласови ти учтиво враћају *Мими*, као разред који понавља тешку реч за диктат. Негде далеко нешто огромно престаје да жваће како би ослушнуло.',
+        'Имаш снажан осећај да си управо целој шуми испричао своја посла. С ведрије стране, живица уздахне и отвори се мало шире, као да је импресионирана твојом непристојношћу.'
       ],
       firstVisitEffects: { stats: { courage: 1 }, flags: { shouted: true } },
       choices: [
-        { text: 'Prođi dok je široko.', to: 'hollowwood' }
+        { text: 'Прођи док је широко.', to: 'hollowwood' }
       ]
     },
 
     gap_fail: {
-      title: 'Trnje ima svoje mišljenje',
+      title: 'Трње има своје мишљење',
       text: [
-        'Živica ti uzme parče rukava i malo tebe pride. Padaš na drugu stranu u gomili udova i peckanja.',
-        'Jedan trn, i dalje držeći tvoj rukav, vraća ga nazad. Učtivo. To je trenutak kad tvoja noć prestaje da bude obična.'
+        'Живица ти узме парче рукава и мало тебе приде. Падаш на другу страну у гомили удова и пецкања.',
+        'Један трн, и даље држећи твој рукав, враћа га назад. Учтиво. То је тренутак кад твоја ноћ престаје да буде обична.'
       ],
-      choices: [ { text: 'Ustani. Nastavi dalje.', to: 'hollowwood' } ]
+      choices: [ { text: 'Устани. Настави даље.', to: 'hollowwood' } ]
     },
 
     /* ---------- Act II: The Hollowwood ---------- */
 
     hollowwood: {
-      title: 'Šuplja šuma',
+      title: 'Шупља шума',
       text: [
-        'Šuma s druge strane je ogromna i tiha i osvetljena odozdo, kao da je mahovina čitavog leta skupljala mesečinu.',
-        'Mimini zvezdani tragovi šapa produžavaju napred, pa se onda razdvajaju — što je nemoguće, osim ako ih nije bilo dve, a o tome odbijaš da razmišljaš.',
-        'Tri puta: potok crne vode preko kamenova za gaženje, kameni most pod kojim nešto hrče i krug pečuraka gde moljci plešu vrlo organizovano.'
+        'Шума с друге стране је огромна и тиха и осветљена одоздо, као да је маховина читавог лета скупљала месечину.',
+        'Мимини звездани трагови шапа продужавају напред, па се онда раздвајају — што је немогуће, осим ако их није било две, а о томе одбијаш да размишљаш.',
+        'Три пута: поток црне воде преко каменова за гажење, камени мост под којим нешто хрче и круг печурака где мољци плешу врло организовано.'
       ],
       choices: [
-        { text: 'Pređi crni potok.', to: 'brook', notFlag: 'didBrook' },
-        { text: 'Idi preko mosta (i preko onoga ko je ispod njega).', to: 'bridge', notFlag: 'didBridge' },
-        { text: 'Uđi u krug pečuraka.', to: 'ring', notFlag: 'didRing' },
-        { text: 'Prati gavranju buku dublje unutra.', to: 'crow_market', onlyFlag: 'wandered' }
+        { text: 'Пређи црни поток.', to: 'brook', notFlag: 'didBrook' },
+        { text: 'Иди преко моста (и преко онога ко је испод њега).', to: 'bridge', notFlag: 'didBridge' },
+        { text: 'Уђи у круг печурака.', to: 'ring', notFlag: 'didRing' },
+        { text: 'Прати гаврању буку дубље унутра.', to: 'crow_market', onlyFlag: 'wandered' }
       ]
     },
 
     brook: {
-      title: 'Potok koji odražava juče',
+      title: 'Поток који одражава јуче',
       text: [
-        'Voda je crna i ne pokazuje tebe nego *tebe od pre sat vremena*, kako spavaš, sa Mimi sklupčanom u pregibu tvojih kolena.',
-        'Devet kamenova. Srednji je mokar i kezast. Negde ispod vode nešto sa mnogo, mnogo previše peraja drži ritam.'
+        'Вода је црна и не показује тебе него *тебе од пре сат времена*, како спаваш, са Мими склупчаном у прегибу твојих колена.',
+        'Девет каменова. Средњи је мокар и кезаст. Негде испод воде нешто са много, много превише пераја држи ритам.'
       ],
       effects: { flags: { didBrook: true, wandered: true } },
       choices: [
-        { text: 'Preskači kamenje ne gledajući nadole.',
+        { text: 'Прескачи камење не гледајући надоле.',
           roll: { stat: 'courage', dc: 8, success: 'brook_win', fail: 'brook_fail',
                   failEffects: { stats: { health: -1 } }, crit: 'brook_crit' } },
-        { text: 'Pregazi kroz vodu — sporo, hladno, sigurno.', to: 'brook_wade' },
-        { text: 'Nazad do tri puta.', to: 'hollowwood' }
+        { text: 'Прегази кроз воду — споро, хладно, сигурно.', to: 'brook_wade' },
+        { text: 'Назад до три пута.', to: 'hollowwood' }
       ]
     },
 
     brook_win: {
-      title: 'Devet kamenova, devet otkucaja srca',
+      title: 'Девет каменова, девет откуцаја срца',
       text: [
-        'Prelaziš preko kamenova kao neko ko je ovo već radio, a perajasto stvorenje ispod tebe aplaudira zvukom mokrih dlanova.',
-        'Na drugoj obali nalaziš svica kako sedi u tegli koja je već otvorena. „Baš si se otegao“, kaže. Skoči ti u džep i počne uslužno da svetli.'
+        'Прелазиш преко каменова као неко ко је ово већ радио, а перајасто створење испод тебе аплаудира звуком мокрих дланова.',
+        'На другој обали налазиш свица како седи у тегли која је већ отворена. „Баш си се отегао“, каже. Скочи ти у џеп и почне услужно да светли.'
       ],
-      firstVisitEffects: { items: ['✨ Bezobrazni svitac'], stats: { courage: 1 } },
-      choices: [ { text: 'Napred.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['✨ Безобразни свитац'], stats: { courage: 1 } },
+      choices: [ { text: 'Напред.', to: 'crow_market' } ]
     },
 
     brook_crit: {
-      title: 'Savršeno. Baš savršeno.',
+      title: 'Савршено. Баш савршено.',
       text: [
-        'Pređeš tako lepo da se potok, postiđen, nakratko razlije unazad.',
-        'Perajasto stvorenje izroni — sve brkovi i stari novčići — i pokloni ti krljušt koja zuji kada neko u blizini laže. „Za pijacu“, klokota. „Trebaće ti.“',
-        'Pridružuje ti se i jedan bezobrazni svitac, nepozvan, iz tegle na obali.'
+        'Пређеш тако лепо да се поток, постиђен, накратко разлије уназад.',
+        'Перајасто створење изрони — све бркови и стари новчићи — и поклони ти крљушт која зуји када неко у близини лаже. „За пијацу“, клокота. „Требаће ти.“',
+        'Придружује ти се и један безобразни свитац, непозван, из тегле на обали.'
       ],
-      firstVisitEffects: { items: ['✨ Bezobrazni svitac', '🐠 Krljušt istine'], stats: { courage: 1 } },
-      choices: [ { text: 'Napred, svetlucavo.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['✨ Безобразни свитац', '🐠 Крљушт истине'], stats: { courage: 1 } },
+      choices: [ { text: 'Напред, светлуцаво.', to: 'crow_market' } ]
     },
 
     brook_fail: {
-      title: 'Pljus',
+      title: 'Пљус',
       text: [
-        'Kezasti kamen se, ispostavlja se, kezi baš zbog ovoga.',
-        'Upadaš do rebara. Voda je toliko hladna da se prepire s tobom. Nešto ogromno i perajasto gurne te — nimalo neljubazno — do druge obale, pa nestane sa tvojom levom papučom kao naplatom.'
+        'Кезасти камен се, испоставља се, кези баш због овога.',
+        'Упадаш до ребара. Вода је толико хладна да се препире с тобом. Нешто огромно и перајасто гурне те — нимало нељубазно — до друге обале, па нестане са твојом левом папучом као наплатом.'
       ],
-      choices: [ { text: 'Nastavi dalje, gnjecavo.', to: 'crow_market' } ]
+      choices: [ { text: 'Настави даље, гњецаво.', to: 'crow_market' } ]
     },
 
     brook_wade: {
-      title: 'Sporo i hladno',
+      title: 'Споро и хладно',
       text: [
-        'Gaziš. Bedno je i uspeva. Na pola puta, odraz tvog usnulog-ja otvori oči i oblikuje usnama: *iza šupljeg drveta*.',
-        'Spremiš to u onaj deo mozga koji i dalje savesno vodi beleške.'
+        'Газиш. Бедно је и успева. На пола пута, одраз твог уснулог-ја отвори очи и обликује уснама: *иза шупљег дрвета*.',
+        'Спремиш то у онај део мозга који и даље савесно води белешке.'
       ],
       firstVisitEffects: { flags: { hint: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Izađi na obalu i nastavi.', to: 'crow_market' } ]
+      choices: [ { text: 'Изађи на обалу и настави.', to: 'crow_market' } ]
     },
 
     bridge: {
-      title: 'Ispod mosta, hrkanje',
+      title: 'Испод моста, хркање',
       text: [
-        'Hrkanje prestaje. Mahovinasti trol se odmotava ispod mosta — skoro tri metra vlažnog granita sa šeširom od paprati.',
-        '„Mostarina“, zagrmi, a onda doda izvinjavajući se: „izvini, posao je takav. Zagonetka ili novčić ili dobrota. Biraj.“',
-        'Primećuješ da su mu preko nosa tri duge ogrebotine. Sveže. Mačkastog oblika.'
+        'Хркање престаје. Маховинасти трол се одмотава испод моста — скоро три метра влажног гранита са шеширом од папрати.',
+        '„Мостарина“, загрми, а онда дода извињавајући се: „извини, посао је такав. Загонетка или новчић или доброта. Бирај.“',
+        'Примећујеш да су му преко носа три дуге огреботине. Свеже. Мачкастог облика.'
       ],
       effects: { flags: { didBridge: true, wandered: true } },
       choices: [
-        { text: 'Uzmi zagonetku.', to: 'troll_riddle' },
-        { text: 'Ponudi suvu ribu.', to: 'troll_gift', needItem: '🐟 Suva riba' },
-        { text: 'Pitaj za ogrebotine i da li ga nos boli.', to: 'troll_kind' },
-        { text: 'Nazad do tri puta.', to: 'hollowwood' }
+        { text: 'Узми загонетку.', to: 'troll_riddle' },
+        { text: 'Понуди суву рибу.', to: 'troll_gift', needItem: '🐟 Сува риба' },
+        { text: 'Питај за огреботине и да ли га нос боли.', to: 'troll_kind' },
+        { text: 'Назад до три пута.', to: 'hollowwood' }
       ]
     },
 
     troll_riddle: {
-      title: 'Mostarina od reči',
+      title: 'Мостарина од речи',
       text: [
-        '„Čuvam se tako što se dajem“, kaže trol. „Lomim se tako što se ispričam. Mala bića me nose preko čitavih šuma.“',
-        'Njegove oči su strpljive. Mostovi su strpljivi. Ti nisi, ali se trudiš.'
+        '„Чувам се тако што се дајем“, каже трол. „Ломим се тако што се испричам. Мала бића ме носе преко читавих шума.“',
+        'Његове очи су стрпљиве. Мостови су стрпљиви. Ти ниси, али се трудиш.'
       ],
       choices: [
-        { text: '„Obećanje.“', to: 'troll_right' },
-        { text: '„Senka.“', to: 'troll_wrong' },
-        { text: '„Baš dobar štap.“', to: 'troll_wrong' },
-        { text: 'Pametno pogađaj iz konteksta.',
+        { text: '„Обећање.“', to: 'troll_right' },
+        { text: '„Сенка.“', to: 'troll_wrong' },
+        { text: '„Баш добар штап.“', to: 'troll_wrong' },
+        { text: 'Паметно погађај из контекста.',
           roll: { stat: 'cunning', dc: 8, success: 'troll_right', fail: 'troll_wrong' } }
       ]
     },
 
     troll_right: {
-      title: 'Tačno, iritantno tačno',
+      title: 'Тачно, иритантно тачно',
       text: [
-        '„Tačno“, uzdahne trol, koji više voli da naplaćuje mostarinu nego da daje uputstva. „Prođi.“',
-        'Dodaje, preko volje: „Tvoja mačka je prošla u vreme izlaska meseca. Hodala je kao da je most njen. Ogrebala me je kad sam rekao da nije. Nosila je nešto u ustima, i to *nije* bio miš.“'
+        '„Тачно“, уздахне трол, који више воли да наплаћује мостарину него да даје упутства. „Прођи.“',
+        'Додаје, преко воље: „Твоја мачка је прошла у време изласка месеца. Ходала је као да је мост њен. Огребала ме је кад сам рекао да није. Носила је нешто у устима, и то *није* био миш.“'
       ],
       firstVisitEffects: { stats: { cunning: 1 }, flags: { trollTold: true } },
-      choices: [ { text: 'Pređi most.', to: 'crow_market' } ]
+      choices: [ { text: 'Пређи мост.', to: 'crow_market' } ]
     },
 
     troll_wrong: {
-      title: 'Pogrešno, ali veselo',
+      title: 'Погрешно, али весело',
       text: [
-        '„Ne“, kaže trol, oduševljeno. „Mostarina nije plaćena. Ali pravila su pravila, a pravila kažu da moram samo da budem *neprijatan*.“',
-        'Podiže te za kragnu pidžame i spušta na drugu stranu naopačke, pa onda uspravno, da čast bude zadovoljena. Gubiš malo dostojanstva i malo kože.'
+        '„Не“, каже трол, одушевљено. „Мостарина није плаћена. Али правила су правила, а правила кажу да морам само да будем *непријатан*.“',
+        'Подиже те за крагну пиџаме и спушта на другу страну наопачке, па онда усправно, да част буде задовољена. Губиш мало достојанства и мало коже.'
       ],
       firstVisitEffects: { stats: { health: -1 } },
-      choices: [ { text: 'Odlutaj sa ostacima svog ponosa.', to: 'crow_market' } ]
+      choices: [ { text: 'Одлутај са остацима свог поноса.', to: 'crow_market' } ]
     },
 
     troll_gift: {
-      title: 'Diplomatija sa suvom ribom',
+      title: 'Дипломатија са сувом рибом',
       text: [
-        'Podigneš suvu ribu. Trol je uzme nežno kao da drži dragulj i pojede je na način koji jasno govori da mu niko ništa nije ponudio već dve stotine godina.',
-        '„Dobrota prihvaćena“, kaže punih usta. „Savet uključen, besplatno: na gavranjoj pijaci nikad ne prihvataj *prvu* cenu i nikad ne izgovaraj ime svoje mačke naglas. Tamo su imena valuta.“',
-        'Pruža ti i grumen mahovine sa mosta. „Žvaći ako mrak postane previše mračan.“'
+        'Подигнеш суву рибу. Трол је узме нежно као да држи драгуљ и поједе је на начин који јасно говори да му нико ништа није понудио већ две стотине година.',
+        '„Доброта прихваћена“, каже пуних уста. „Савет укључен, бесплатно: на гаврањој пијаци никад не прихватај *прву* цену и никад не изговарај име своје мачке наглас. Тамо су имена валута.“',
+        'Пружа ти и грумен маховине са моста. „Жваћи ако мрак постане превише мрачан.“'
       ],
-      firstVisitEffects: { lose: ['🐟 Suva riba'], items: ['🌿 Mostna mahovina'], stats: { kindness: 1 }, flags: { marketTip: true } },
-      choices: [ { text: 'Pređi most sa prijateljem iza sebe.', to: 'crow_market' } ]
+      firstVisitEffects: { lose: ['🐟 Сува риба'], items: ['🌿 Мостна маховина'], stats: { kindness: 1 }, flags: { marketTip: true } },
+      choices: [ { text: 'Пређи мост са пријатељем иза себе.', to: 'crow_market' } ]
     },
 
     troll_kind: {
-      title: 'Da li boli?',
+      title: 'Да ли боли?',
       text: [
-        'Niko, za dva veka, nije pitao trola za nos. Sedne tako naglo da se most pobuni.',
-        '„Bila je uplašena“, kaže. „Ne od mene. Od onoga što ju je pratilo. Mala crna mačka, bela čarapica, i nešto iza nje što sam mogao da čujem, ali ne i da vidim.“ Dozvoli ti da ogrebotine tapkaš mokrom paprati.',
-        '„Idi sad. Mostarina oproštena. I uzmi ovo — znači *ovo dete je prijatelj mosta*. Nekim ljudima je to važno.“'
+        'Нико, за два века, није питао трола за нос. Седне тако нагло да се мост побуни.',
+        '„Била је уплашена“, каже. „Не од мене. Од онога што ју је пратило. Мала црна мачка, бела чарапица, и нешто иза ње што сам могао да чујем, али не и да видим.“ Дозволи ти да огреботине тапкаш мокром папрати.',
+        '„Иди сад. Мостарина опроштена. И узми ово — значи *ово дете је пријатељ моста*. Неким људима је то важно.“'
       ],
-      firstVisitEffects: { items: ['🪨 Trolov žeton'], stats: { kindness: 1 }, flags: { trollFriend: true, followed: true } },
-      choices: [ { text: 'Pređi most, sad već zabrinut.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['🪨 Тролов жетон'], stats: { kindness: 1 }, flags: { trollFriend: true, followed: true } },
+      choices: [ { text: 'Пређи мост, сад већ забринут.', to: 'crow_market' } ]
     },
 
     ring: {
-      title: 'Krug vrlo organizovanih moljaca',
+      title: 'Круг врло организованих мољаца',
       text: [
-        'Dvesta moljaca pleše svečani ples iznad pečuraka. Plešu u obliku mačke. Shvataš da oni *odglumljuju* nešto — malu mačku koja trči, a iza nje priliku sa previše nogu.',
-        'Moljci zastanu. Žele partnera. Krajnje su jasni po tom pitanju uprkos tome što nemaju lica.'
+        'Двеста мољаца плеше свечани плес изнад печурака. Плешу у облику мачке. Схваташ да они *одглумљују* нешто — малу мачку која трчи, а иза ње прилику са превише ногу.',
+        'Мољци застану. Желе партнера. Крајње су јасни по том питању упркос томе што немају лица.'
       ],
       effects: { flags: { didRing: true, wandered: true, followed: true } },
       choices: [
-        { text: 'Pleši sa moljcima.',
+        { text: 'Плеши са мољцима.',
           roll: { stat: 'kindness', dc: 7, success: 'ring_win', fail: 'ring_fail' } },
-        { text: 'Umesto toga isprati celu priču do kraja.', to: 'ring_watch' },
-        { text: 'Polako se povuci. Nazad do tri puta.', to: 'hollowwood' }
+        { text: 'Уместо тога испрати целу причу до краја.', to: 'ring_watch' },
+        { text: 'Полако се повуци. Назад до три пута.', to: 'hollowwood' }
       ]
     },
 
     ring_win: {
-      title: 'Veoma blesav, veoma ozbiljan ples',
+      title: 'Веома блесав, веома озбиљан плес',
       text: [
-        'Plešeš. Loše. Strašno loše, u donjem delu pidžame, sa jednom papučom, u krugu svetlećih pečuraka usred šume koja ne bi smela da postoji.',
-        'Moljci su oduševljeni. Sleću ti na ramena i uplete se u sivi plašt koji ništa ne teži i zbog kog se osećaš pomalo nevidljivo.',
-        '„Tiho-stvar je prati“, šapuću svi zajedno. „Tiho-stvar hoće njen glas.“'
+        'Плешеш. Лоше. Страшно лоше, у доњем делу пиџаме, са једном папучом, у кругу светлећих печурака усред шуме која не би смела да постоји.',
+        'Мољци су одушевљени. Слећу ти на рамена и уплете се у сиви плашт који ништа не тежи и због ког се осећаш помало невидљиво.',
+        '„Тихо-ствар је прати“, шапућу сви заједно. „Тихо-ствар хоће њен глас.“'
       ],
-      firstVisitEffects: { items: ['🦋 Plašt od moljaca'], stats: { kindness: 1 }, flags: { hushKnown: true } },
-      choices: [ { text: 'Prati kuda moljci pokazuju.', to: 'crow_market' } ]
+      firstVisitEffects: { items: ['🦋 Плашт од мољаца'], stats: { kindness: 1 }, flags: { hushKnown: true } },
+      choices: [ { text: 'Прати куда мољци показују.', to: 'crow_market' } ]
     },
 
     ring_fail: {
-      title: 'Dve leve noge, jedna leva papuča',
+      title: 'Две леве ноге, једна лева папуча',
       text: [
-        'Nagaziš na ples. Znaš to jer se ples zaustavi i svaki moljac se odjednom okrene ka tebi, a to je mnogo gledanja od stvari koje, iskreno, nemaju oči.',
-        'Opraštaju ti — moljci su takvi — ali ti ne pozajmljuju svoj plašt. Ipak, pre nego što se razlete, šapnu jednu reč: *„Tiho-stvar.“*'
+        'Нагазиш на плес. Знаш то јер се плес заустави и сваки мољац се одједном окрене ка теби, а то је много гледања од ствари које, искрено, немају очи.',
+        'Опраштају ти — мољци су такви — али ти не позајмљују свој плашт. Ипак, пре него што се разлете, шапну једну реч: *„Тихо-ствар.“*'
       ],
       firstVisitEffects: { flags: { hushKnown: true } },
-      choices: [ { text: 'Nastavi dalje, uznemiren.', to: 'crow_market' } ]
+      choices: [ { text: 'Настави даље, узнемирен.', to: 'crow_market' } ]
     },
 
     ring_watch: {
-      title: 'Cela priča, ispričana moljcima',
+      title: 'Цела прича, испричана мољцима',
       text: [
-        'Sedneš i odgledaš ples tri puta. Moljac-Mimi trči. Mnogonoga Tiho-stvar je prati. A onda — deo koji si morao da gledaš tri puta da bi bio siguran — moljac-Mimi prestaje da trči i okreće se, zato što nosi nešto malo, a to malo više ne može da trči.',
-        'Moljci završavaju. Naklone se. Jedan sleti na tvoj nos da proveri da li si razumeo.'
+        'Седнеш и одгледаш плес три пута. Мољац-Мими трчи. Многонога Тихо-ствар је прати. А онда — део који си морао да гледаш три пута да би био сигуран — мољац-Мими престаје да трчи и окреће се, зато што носи нешто мало, а то мало више не може да трчи.',
+        'Мољци завршавају. Наклоне се. Један слети на твој нос да провери да ли си разумео.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, sawKitten: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Hajde, brzo sad.', to: 'crow_market' } ]
+      choices: [ { text: 'Хајде, брзо сад.', to: 'crow_market' } ]
     },
 
     /* ---------- Act III: The Market and the Witch ---------- */
 
     crow_market: {
-      title: 'Gavranja pijaca',
+      title: 'Гаврања пијаца',
       text: [
-        'Čistina puna tezgi napravljenih od kišobrana, na kojima rade isključivo gavrani u prslucima, osvetljena lampama koje su iskreno samo veoma samodopadljive krijesnice.',
-        'Prodaju: pravce, pozajmljena imena, izvinjenja u boci i jednu (1) mapu do Dvora devetostrukog ognjišta, gde — kako objašnjava natpis — *sve izgubljene mačke na kraju budu zavedene*.',
-        'Glavni gavran odmeri tvoju pidžamu. „Cena je jedno ime“, kaže. „Ne tvoje. Bilo čije.“'
+        'Чистина пуна тезги направљених од кишобрана, на којима раде искључиво гаврани у прслуцима, осветљена лампама које су искрено само веома самодопадљиве кријеснице.',
+        'Продају: правце, позајмљена имена, извињења у боци и једну (1) мапу до Двора деветоструког огњишта, где — како објашњава натпис — *све изгубљене мачке на крају буду заведене*.',
+        'Главни гавран одмери твоју пиџаму. „Цена је једно име“, каже. „Не твоје. Било чије.“'
       ],
       choices: [
-        { text: 'Trguj imenom koje ti nije žao da izgubiš (onim nastavnika kog najmanje voliš).', to: 'market_trade' },
-        { text: 'Cenkaj se. Nikad ne prihvataj prvu cenu.', to: 'market_haggle', onlyFlag: 'marketTip' },
-        { text: 'Pokaži trolov žeton.', to: 'market_token', needItem: '🪨 Trolov žeton' },
-        { text: 'Džepari mapu dok se gavrani raspravljaju.',
+        { text: 'Тргуј именом које ти није жао да изгубиш (оним наставника ког најмање волиш).', to: 'market_trade' },
+        { text: 'Ценкај се. Никад не прихватај прву цену.', to: 'market_haggle', onlyFlag: 'marketTip' },
+        { text: 'Покажи тролов жетон.', to: 'market_token', needItem: '🪨 Тролов жетон' },
+        { text: 'Џепари мапу док се гаврани расправљају.',
           roll: { stat: 'cunning', dc: 9, success: 'market_stolen', fail: 'market_caught', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     market_trade: {
-      title: 'Prodato: jedno ime',
+      title: 'Продато: једно име',
       text: [
-        'Izgovoriš jedno ime. Gavrani ga sa velikom svečanošću zapišu i ti odmah više ne možeš da se setiš koje je bilo. Negde se nastavnik matematike budi sa divnim osećajem anonimnosti.',
-        'Mapa je pero. Kad ga držiš, ono pokazuje. Trenutno pokazuje toliko uporno da pecka.'
+        'Изговориш једно име. Гаврани га са великом свечаношћу запишу и ти одмах више не можеш да се сетиш које је било. Негде се наставник математике буди са дивним осећајем анонимности.',
+        'Мапа је перо. Кад га држиш, оно показује. Тренутно показује толико упорно да пецка.'
       ],
-      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'] },
-      choices: [ { text: 'Prati pero.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Перо које показује'] },
+      choices: [ { text: 'Прати перо.', to: 'thornway' } ]
     },
 
     market_haggle: {
-      title: 'Nikad prva cena',
+      title: 'Никад прва цена',
       text: [
-        '„To vam je prva cena“, kažeš. „Saslušaću drugu.“',
-        'Svaki gavran na pijaci utihne, a onda prasne u aplauz, što kod gavrana znači da ti bacaju sitne sjajne stvarčice u glavu.',
-        '„*Profesionalac*,“ kaže glavni gavran, istovremeno zgađen i impresioniran. Dobijaš mapu-pero za jedno dugme, plus izvinjenje u boci „za kad ti zatreba, a hoće“.'
+        '„То вам је прва цена“, кажеш. „Саслушаћу другу.“',
+        'Сваки гавран на пијаци утихне, а онда прасне у аплауз, што код гаврана значи да ти бацају ситне сјајне стварчице у главу.',
+        '„*Професионалац*,“ каже главни гавран, истовремено згађен и импресиониран. Добијаш мапу-перо за једно дугме, плус извињење у боци „за кад ти затреба, а хоће“.'
       ],
-      firstVisitEffects: { items: ['🪶 Pero koje pokazuje', '🍾 Izvinjenje u boci'], stats: { cunning: 1 } },
-      choices: [ { text: 'Prati pero.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Перо које показује', '🍾 Извињење у боци'], stats: { cunning: 1 } },
+      choices: [ { text: 'Прати перо.', to: 'thornway' } ]
     },
 
     market_token: {
-      title: 'Prijatelj mosta',
+      title: 'Пријатељ моста',
       text: [
-        'Podigneš trolov žeton. Prsluci se zatežu. Kljunovi se spuštaju.',
-        '„Prijatelj mosta“, kaže glavni gavran. „Onda nema naplate; tom velikom vlažnom idiotu dugujemo sve.“ Mapa-pero spušta se u tvoju ruku zajedno s upozorenjem, izrečenim tiho:',
-        '„Nešto je večeras prošlo ovuda, a nema ime koje bi moglo da menja. Lovi glas. Idi meko.“'
+        'Подигнеш тролов жетон. Прслуци се затежу. Кљунови се спуштају.',
+        '„Пријатељ моста“, каже главни гавран. „Онда нема наплате; том великом влажном идиоту дугујемо све.“ Мапа-перо спушта се у твоју руку заједно с упозорењем, изреченим тихо:',
+        '„Нешто је вечерас прошло овуда, а нема име које би могло да мења. Лови глас. Иди меко.“'
       ],
-      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'], stats: { kindness: 1 }, flags: { hushKnown: true } },
-      choices: [ { text: 'Idi meko. Prati pero.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Перо које показује'], stats: { kindness: 1 }, flags: { hushKnown: true } },
+      choices: [ { text: 'Иди меко. Прати перо.', to: 'thornway' } ]
     },
 
     market_stolen: {
-      title: 'Kartografija sa pet prstiju',
+      title: 'Картографија са пет прстију',
       text: [
-        'Uzimaš pero dok se dva gavrana raspravljaju da li se mesec računa kao novčić. Ispostavlja se da ne računa, a rasprava je strašno glasna.',
-        'Tri koraka si daleko kad glavni gavran sasvim mirno dovikne za tobom: „Dobro. Ali pijaca se uvek naplati, dete. Uzećemo kasnije, a mi biramo kada.“',
-        'To je nekako mnogo gore nego da su te uhvatili.'
+        'Узимаш перо док се два гаврана расправљају да ли се месец рачуна као новчић. Испоставља се да не рачуна, а расправа је страшно гласна.',
+        'Три корака си далеко кад главни гавран сасвим мирно довикне за тобом: „Добро. Али пијаца се увек наплати, дете. Узећемо касније, а ми бирамо када.“',
+        'То је некако много горе него да су те ухватили.'
       ],
-      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'], flags: { crowDebt: true }, stats: { cunning: 1 } },
-      choices: [ { text: 'Odlazi brzo.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Перо које показује'], flags: { crowDebt: true }, stats: { cunning: 1 } },
+      choices: [ { text: 'Одлази брзо.', to: 'thornway' } ]
     },
 
     market_caught: {
-      title: 'Gavrani ne promašuju',
+      title: 'Гаврани не промашују',
       text: [
-        'Četrdeset kljunova se odjednom okrene. Precizno te kljucnu, bez prave zlobe, pa te okače za kragnu o tezgu od kišobrana dok se ne izviniš.',
-        'Izviniš se. Glavni gavran uzdahne i ipak ti da pero. „Nosi. Sramotiš se.“ Svi gavrani se slažu da je to bilo najsmešnije što se na pijaci dogodilo godinama.'
+        'Четрдесет кљунова се одједном окрене. Прецизно те кљуцну, без праве злобе, па те окаче за крагну о тезгу од кишобрана док се не извиниш.',
+        'Извиниш се. Главни гавран уздахне и ипак ти да перо. „Носи. Срамотиш се.“ Сви гаврани се слажу да је то било најсмешније што се на пијаци догодило годинама.'
       ],
-      firstVisitEffects: { items: ['🪶 Pero koje pokazuje'] },
-      choices: [ { text: 'Iskradaj se niz trnovitu stazu.', to: 'thornway' } ]
+      firstVisitEffects: { items: ['🪶 Перо које показује'] },
+      choices: [ { text: 'Искрадај се низ трновиту стазу.', to: 'thornway' } ]
     },
 
     thornway: {
-      title: 'Trnoviti put',
+      title: 'Трновити пут',
       text: [
-        'Pero te vuče niz hodnik od crnog trnja u koji mesečina mora da se ugura postrance.',
-        'Na pola puta šuma postaje *tiha* — ne nema, nego prigušena, kao da je nečija ruka prekrila usta sveta. Tvoji koraci prestaju da prave zvuk. Tvoj dah prestaje da pravi zvuk.',
-        'Nešto hoda kraj tebe, prati tvoj korak u stopu, a ima više nogu nego što je za to potrebno.'
+        'Перо те вуче низ ходник од црног трња у који месечина мора да се угура постранце.',
+        'На пола пута шума постаје *тиха* — не нема, него пригушена, као да је нечија рука прекрила уста света. Твоји кораци престају да праве звук. Твој дах престаје да прави звук.',
+        'Нешто хода крај тебе, прати твој корак у стопу, а има више ногу него што је за то потребно.'
       ],
       choices: [
-        { text: 'Sažvaći mostnu mahovinu i vidi istinski.', to: 'hush_seen', needItem: '🌿 Mostna mahovina', effects: { lose: ['🌿 Mostna mahovina'] } },
-        { text: 'Pozvoni Barnabijevim zvonom u tišinu.', to: 'hush_bell', needItem: '🔔 Barnabijevo zvono' },
-        { text: 'Trči. Samo trči.',
+        { text: 'Сажваћи мостну маховину и види истински.', to: 'hush_seen', needItem: '🌿 Мостна маховина', effects: { lose: ['🌿 Мостна маховина'] } },
+        { text: 'Позвони Барнабијевим звоном у тишину.', to: 'hush_bell', needItem: '🔔 Барнабијево звоно' },
+        { text: 'Трчи. Само трчи.',
           roll: { stat: 'courage', dc: 9, success: 'witch_hut', fail: 'hush_caught', failEffects: { stats: { health: -2 } } } },
-        { text: 'Stoj savršeno mirno i budi vrlo, vrlo dosadan.',
+        { text: 'Стој савршено мирно и буди врло, врло досадан.',
           roll: { stat: 'cunning', dc: 8, success: 'witch_hut', fail: 'hush_caught', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     hush_seen: {
-      title: 'Tiho-stvar',
+      title: 'Тихо-ствар',
       text: [
-        'Mahovina ima ukus kao bara koja se izvinjava, a onda možeš da je *vidiš*: visoko, presavijeno, osluškujuće stvorenje napravljeno od prostora između zvukova, okićeno ukradenim glasovima kao narukvicom sa privescima.',
-        'Primeti da si ga primetio. Ispostavlja se da je to jedina stvar koju nikako ne podnosi. Trzne se, malo se rasplete i klizne između trnja — ka mestu gde je, shvataš uz trzaj u stomaku, Mimi.'
+        'Маховина има укус као бара која се извињава, а онда можеш да је *видиш*: високо, пресавијено, ослушкујуће створење направљено од простора између звукова, окићено украденим гласовима као наруквицом са привесцима.',
+        'Примети да си га приметио. Испоставља се да је то једина ствар коју никако не подноси. Трзне се, мало се расплете и клизне између трња — ка месту где је, схваташ уз трзај у стомаку, Мими.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, hushSeen: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Juri za njim.', to: 'witch_hut' } ]
+      choices: [ { text: 'Јури за њим.', to: 'witch_hut' } ]
     },
 
     hush_bell: {
-      title: 'Zvuk koji ne može da proguta',
+      title: 'Звук који не може да прогута',
       text: [
-        'Pozvoniš malim mesinganim zvonom. Tišina pokuša da proguta zvuk i ne uspe — zvonom je jedan dečak zvao svoju mačku na čaj šezdeset godina, a takva zvonjava ima *korenje*.',
-        'Tiho-stvar ustukne i ispusti tri ukradena glasa, koji šmugnu u žbunje da pronađu svoje vlasnike. Jedan od njih, na trenutak, zvuči tačno kao mačka koja izgovara tvoje ime.'
+        'Позвониш малим месинганим звоном. Тишина покуша да прогута звук и не успе — звоном је један дечак звао своју мачку на чај шездесет година, а таква звоњава има *корење*.',
+        'Тихо-ствар устукне и испусти три украдена гласа, који шмугну у жбуње да пронађу своје власнике. Један од њих, на тренутак, звучи тачно као мачка која изговара твоје име.'
       ],
       firstVisitEffects: { flags: { hushKnown: true, bellWorks: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Prati glas koji je zvučao kao ona.', to: 'witch_hut' } ]
+      choices: [ { text: 'Прати глас који је звучао као она.', to: 'witch_hut' } ]
     },
 
     hush_caught: {
-      title: 'Uzme ti nešto',
+      title: 'Узме ти нешто',
       text: [
-        'Hladnoća se sklapa oko tebe. Nešto dugo i pažljivo prolazi kroz tvoje džepove, a onda kroz tvoje *misli*, i uzima zvuk tvog sopstvenog smeha — osetiš kako odlazi, kao kad ispadne zub.',
-        'Onda ode, dosađeno, jer ti nisi ono što želi. Ležiš u trnju dok ponovo ne možeš da se pomeriš, a šuma polako vraća svoje zvuke.',
-        'Trebaće ti taj smeh. Odlučuješ, ležeći tu, da ćeš ga uzeti nazad.'
+        'Хладноћа се склапа око тебе. Нешто дуго и пажљиво пролази кроз твоје џепове, а онда кроз твоје *мисли*, и узима звук твог сопственог смеха — осетиш како одлази, као кад испадне зуб.',
+        'Онда оде, досађено, јер ти ниси оно што жели. Лежиш у трњу док поново не можеш да се помериш, а шума полако враћа своје звуке.',
+        'Требаће ти тај смех. Одлучујеш, лежећи ту, да ћеш га узети назад.'
       ],
       firstVisitEffects: { flags: { laughStolen: true, hushKnown: true }, stats: { courage: 1 } },
-      choices: [ { text: 'Ustani. Nastavi dalje.', to: 'witch_hut' } ]
+      choices: [ { text: 'Устани. Настави даље.', to: 'witch_hut' } ]
     },
 
     witch_hut: {
-      title: 'Bramblvikina čajna koliba',
+      title: 'Брамблвикина чајна колиба',
       text: [
-        'Koliba stoji na panju drveta koje je moralo biti veliko kao katedrala. Dim izlazi iz dimnjaka u obliku malih, zadovoljnih životinja.',
-        'Veštica unutra je otprilike godina tvoje mame, sva u mačjoj dlaci, i nimalo nije iznenađena što te vidi. „Aha“, kaže Bramblvik. „Ti si njen. Priča o tebi.“',
-        'Sipa tri šolje ne pitajući te koju želiš.'
+        'Колиба стоји на пању дрвета које је морало бити велико као катедрала. Дим излази из димњака у облику малих, задовољних животиња.',
+        'Вештица унутра је отприлике година твоје маме, сва у мачјој длаци, и нимало није изненађена што те види. „Аха“, каже Брамблвик. „Ти си њен. Прича о теби.“',
+        'Сипа три шоље не питајући те коју желиш.'
       ],
       choices: [
-        { text: '„Ona PRIČA o meni?“', to: 'witch_talk' },
-        { text: 'Popij crvenu šolju (hrabrost).', to: 'tea_red', effects: { stats: { courage: 2 } } },
-        { text: 'Popij zelenu šolju (oštrina).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
-        { text: 'Popij zlatnu šolju (toplina).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
+        { text: '„Она ПРИЧА о мени?“', to: 'witch_talk' },
+        { text: 'Попиј црвену шољу (храброст).', to: 'tea_red', effects: { stats: { courage: 2 } } },
+        { text: 'Попиј зелену шољу (оштрина).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
+        { text: 'Попиј златну шољу (топлина).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
       ]
     },
 
     witch_talk: {
-      title: 'Šta Mimi govori o tebi',
+      title: 'Шта Мими говори о теби',
       text: [
-        '„Stalno“, kaže Bramblvik. „Mačke imaju dva doma: jedan gde ih hrane i drugi gde su *potrebne*. Tvoja Mimi je Čuvarka Šuplje šume — još od pre nego što si se rodio — i nijednom nije začepila o detetu s hladnim stopalima.“',
-        'Promeša lonac. „Večeras je prošla ovuda u žurbi, noseći nešto. A za njom je prošlo i nešto što nema sopstveni glas. Popij čaj, pa idi i budi od koristi.“'
+        '„Стално“, каже Брамблвик. „Мачке имају два дома: један где их хране и други где су *потребне*. Твоја Мими је Чуварка Шупље шуме — још од пре него што си се родио — и ниједном није зачепила о детету с хладним стопалима.“',
+        'Промеша лонац. „Вечерас је прошла овуда у журби, носећи нешто. А за њом је прошло и нешто што нема сопствени глас. Попиј чај, па иди и буди од користи.“'
       ],
       firstVisitEffects: { flags: { knowsWarden: true }, stats: { kindness: 1 } },
       choices: [
-        { text: 'Popij crvenu šolju (hrabrost).', to: 'tea_red', effects: { stats: { courage: 2 } } },
-        { text: 'Popij zelenu šolju (oštrina).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
-        { text: 'Popij zlatnu šolju (toplina).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
+        { text: 'Попиј црвену шољу (храброст).', to: 'tea_red', effects: { stats: { courage: 2 } } },
+        { text: 'Попиј зелену шољу (оштрина).', to: 'tea_green', effects: { stats: { cunning: 2 } } },
+        { text: 'Попиј златну шољу (топлина).', to: 'tea_gold', effects: { stats: { kindness: 2, health: 2 } } }
       ]
     },
 
     tea_red: {
-      title: 'Crveni čaj',
-      text: ['Ima ukus cimeta i onog osećaja kad se uspraviš pred nekim većim od sebe. Ruke prestaju da ti drhte. Bramblvik klimne i pruži ti grančicu jarebike „za kucanje“.'],
-      firstVisitEffects: { items: ['🌾 Grančica jarebike'] },
-      choices: [ { text: 'Izađi u mrak, ka Dvoru.', to: 'hollow_tree' } ]
+      title: 'Црвени чај',
+      text: ['Има укус цимета и оног осећаја кад се усправиш пред неким већим од себе. Руке престају да ти дрхте. Брамблвик климне и пружи ти гранчицу јаребике „за куцање“.'],
+      firstVisitEffects: { items: ['🌾 Гранчица јаребике'] },
+      choices: [ { text: 'Изађи у мрак, ка Двору.', to: 'hollow_tree' } ]
     },
     tea_green: {
-      title: 'Zeleni čaj',
-      text: ['Ima ukus koprive i trenutka tik pre nego što razumeš šalu. Sve postaje oštrije; primećuješ da koliba ima trinaest mačjih vratanca, a jedna se još njišu.'],
-      firstVisitEffects: { items: ['🌾 Grančica jarebike'], flags: { hint: true } },
-      choices: [ { text: 'Izađi u pravcu vratanca koja se njišu.', to: 'hollow_tree' } ]
+      title: 'Зелени чај',
+      text: ['Има укус коприве и тренутка тик пре него што разумеш шалу. Све постаје оштрије; примећујеш да колиба има тринаест мачјих вратанца, а једна се још њишу.'],
+      firstVisitEffects: { items: ['🌾 Гранчица јаребике'], flags: { hint: true } },
+      choices: [ { text: 'Изађи у правцу вратанца која се њишу.', to: 'hollow_tree' } ]
     },
     tea_gold: {
-      title: 'Zlatni čaj',
-      text: ['Ima ukus kao kad te neko lepo ušuška. Ogrebotine se zatvaraju. Bramblvik ti dospe još, a onda napuni malu flašicu „za nešto maleno čemu će trebati više nego tebi“.'],
-      firstVisitEffects: { items: ['🌾 Grančica jarebike', '🍼 Topla flašica'] },
-      choices: [ { text: 'Izađi, topao, u hladnoću.', to: 'hollow_tree' } ]
+      title: 'Златни чај',
+      text: ['Има укус као кад те неко лепо ушушка. Огреботине се затварају. Брамблвик ти доспе још, а онда напуни малу флашицу „за нешто малено чему ће требати више него теби“.'],
+      firstVisitEffects: { items: ['🌾 Гранчица јаребике', '🍼 Топла флашица'] },
+      choices: [ { text: 'Изађи, топао, у хладноћу.', to: 'hollow_tree' } ]
     },
 
     /* ---------- Act IV: The Court of the Ninefold Hearth ---------- */
 
     hollow_tree: {
-      title: 'Šuplje drvo',
+      title: 'Шупље дрво',
       text: [
-        'Pero prestaje da vuče kod mrtvog hrasta veličine crkve, rascepljenog s jedne strane. Zvezdani otisci šapa ulaze unutra. Nijedan ne izlazi.',
-        'Iznutra dopire zvuk mnogih mačaka koje su strašno tihe, a to je najglasnija tišina koja postoji.'
+        'Перо престаје да вуче код мртвог храста величине цркве, расцепљеног с једне стране. Звездани отисци шапа улазе унутра. Ниједан не излази.',
+        'Изнутра допире звук многих мачака које су страшно тихе, а то је најгласнија тишина која постоји.'
       ],
       choices: [
-        { text: 'Prvo proveri iza šupljeg drveta.', to: 'behind_tree', onlyFlag: 'hint' },
-        { text: 'Pokucaj grančicom jarebike.', to: 'court_gate', needItem: '🌾 Grančica jarebike' },
-        { text: 'Samo se uvuci.', to: 'court_gate' }
+        { text: 'Прво провери иза шупљег дрвета.', to: 'behind_tree', onlyFlag: 'hint' },
+        { text: 'Покуцај гранчицом јаребике.', to: 'court_gate', needItem: '🌾 Гранчица јаребике' },
+        { text: 'Само се увуци.', to: 'court_gate' }
       ]
     },
 
     behind_tree: {
-      title: 'Iza šupljeg drveta',
+      title: 'Иза шупљег дрвета',
       text: [
-        'Iza drveta, u udubljenju od mahovine, nalazi se gnezdo: tri parčeta ćebeta, izgrižen čep od flaše i jedno veoma malo, veoma sivo mače sa belom čarapicom, koje drhti i strašno se ljuti zbog toga.',
-        'Sikće na tebe celim telom. Veličine je zemičke. I nepogrešivo je Miminо.'
+        'Иза дрвета, у удубљењу од маховине, налази се гнездо: три парчета ћебета, изгрижен чеп од флаше и једно веома мало, веома сиво маче са белом чарапицом, које дрхти и страшно се љути због тога.',
+        'Сикће на тебе целим телом. Величине је земичке. И непогрешиво је Мимино.'
       ],
       firstVisitEffects: { flags: { foundKitten: true } },
       choices: [
-        { text: 'Daj mu toplu flašicu.', to: 'kitten_flask', needItem: '🍼 Topla flašica' },
-        { text: 'Zadeni ga u gornji deo pidžame i ponesi sa sobom.', to: 'kitten_carry' },
-        { text: 'Ostavi ga sakrivenog — bezbednije je nego da ide s tobom.', to: 'court_gate', effects: { flags: { kittenLeft: true } } }
+        { text: 'Дај му топлу флашицу.', to: 'kitten_flask', needItem: '🍼 Топла флашица' },
+        { text: 'Задени га у горњи део пиџаме и понеси са собом.', to: 'kitten_carry' },
+        { text: 'Остави га сакривеног — безбедније је него да иде с тобом.', to: 'court_gate', effects: { flags: { kittenLeft: true } } }
       ]
     },
 
     kitten_flask: {
-      title: 'Zemička, nahranjena',
+      title: 'Земичка, нахрањена',
       text: [
-        'Mače popije celu flašicu, pa zaspi usred siktanja, što je najsmešnija stvar koju si ikad video. Osetiš kako tvoj ukradeni smeh pokušava da se vrati odakle god da je otišao.',
-        'Utakneš toplu grudvicu u pidžamu. Prede kao veoma mali motor sa kvarom.'
+        'Маче попије целу флашицу, па заспи усред сиктања, што је најсмешнија ствар коју си икад видео. Осетиш како твој украдени смех покушава да се врати одакле год да је отишао.',
+        'Утакнеш топлу грудвицу у пиџаму. Преде као веома мали мотор са кваром.'
       ],
-      firstVisitEffects: { items: ['🐈 Uspavano mače'], lose: ['🍼 Topla flašica'], stats: { kindness: 1 }, flags: { hasKitten: true } },
-      choices: [ { text: 'Ka Dvoru.', to: 'court_gate' } ]
+      firstVisitEffects: { items: ['🐈 Успавано маче'], lose: ['🍼 Топла флашица'], stats: { kindness: 1 }, flags: { hasKitten: true } },
+      choices: [ { text: 'Ка Двору.', to: 'court_gate' } ]
     },
 
     kitten_carry: {
-      title: 'Mali, besni teret',
+      title: 'Мали, бесни терет',
       text: [
-        'Izujeda te jedanaest puta, sve namerno, nijednom prejako. Onda odustane i zavuče se pod tvoju bradu, i dalje gunđajući.',
-        'Nikad u životu nisi nosio nešto pažljivije.'
+        'Изуједа те једанаест пута, све намерно, ниједном прејако. Онда одустане и завуче се под твоју браду, и даље гунђајући.',
+        'Никад у животу ниси носио нешто пажљивије.'
       ],
-      firstVisitEffects: { items: ['🐈 Uspavano mače'], stats: { kindness: 1 }, flags: { hasKitten: true } },
-      choices: [ { text: 'Ka Dvoru.', to: 'court_gate' } ]
+      firstVisitEffects: { items: ['🐈 Успавано маче'], stats: { kindness: 1 }, flags: { hasKitten: true } },
+      choices: [ { text: 'Ка Двору.', to: 'court_gate' } ]
     },
 
     court_gate: {
-      title: 'Kapija devet brkova',
+      title: 'Капија девет бркова',
       text: [
-        'Unutrašnjost drveta nije unutrašnjost drveta. To je dvorana korenja i vatre, devet ognjišta gori u krugu, a mačke — stotine mačaka — raspoređene su tačno na mestima najveće moguće smetnje.',
-        'Dva ogromna čuvara na vratima, jedan riđ i jedan potpuno odsutan osim po osmehu, zaklanjaju prolaz.',
-        '„Kaži svoj posao, toplo stvorenje“, kaže riđi.'
+        'Унутрашњост дрвета није унутрашњост дрвета. То је дворана корења и ватре, девет огњишта гори у кругу, а мачке — стотине мачака — распоређене су тачно на местима највеће могуће сметње.',
+        'Два огромна чувара на вратима, један риђ и један потпуно одсутан осим по осмеху, заклањају пролаз.',
+        '„Кажи свој посао, топло створење“, каже риђи.'
       ],
       choices: [
-        { text: 'Pozvoni Barnabijevim zvonom.', to: 'gate_bell', needItem: '🔔 Barnabijevo zvono', hideWhenLocked: false },
-        { text: 'Pokaži uspavano mače.', to: 'gate_kitten', needItem: '🐈 Uspavano mače' },
-        { text: '„Došao sam po svoju mačku.“',
+        { text: 'Позвони Барнабијевим звоном.', to: 'gate_bell', needItem: '🔔 Барнабијево звоно', hideWhenLocked: false },
+        { text: 'Покажи успавано маче.', to: 'gate_kitten', needItem: '🐈 Успавано маче' },
+        { text: '„Дошао сам по своју мачку.“',
           roll: { stat: 'courage', dc: 9, success: 'court', fail: 'gate_thrown', failEffects: { stats: { health: -1 } } } },
-        { text: 'Ponudi da te prvo češkaju iza ušiju, kao danak.',
+        { text: 'Понуди да те прво чешкају иза ушију, као данак.',
           roll: { stat: 'kindness', dc: 8, success: 'court', fail: 'gate_thrown' } }
       ]
     },
 
     gate_bell: {
-      title: 'Zvonjava koja zvuči pogrešno',
+      title: 'Звоњава која звучи погрешно',
       text: [
-        'Pozvoniš zvonom i ono zazvuči *pogrešno* — preveliko, previše zlatno, zvuk katedrale iz naprstka.',
-        'Sve mačke u dvorani ustanu odjednom. Riđi stražar se pokloni toliko nisko da mu brkovi pometu korenje. „Barnabijevo zvono“, dahne. „Samo Čuvarkino. Prođi, dete. Brzo. Raspravlja se već sat vremena i gubi.“'
+        'Позвониш звоном и оно зазвучи *погрешно* — превелико, превише златно, звук катедрале из напрстка.',
+        'Све мачке у дворани устану одједном. Риђи стражар се поклони толико ниско да му бркови помету корење. „Барнабијево звоно“, дахне. „Само Чуваркино. Прођи, дете. Брзо. Расправља се већ сат времена и губи.“'
       ],
       firstVisitEffects: { stats: { courage: 1 } },
-      choices: [ { text: 'Prođi.', to: 'court' } ]
+      choices: [ { text: 'Прођи.', to: 'court' } ]
     },
 
     gate_kitten: {
-      title: 'Teretna diplomatija',
+      title: 'Теретна дипломатија',
       text: [
-        'Rasčepiš gornji deo pidžame za jedan prst. Jedno sivo uho, jedna bela čarapica, jedno ogromno zevanje.',
-        'Dvorana proizvede zvuk koji nijedan čovek nikad nije čuo: trista mačaka koje kažu *oh*. Stražari se sklanjaju toliko brzo da nevidljivi zaboravi da zadrži osmeh.'
+        'Расчепиш горњи део пиџаме за један прст. Једно сиво ухо, једна бела чарапица, једно огромно зевање.',
+        'Дворана произведе звук који ниједан човек никад није чуо: триста мачака које кажу *ох*. Стражари се склањају толико брзо да невидљиви заборави да задржи осмех.'
       ],
-      choices: [ { text: 'Unesi naslednika unutra.', to: 'court' } ]
+      choices: [ { text: 'Унеси наследника унутра.', to: 'court' } ]
     },
 
     gate_thrown: {
-      title: 'Napolje, pa unutra',
+      title: 'Напоље, па унутра',
       text: [
-        'Iz dvorane te ukloni devet mačaka koje rade usklađeno kao profesionalna selidbena firma, spuste te u mahovinu i pilje u tebe.',
-        'Onda se iznutra začuje mali glas koji kaže nešto kratko i oštro, pa se stražari ukrute, a riđi promrmlja: „Dobro. *Dobro.* Čuvarka traži tebe.“'
+        'Из дворане те уклони девет мачака које раде усклађено као професионална селидбена фирма, спусте те у маховину и пиље у тебе.',
+        'Онда се изнутра зачује мали глас који каже нешто кратко и оштро, па се стражари укруте, а риђи промрмља: „Добро. *Добро.* Чуварка тражи тебе.“'
       ],
-      choices: [ { text: 'Vrati se unutra uzdignute brade.', to: 'court' } ]
+      choices: [ { text: 'Врати се унутра уздигнуте браде.', to: 'court' } ]
     },
 
     court: {
-      title: 'Dvor devetostrukog ognjišta',
+      title: 'Двор деветоструког огњишта',
       text: [
-        'Na stolici načinjenoj od jedne ogromne fosilizovane kosti sedi Kraljica mačaka: bela, drevna, s očima poput dva novčića na dnu bunara.',
-        'A nasred poda, mala i crna i besna, sa belom čarapicom i jednim pocepanim uhom, stoji *Mimi*.',
-        '„Eto te“, kaže Mimi glasom za koji nekako oduvek znaš da ga je imala. „Baš ti je trebalo. I još nešto: ne paniči.“'
+        'На столици начињеној од једне огромне фосилизоване кости седи Краљица мачака: бела, древна, с очима попут два новчића на дну бунара.',
+        'А насред пода, мала и црна и бесна, са белом чарапицом и једним поцепаним ухом, стоји *Мими*.',
+        '„Ето те“, каже Мими гласом за који некако одувек знаш да га је имала. „Баш ти је требало. И још нешто: не паничи.“'
       ],
       choices: [
-        { text: '„TI ZNAŠ DA GOVORIŠ?“', to: 'mochi_talk' },
-        { text: 'Uhvati te panika.', to: 'mochi_talk' }
+        { text: '„ТИ ЗНАШ ДА ГОВОРИШ?“', to: 'mochi_talk' },
+        { text: 'Ухвати те паника.', to: 'mochi_talk' }
       ]
     },
 
     mochi_talk: {
-      title: 'Ne paniči',
+      title: 'Не паничи',
       text: [
-        '„Svi umeju da govore“, kaže Mimi. „Neki od nas biraju da kod kuće ne govore, jer bi to sve pokvarilo.“',
-        'Kraljica progovori i ognjišta potamne. „Čuvarka je napustila svoju dužnost da sakrije mače, a Tiho-stvar je kroz tanko mesto prošlo za njom. Zakon je star: Čuvarka koja pobegne biva *razobličena*, a njen glas dat tišini da ga ponese kući.“',
-        'Mimi te ne gleda. Rep joj je sasvim miran. Tako znaš koliko je uplašena.'
+        '„Сви умеју да говоре“, каже Мими. „Неки од нас бирају да код куће не говоре, јер би то све покварило.“',
+        'Краљица проговори и огњишта потамне. „Чуварка је напустила своју дужност да сакрије маче, а Тихо-ствар је кроз танко место прошло за њом. Закон је стар: Чуварка која побегне бива *разобличена*, а њен глас дат тишини да га понесе кући.“',
+        'Мими те не гледа. Реп јој је сасвим миран. Тако знаш колико је уплашена.'
       ],
       choices: [
-        { text: '„Onda uzmite moj umesto njenog.“', to: 'trial_offer' },
-        { text: '„Dajte mi iskušenje. Otplatiću njen dug.“', to: 'trials' },
-        { text: '„Tiho-stvar mi je već uzelo smeh. Hajde da ga vratimo.“', to: 'trials', needFlag: 'laughStolen' },
-        { text: 'Ne reci ništa i podigni mače.', to: 'kitten_evidence', needItem: '🐈 Uspavano mače' }
+        { text: '„Онда узмите мој уместо њеног.“', to: 'trial_offer' },
+        { text: '„Дајте ми искушење. Отплатићу њен дуг.“', to: 'trials' },
+        { text: '„Тихо-ствар ми је већ узело смех. Хајде да га вратимо.“', to: 'trials', needFlag: 'laughStolen' },
+        { text: 'Не реци ништа и подигни маче.', to: 'kitten_evidence', needItem: '🐈 Успавано маче' }
       ]
     },
 
     kitten_evidence: {
-      title: 'Dokaz broj jedan: zemička',
+      title: 'Доказ број један: земичка',
       text: [
-        'Podigneš mače. Ono se probudi, pogleda trista mačaka i jednu kraljicu, pa zine pravo u lice kraljevstvu.',
-        'Drevne oči Kraljice se suze. „Doneo si naslednicu *ovamo*? Dok je tišina puštena po šumi?“ Duga tišina. „...Pa ipak, doneo si je toplu, nahranjenu i nošenu.“',
-        '„Dete može da stane na Iskušenje umesto Čuvarke. Tri provere. Ako sve tri padneš, zadržaću vas oboje.“'
+        'Подигнеш маче. Оно се пробуди, погледа триста мачака и једну краљицу, па зине право у лице краљевству.',
+        'Древне очи Краљице се сузе. „Донео си наследницу *овамо*? Док је тишина пуштена по шуми?“ Дуга тишина. „...Па ипак, донео си је топлу, нахрањену и ношену.“',
+        '„Дете може да стане на Искушење уместо Чуварке. Три провере. Ако све три паднеш, задржаћу вас обоје.“'
       ],
       firstVisitEffects: { stats: { kindness: 1 }, flags: { royalFavour: true } },
-      choices: [ { text: 'Stani na Iskušenje.', to: 'trials' } ]
+      choices: [ { text: 'Стани на Искушење.', to: 'trials' } ]
     },
 
     trial_offer: {
-      title: 'Ponuda kakvu Dvor nije očekivao',
+      title: 'Понуда какву Двор није очекивао',
       text: [
-        'Dvorana utihne toliko da možeš da čuješ kako devet vatri razmišlja.',
-        '„Čovek nudi glas za mačku“, kaže Kraljica polako. „To se nije desilo šest stotina godina. Poslednji put je prošlo *vrlo* dobro, i još se nismo sasvim oporavili od sramote.“',
-        '„Ne. Nećeš dati glas. Proći ćeš Iskušenje: hrabrost, lukavost, dobrota. Prođi koliko možeš. Onda ćemo videti koliko vrediš.“'
+        'Дворана утихне толико да можеш да чујеш како девет ватри размишља.',
+        '„Човек нуди глас за мачку“, каже Краљица полако. „То се није десило шест стотина година. Последњи пут је прошло *врло* добро, и још се нисмо сасвим опоравили од срамоте.“',
+        '„Не. Нећеш дати глас. Проћи ћеш Искушење: храброст, лукавост, доброта. Прођи колико можеш. Онда ћемо видети колико вредиш.“'
       ],
       firstVisitEffects: { stats: { courage: 1 }, flags: { royalFavour: true } },
-      choices: [ { text: 'Stani na Iskušenje.', to: 'trials' } ]
+      choices: [ { text: 'Стани на Искушење.', to: 'trials' } ]
     },
 
     trials: {
-      title: 'Iskušenje tri šape',
+      title: 'Искушење три шапе',
       text: [
-        'Kraljica podigne jednu šapu i pod dvorane se otvori u tri vrata puna ognja.',
-        '„Uđi u svaka. Uzmi ono što nađeš. Onda idemo u lov, a trebaće ti sve to.“',
-        'Mimi, prolazeći kraj tebe, čelom gurne tvoj članak baš onako kako to radi kod kuće kad je činija prazna. To je najhrabrija stvar koju si ikad osetio.'
+        'Краљица подигне једну шапу и под дворане се отвори у три врата пуна огња.',
+        '„Уђи у свака. Узми оно што нађеш. Онда идемо у лов, а требаће ти све то.“',
+        'Мими, пролазећи крај тебе, челом гурне твој чланак баш онако како то ради код куће кад је чинија празна. То је најхрабрија ствар коју си икад осетио.'
       ],
       choices: [
-        { text: 'Vrata vatre — hrabrost.', to: 'trial_courage', notFlag: 'tCourage' },
-        { text: 'Vrata ogledala — lukavost.', to: 'trial_cunning', notFlag: 'tCunning' },
-        { text: 'Vrata pepela — dobrota.', to: 'trial_kindness', notFlag: 'tKind' },
-        { text: 'Objavi da si spreman i kreni u lov na Tiho-stvar.', to: 'hunt' }
+        { text: 'Врата ватре — храброст.', to: 'trial_courage', notFlag: 'tCourage' },
+        { text: 'Врата огледала — лукавост.', to: 'trial_cunning', notFlag: 'tCunning' },
+        { text: 'Врата пепела — доброта.', to: 'trial_kindness', notFlag: 'tKind' },
+        { text: 'Објави да си спреман и крени у лов на Тихо-ствар.', to: 'hunt' }
       ]
     },
 
     trial_courage: {
-      title: 'Vrata vatre',
+      title: 'Врата ватре',
       text: [
-        'Iza njih: hodnik ognjišne vatre, a na kraju jedan žar na postolju. Pravilo ne izgovara niko, a svi ga razumeju: *hodaj, ne trči.*'
+        'Иза њих: ходник огњишне ватре, а на крају један жар на постољу. Правило не изговара нико, а сви га разумеју: *ходај, не трчи.*'
       ],
       effects: { flags: { tCourage: true } },
       choices: [
-        { text: 'Prođi kroz vatru.',
+        { text: 'Прођи кроз ватру.',
           roll: { stat: 'courage', dc: 8, success: 'trial_c_win', fail: 'trial_c_fail', failEffects: { stats: { health: -1 } } } }
       ]
     },
     trial_c_win: {
-      title: 'Žar uzet',
-      text: ['Hodaš. Plamen liže, ali ne ujeda. Podigneš žar i on ti sedi u dlanu kao namrgođena mačka, topao i sasvim miran. Negde iza tebe trista mačaka uglas kaže *hm*.'],
-      firstVisitEffects: { items: ['🔥 Žar iz ognjišta'], stats: { courage: 1 } },
-      choices: [ { text: 'Nazad do trojih vrata.', to: 'trials' } ]
+      title: 'Жар узет',
+      text: ['Ходаш. Пламен лиже, али не уједа. Подигнеш жар и он ти седи у длану као намргођена мачка, топао и сасвим миран. Негде иза тебе триста мачака углас каже *хм*.'],
+      firstVisitEffects: { items: ['🔥 Жар из огњишта'], stats: { courage: 1 } },
+      choices: [ { text: 'Назад до тројих врата.', to: 'trials' } ]
     },
     trial_c_fail: {
-      title: 'Potrčao si',
-      text: ['Na pola puta tvoja hrabrost proračuna verovatnoću i ti potrčiš. Vatra je više razočarana nego ljuta; sprži ti obrve za uspomenu. Žar ostaje na svom postolju, samodovoljno užaren.'],
-      choices: [ { text: 'Nazad do trojih vrata, bez obrva.', to: 'trials' } ]
+      title: 'Потрчао си',
+      text: ['На пола пута твоја храброст прорачуна вероватноћу и ти потрчиш. Ватра је више разочарана него љута; спржи ти обрве за успомену. Жар остаје на свом постољу, самодовољно ужарен.'],
+      choices: [ { text: 'Назад до тројих врата, без обрва.', to: 'trials' } ]
     },
 
     trial_cunning: {
-      title: 'Vrata ogledala',
+      title: 'Врата огледала',
       text: [
-        'Devet ogledala. U osam njih ti tražiš svoju mačku. U jednom od njih tvoja mačka traži tebe.',
-        'Moraš brzo da odabereš ono drugačije, jer se ogledala mešaju kao trik s kartama koji izvodi neko sa previše šapa.'
+        'Девет огледала. У осам њих ти тражиш своју мачку. У једном од њих твоја мачка тражи тебе.',
+        'Мораш брзо да одабереш оно другачије, јер се огледала мешају као трик с картама који изводи неко са превише шапа.'
       ],
       effects: { flags: { tCunning: true } },
       choices: [
-        { text: 'Prati neobično ogledalo.',
+        { text: 'Прати необично огледало.',
           roll: { stat: 'cunning', dc: 8, success: 'trial_m_win', fail: 'trial_m_fail' } },
-        { text: 'Zatvori oči i umesto toga oslušni predenje.',
+        { text: 'Затвори очи и уместо тога ослушни предење.',
           roll: { stat: 'kindness', dc: 9, success: 'trial_m_win', fail: 'trial_m_fail' } }
       ]
     },
     trial_m_win: {
-      title: 'Nađeno u pogledu',
-      text: ['Lupiš dlanom pravo ogledalo. Ono prsne u hladnu svetlost koja ti se sakuplja u džepu kao krhotina koja pokazuje stvari onakve kakve zaista jesu — uključujući, kad je krišom pogledaš, jedan dugi presavijeni oblik koji vreba na ivici dvorane. Već je ovde.'],
-      firstVisitEffects: { items: ['🪞 Krhotina istine'], stats: { cunning: 1 }, flags: { hushHere: true } },
-      choices: [ { text: 'Nazad do vrata, sad brže.', to: 'trials' } ]
+      title: 'Нађено у погледу',
+      text: ['Лупиш дланом право огледало. Оно прсне у хладну светлост која ти се сакупља у џепу као крхотина која показује ствари онакве какве заиста јесу — укључујући, кад је кришом погледаш, један дуги пресавијени облик који вреба на ивици дворане. Већ је овде.'],
+      firstVisitEffects: { items: ['🪞 Крхотина истине'], stats: { cunning: 1 }, flags: { hushHere: true } },
+      choices: [ { text: 'Назад до врата, сад брже.', to: 'trials' } ]
     },
     trial_m_fail: {
-      title: 'Osam pogrešnih pokušaja',
-      text: ['Biraš pogrešno, pa pogrešno, pa opet pogrešno. Ogledala se smeju glasom mačke koja je gurnula čašu sa stola. Odlaziš bez ičega osim snažnog osećaja da si bio *procenjen*.'],
-      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
+      title: 'Осам погрешних покушаја',
+      text: ['Бираш погрешно, па погрешно, па опет погрешно. Огледала се смеју гласом мачке која је гурнула чашу са стола. Одлазиш без ичега осим снажног осећаја да си био *процењен*.'],
+      choices: [ { text: 'Назад до врата.', to: 'trials' } ]
     },
 
     trial_kindness: {
-      title: 'Vrata pepela',
+      title: 'Врата пепела',
       text: [
-        'Hladna soba, mrtvo ognjište i jedna veoma stara mačka koja leži u pepelu — slepa, mršava, drhtava i odavno iznad toga da je briga ko gleda.',
-        'Ovde nema ničega što bi se osvojilo. Naravno, upravo je to ispit.'
+        'Хладна соба, мртво огњиште и једна веома стара мачка која лежи у пепелу — слепа, мршава, дрхтава и одавно изнад тога да је брига ко гледа.',
+        'Овде нема ничега што би се освојило. Наравно, управо је то испит.'
       ],
       effects: { flags: { tKind: true } },
       choices: [
-        { text: 'Ugrej staru mačku žarom iz ognjišta.', to: 'trial_k_ember', needItem: '🔥 Žar iz ognjišta' },
-        { text: 'Skini gornji deo pidžame i umotaj je u njega.', to: 'trial_k_win' },
-        { text: 'Sedi i mazi je dok ne prestane da drhti.', to: 'trial_k_win' },
-        { text: 'Odi — imaš svoju mačku koju treba spasiti.', to: 'trial_k_leave' }
+        { text: 'Угреј стару мачку жаром из огњишта.', to: 'trial_k_ember', needItem: '🔥 Жар из огњишта' },
+        { text: 'Скини горњи део пиџаме и умотај је у њега.', to: 'trial_k_win' },
+        { text: 'Седи и мази је док не престане да дрхти.', to: 'trial_k_win' },
+        { text: 'Оди — имаш своју мачку коју треба спасити.', to: 'trial_k_leave' }
       ]
     },
     trial_k_ember: {
-      title: 'Ognjište ponovo gori',
+      title: 'Огњиште поново гори',
       text: [
-        'Staviš žar u mrtvo ognjište. On plane zvukom sličnim predenju i soba se napuni svetlošću.',
-        'Stara mačka otvori mlečne oči. „Oh“, kaže. „Tako je bolje. Ti si onaj sa hladnim stopalima.“ Spusti čelo na tvoje zglobove i nešto toplo i tvrdoglavo nastani ti se u grudima, nešto što nikakva tišina nikad neće moći da pojede.'
+        'Ставиш жар у мртво огњиште. Он плане звуком сличним предењу и соба се напуни светлошћу.',
+        'Стара мачка отвори млечне очи. „Ох“, каже. „Тако је боље. Ти си онај са хладним стопалима.“ Спусти чело на твоје зглобове и нешто топло и тврдоглаво настани ти се у грудима, нешто што никаква тишина никад неће моћи да поједе.'
       ],
-      firstVisitEffects: { items: ['💛 Toplota koja se ne može pojesti'], lose: ['🔥 Žar iz ognjišta'], stats: { kindness: 2, health: 1 }, flags: { blessed: true } },
-      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
+      firstVisitEffects: { items: ['💛 Топлота која се не може појести'], lose: ['🔥 Жар из огњишта'], stats: { kindness: 2, health: 1 }, flags: { blessed: true } },
+      choices: [ { text: 'Назад до врата.', to: 'trials' } ]
     },
     trial_k_win: {
-      title: 'Ništa za osvojiti',
+      title: 'Ништа за освојити',
       text: [
-        'Sediš u pepelu, u hladnoj sobi, sa neznancem koji umire, i radiš jedinu korisnu stvar koja postoji, a to je da ostaneš.',
-        'Posle nekog vremena drhtanje prestane. „Dobar“, promrmlja stara mačka. „Dobrotu jedinu nikad ne troše.“ Izdiše srebrnu nit koja ti se dvaput obavije oko ručnog zgloba i ostane tu.'
+        'Седиш у пепелу, у хладној соби, са незнанцем који умире, и радиш једину корисну ствар која постоји, а то је да останеш.',
+        'После неког времена дрхтање престане. „Добар“, промрмља стара мачка. „Доброту једину никад не троше.“ Издише сребрну нит која ти се двапут обавије око ручног зглоба и остане ту.'
       ],
-      firstVisitEffects: { items: ['🧵 Srebrna nit'], stats: { kindness: 2 }, flags: { blessed: true } },
-      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
+      firstVisitEffects: { items: ['🧵 Сребрна нит'], stats: { kindness: 2 }, flags: { blessed: true } },
+      choices: [ { text: 'Назад до врата.', to: 'trials' } ]
     },
     trial_k_leave: {
-      title: 'Odlaziš',
-      text: ['Odlaziš. To je razuman izbor i sedi ti u stomaku kao progutan kamen do kraja noći. Iza tebe, drhtanje se nastavlja.'],
+      title: 'Одлазиш',
+      text: ['Одлазиш. То је разуман избор и седи ти у стомаку као прогутан камен до краја ноћи. Иза тебе, дрхтање се наставља.'],
       firstVisitEffects: { stats: { kindness: -1 }, flags: { coldChoice: true } },
-      choices: [ { text: 'Nazad do vrata.', to: 'trials' } ]
+      choices: [ { text: 'Назад до врата.', to: 'trials' } ]
     },
 
     /* ---------- Act V: The Hunt ---------- */
 
     hunt: {
-      title: 'Tišina dolazi sama',
+      title: 'Тишина долази сама',
       text: [
-        'Ne moraš da ideš u lov. Dvorana utihne — ona pogrešna tišina, prigušena vrsta — i svako ognjište zatreperi odjednom.',
-        'Tiho-stvar se razmotava između dve vatre: visoko, osluškujuće, okićeno ukradenim glasovima kao zvečkom od tuđih reči. Jedan od tih glasova je tvoj smeh.',
-        'Pruža se ka Mimi, koja stoji čvrsto ispred trista utišanih mačaka, jer tako radi Čuvarka.'
+        'Не мораш да идеш у лов. Дворана утихне — она погрешна тишина, пригушена врста — и свако огњиште затрепери одједном.',
+        'Тихо-ствар се размотава између две ватре: високо, ослушкујуће, окићено украденим гласовима као звечком од туђих речи. Један од тих гласова је твој смех.',
+        'Пружа се ка Мими, која стоји чврсто испред триста утишаних мачака, јер тако ради Чуварка.'
       ],
       choices: [
-        { text: 'Pozvoni Barnabijevim zvonom — zvukom sa korenjem.', to: 'end_bell', needItem: '🔔 Barnabijevo zvono' },
-        { text: 'Podigni krhotinu istine i *vidi* je.', to: 'end_shard', needItem: '🪞 Krhotina istine', hideWhenLocked: false },
-        { text: 'Stani ispred Mimi.',
+        { text: 'Позвони Барнабијевим звоном — звуком са корењем.', to: 'end_bell', needItem: '🔔 Барнабијево звоно' },
+        { text: 'Подигни крхотину истине и *види* је.', to: 'end_shard', needItem: '🪞 Крхотина истине', hideWhenLocked: false },
+        { text: 'Стани испред Мими.',
           roll: { stat: 'courage', dc: 9, success: 'end_shield_win', fail: 'end_shield_fail', failEffects: { stats: { health: -2 } } } },
-        { text: 'Obrati joj se blago. Pitaj je šta je izgubila.',
+        { text: 'Обрати јој се благо. Питај је шта је изгубила.',
           roll: { stat: 'kindness', dc: 8, success: 'end_ask_win', fail: 'end_shield_fail', failEffects: { stats: { health: -1 } } } }
       ]
     },
 
     end_bell: {
-      title: 'Zvuk sa korenjem',
+      title: 'Звук са корењем',
       text: [
-        'Pozvoniš zvonom i ovog puta zazvoni ceo Dvor s njim — devet ognjišta, trista grla, šezdeset godina jednog starca koji zove jednu staru mačku kući na čaj.',
-        'Tiho-stvar to ne može da proguta. Raspline se kao magla na prozoru i svaki ukradeni glas prsne slobodan i pojuri svom vlasniku. Tvoj smeh te udari u grudi i još se smeješ kad ognjišta opet planu.',
-        'Kraljica pažljivo spusti glavu za jedan jedini pedalj. „Dug je plaćen, a šuma je tiša zbog toga.“'
+        'Позвониш звоном и овог пута зазвони цео Двор с њим — девет огњишта, триста грла, шездесет година једног старца који зове једну стару мачку кући на чај.',
+        'Тихо-ствар то не може да прогута. Расплине се као магла на прозору и сваки украдени глас прсне слободан и појури свом власнику. Твој смех те удари у груди и још се смејеш кад огњишта опет плану.',
+        'Краљица пажљиво спусти главу за један једини педаљ. „Дуг је плаћен, а шума је тиша због тога.“'
       ],
-      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
+      choices: [ { text: 'Окрени се ка Мими.', to: 'aftermath' } ]
     },
 
     end_shard: {
-      title: 'Viđena',
+      title: 'Виђена',
       text: [
-        'Podigneš krhotinu i *pogledaš* je — zaista, onako kako je niko nikad nije pogledao — pa kažeš sasvim glasno: „Vidim te.“',
-        'Ona stane. Biti viđena jedina je stvar koju tišina ne može da preživi. Sklapa se u sve manju i manju, ispuštajući glasove usput, dok od nje ne ostane malo sivo stvorenje veličine moljca, koje odleprša u korenje da iz ničega počne iznova.',
-        'Tvoj smeh se vraća poslednji, pomalo postiđeno, kao pas koji je odlutao u parku.'
+        'Подигнеш крхотину и *погледаш* је — заиста, онако како је нико никад није погледао — па кажеш сасвим гласно: „Видим те.“',
+        'Она стане. Бити виђена једина је ствар коју тишина не може да преживи. Склапа се у све мању и мању, испуштајући гласове успут, док од ње не остане мало сиво створење величине мољца, које одлепрша у корење да из ничега почне изнова.',
+        'Твој смех се враћа последњи, помало постиђено, као пас који је одлутао у парку.'
       ],
-      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
+      choices: [ { text: 'Окрени се ка Мими.', to: 'aftermath' } ]
     },
 
     end_shield_win: {
-      title: 'Ispred',
+      title: 'Испред',
       text: [
-        'Staneš između tišine i mačke, u donjem delu pidžame, sa jednom papučom, i kažeš „ne“.',
-        'Zgrabi te i pronađe — na svoju ogromnu zbunjenost — da u tebi nema ničega vrednog jedenja: nimalo tišine, samo topla bučna zbrka od deteta koje svojoj mački priča baš sve.',
-        'Pusti te, uvređeno, i pobegne iz dvorane. Dvor eksplodira u najnedostojnije navijanje u poslednjih devet stotina godina.'
+        'Станеш између тишине и мачке, у доњем делу пиџаме, са једном папучом, и кажеш „не“.',
+        'Зграби те и пронађе — на своју огромну збуњеност — да у теби нема ничега вредног једења: нимало тишине, само топла бучна збрка од детета које својој мачки прича баш све.',
+        'Пусти те, увређено, и побегне из дворане. Двор експлодира у најнедостојније навијање у последњих девет стотина година.'
       ],
       firstVisitEffects: { stats: { courage: 1 } },
-      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
+      choices: [ { text: 'Окрени се ка Мими.', to: 'aftermath' } ]
     },
 
     end_shield_fail: {
-      title: 'Nije dovoljno, sam',
+      title: 'Није довољно, сам',
       text: [
-        'Nisi dovoljno brz, ni dovoljno glasan, i hladnoća se sklapa oko tebe —',
-        '— a onda iz tvog gornjeg dela pidžame / iz korenja izleće veoma mala siva prilika sa belom čarapicom i sikće na Tiho-stvar sa svih svojih dvesta grama.',
-        'Ceo Dvor sikće s njom. Trista mačaka. Devet ognjišta. Jedno dete na podu koje se pridružuje s onim što mu je ostalo od glasa. Tišina ne može da pojede buku toliku. Rasplete se i pobegne.'
+        'Ниси довољно брз, ни довољно гласан, и хладноћа се склапа око тебе —',
+        '— а онда из твог горњег дела пиџаме / из корења излеће веома мала сива прилика са белом чарапицом и сикће на Тихо-ствар са свих својих двеста грама.',
+        'Цео Двор сикће с њом. Триста мачака. Девет огњишта. Једно дете на поду које се придружује с оним што му је остало од гласа. Тишина не може да поједе буку толику. Расплете се и побегне.'
       ],
-      choices: [ { text: 'Uspravi se, dok ti zuji u ušima.', to: 'aftermath' } ]
+      choices: [ { text: 'Усправи се, док ти зуји у ушима.', to: 'aftermath' } ]
     },
 
     end_ask_win: {
-      title: 'Šta si izgubila?',
+      title: 'Шта си изгубила?',
       text: [
-        'Učiniš nešto što niko devet stotina godina nije pokušao. Sedneš na pod Dvora, pogledaš nagore u visoku presavijenu tišinu i pitaš: „Šta si *ti* izgubila?“',
-        'Ona stane. Polako, među ukradenim glasovima, izađe jedan mali, napukao i njen sopstveni: *„Sve. Bila sam ognjište. Niko nije sedeo kraj mene.“*',
-        'Pa ga ponovo potpališ — žarom, niti umotane drhtave stare mačke, ili samo time što se primakneš i napraviš mesta. Tiho-stvar postane deseta vatra u Dvoru devetostrukog ognjišta, gori veoma tiho, i svaki glas koji je uzela vrati se kući.'
+        'Учиниш нешто што нико девет стотина година није покушао. Седнеш на под Двора, погледаш нагоре у високу пресавијену тишину и питаш: „Шта си *ти* изгубила?“',
+        'Она стане. Полако, међу украденим гласовима, изађе један мали, напукао и њен сопствени: *„Све. Била сам огњиште. Нико није седео крај мене.“*',
+        'Па га поново потпалиш — жаром, нити умотане дрхтаве старе мачке, или само тиме што се примакнеш и направиш места. Тихо-ствар постане десета ватра у Двору деветоструког огњишта, гори веома тихо, и сваки глас који је узела врати се кући.'
       ],
       firstVisitEffects: { stats: { kindness: 1 }, flags: { tenthHearth: true } },
-      choices: [ { text: 'Okreni se ka Mimi.', to: 'aftermath' } ]
+      choices: [ { text: 'Окрени се ка Мими.', to: 'aftermath' } ]
     },
 
     aftermath: {
-      title: 'Mačje svođenje računa',
+      title: 'Мачје свођење рачуна',
       text: [
-        'Kraljica mačaka dugo, dugo te posmatra.',
-        '„Dug Čuvarke platilo je ljudsko dete u pidžami“, kaže. „Dvor je ponižen, a ja sam, u sebi, oduševljena. Čuvarko Mimi: oslobođena si. Biraj.“',
-        'Mimi pogleda devet ognjišta, svoje mače, šumu koju je čuvala još pre nego što si se rodio. Onda tebe.',
-        '„Dobro“, kaže. „Onda me pitaj. Kako treba.“'
+        'Краљица мачака дуго, дуго те посматра.',
+        '„Дуг Чуварке платило је људско дете у пиџами“, каже. „Двор је понижен, а ја сам, у себи, одушевљена. Чуварко Мими: ослобођена си. Бирај.“',
+        'Мими погледа девет огњишта, своје маче, шуму коју је чувала још пре него што си се родио. Онда тебе.',
+        '„Добро“, каже. „Онда ме питај. Како треба.“'
       ],
       choices: [
-        { text: '„Dođi kući. Molim te.“', to: 'end_home' },
-        { text: '„Ostani. Ovo je tvoja šuma. Dolaziću svake Šuplje noći.“', to: 'end_stay' },
-        { text: '„Dođi kući — i povedi mače. I posao. Snaći ćemo se.“', to: 'end_both', needFlag: 'foundKitten' },
-        { text: '„Mogu li ja da ostanem ovde s tobom?“', to: 'end_wild' }
+        { text: '„Дођи кући. Молим те.“', to: 'end_home' },
+        { text: '„Остани. Ово је твоја шума. Долазићу сваке Шупље ноћи.“', to: 'end_stay' },
+        { text: '„Дођи кући — и поведи маче. И посао. Снаћи ћемо се.“', to: 'end_both', needFlag: 'foundKitten' },
+        { text: '„Могу ли ја да останем овде с тобом?“', to: 'end_wild' }
       ]
     },
 
     /* ---------- Endings ---------- */
 
     end_home: {
-      title: 'Kraj: Udubljenje u jorganu',
+      title: 'Крај: Удубљење у јоргану',
       text: [
-        '„Naravno“, kaže Mimi i izađe iz Dvora devetostrukog ognjišta ne osvrćući se, uzdignutog repa, kao da joj mesto pripada — što se, ispostavlja se, zapravo donekle i dešava.',
-        'Izlazite kroz živicu u četiri ujutru. Pusti ti da je nosiš onaj poslednji komadić puta, što ti nikad ranije nije dopustila.',
-        'Ujutru na jorganu ima udubljenje, a u njemu mačka, i ne kaže nijednu jedinu reč — ne za doručkom, ne nikad više, ne tamo gde bi iko mogao da čuje. Ali kad kažeš „Znam šta si“, ona ti polako trepne, što na mačjem znači *da*, a takođe i *nemoj nikom da kažeš*.'
+        '„Наравно“, каже Мими и изађе из Двора деветоструког огњишта не осврћући се, уздигнутог репа, као да јој место припада — што се, испоставља се, заправо донекле и дешава.',
+        'Излазите кроз живицу у четири ујутру. Пусти ти да је носиш онај последњи комадић пута, што ти никад раније није допустила.',
+        'Ујутру на јоргану има удубљење, а у њему мачка, и не каже ниједну једину реч — не за доручком, не никад више, не тамо где би ико могао да чује. Али кад кажеш „Знам шта си“, она ти полако трепне, што на мачјем значи *да*, а такође и *немој ником да кажеш*.'
       ],
       ending: true,
       choices: []
     },
 
     end_stay: {
-      title: 'Kraj: Stalni poziv',
+      title: 'Крај: Стални позив',
       text: [
-        'To je najteža rečenica koju si ikad izgovorio i uspeš da je izneseš a da ti glas ne pukne.',
-        'Mimi dugo ćuti. „To“, kaže, „je najdobrotnija stvar koju je iko ikada učinio za mene, i tu računam i ono kad si mi dao celu svoju piletinu za večeru.“',
-        'Ona ostaje. Ti odlaziš kući sa praznim jorganom — ali svake sledeće Šuplje noći živica udahne i otvori se, a mala crna mačka sa belom čarapicom čeka s druge strane sa celom godinom novosti, i ti si jedina osoba na svetu koja sme da sluša mačje tračeve.'
+        'То је најтежа реченица коју си икад изговорио и успеш да је изнесеш а да ти глас не пукне.',
+        'Мими дуго ћути. „То“, каже, „је најдобротнија ствар коју је ико икада учинио за мене, и ту рачунам и оно кад си ми дао целу своју пилетину за вечеру.“',
+        'Она остаје. Ти одлазиш кући са празним јорганом — али сваке следеће Шупље ноћи живица удахне и отвори се, а мала црна мачка са белом чарапицом чека с друге стране са целом годином новости, и ти си једина особа на свету која сме да слуша мачје трачеве.'
       ],
       ending: true,
       choices: []
     },
 
     end_both: {
-      title: 'Kraj: Dve mačke, jedna Čuvarka, bez objašnjenja',
+      title: 'Крај: Две мачке, једна Чуварка, без објашњења',
       text: [
-        '„Oboje“, kažeš. „Sve to. Mače, posao, sve. Imamo baštu i živicu koja se otvara jednom godišnje, a ja *strašno* dobro čuvam tajne.“',
-        'Kraljica mačaka pusti zvuk koji bi mogao biti smeh, a mogao bi biti i problem sa plućima. „Mesto Čuvarke, vođeno iz *prizemnice*“, kaže. „Neka bude. Ovaj vek je bio užasno dosadan.“',
-        'Kući stižeš u zoru sa mačkom pod jednom rukom i zemičkom pod bradom. Roditeljima se kaže da je bilo jedno napušteno mače. Svi odluče da u to poveruju. U Šupljim noćima tvoj prozor spavaće sobe ostaje otvoren, a cela šuma zna put.'
+        '„Обоје“, кажеш. „Све то. Маче, посао, све. Имамо башту и живицу која се отвара једном годишње, а ја *страшно* добро чувам тајне.“',
+        'Краљица мачака пусти звук који би могао бити смех, а могао би бити и проблем са плућима. „Место Чуварке, вођено из *приземнице*“, каже. „Нека буде. Овај век је био ужасно досадан.“',
+        'Кући стижеш у зору са мачком под једном руком и земичком под брадом. Родитељима се каже да је било једно напуштено маче. Сви одлуче да у то поверују. У Шупљим ноћима твој прозор спаваће собе остаје отворен, а цела шума зна пут.'
       ],
       ending: true,
       choices: []
     },
 
     end_wild: {
-      title: 'Kraj: Dete koje je ostalo do jutra',
+      title: 'Крај: Дете које је остало до јутра',
       text: [
-        '„Ne“, kaže Mimi blago, pre nego što Kraljica stigne da odgovori. „Nipošto. Imaš školu.“',
-        'Ali pusti te da ostaneš do svitanja, a Dvor — koji su, ispod svega, ipak mačke — te sate provodi sedeći na tebi, svi oni, u smenama, predući, što je najbliže viteštvu što Šuplja šuma nudi.',
-        'Kući se vraćaš u izlazak sunca, topao, prekriven dlakom, sa vraćenim smehom i malom sivom senkom koja ti prati pete, i sa stalnim sastankom sa šumom koja će se za tebe uvek, uvek otvoriti.'
+        '„Не“, каже Мими благо, пре него што Краљица стигне да одговори. „Нипошто. Имаш школу.“',
+        'Али пусти те да останеш до свитања, а Двор — који су, испод свега, ипак мачке — те сате проводи седећи на теби, сви они, у сменама, предући, што је најближе витештву што Шупља шума нуди.',
+        'Кући се враћаш у излазак сунца, топао, прекривен длаком, са враћеним смехом и малом сивом сенком која ти прати пете, и са сталним састанком са шумом која ће се за тебе увек, увек отворити.'
       ],
       ending: true,
       choices: []
     },
 
     faint: {
-      title: 'Kraj: Šuma te zadrži još malo',
+      title: 'Крај: Шума те задржи још мало',
       text: [
-        'Noge te izdaju. Mahovina se podigne da te dočeka, a mnogo je mekša nego što mahovina ima ikakvo pravo da bude.',
-        'Budiš se u podne u sopstvenoj bašti, suv, topao, sa zavijenim ogrebotinama u paučinu i moljčevu svilu, i bez mačke.',
-        'Na jastuku pored tebe: jedno mesingano zvonce, jedno sivo mače sa belom čarapicom i poruka ispisana paučastom rukom: *„Ostaje da to dovrši. Šalje malenu. Kaže da si bio sjajan, i da pojedeš nešto.“* Sledeće Šuplje noći bićeš spreman. Imaš celu godinu da postaneš hrabriji.'
+        'Ноге те издају. Маховина се подигне да те дочека, а много је мекша него што маховина има икакво право да буде.',
+        'Будиш се у подне у сопственој башти, сув, топао, са завијеним огреботинама у паучину и мољчеву свилу, и без мачке.',
+        'На јастуку поред тебе: једно месингано звонце, једно сиво маче са белом чарапицом и порука исписана паучастом руком: *„Остаје да то доврши. Шаље малену. Каже да си био сјајан, и да поједеш нешто.“* Следеће Шупље ноћи бићеш спреман. Имаш целу годину да постанеш храбрији.'
       ],
       ending: true,
       choices: []
