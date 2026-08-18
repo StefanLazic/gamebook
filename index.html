@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1b1033">
-<meta name="description" content="Бркосјај — мала фантастична књига-игра о детету које тражи несталу мачку Мими.">
-<title>Бркосјај — књига-игра</title>
+<meta name="theme-color" content="#0f3d6b">
+<meta name="description" content="Први дан петог разреда — књига-игра о једанаестогодишњаку, првом дану у петом разреду у Београду и пет часова без лоше оцене.">
+<title>Први дан петог разреда — књига-игра</title>
 <link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎒</text></svg>">
 </head>
 <body>
 <div id="stars" aria-hidden="true"></div>
@@ -16,21 +16,21 @@
   <!-- Naslovni ekran -->
   <section id="title-screen" class="screen">
     <button id="howto-btn" class="btn btn-ghost howto-top">❓ Како се игра — коцке и особине</button>
-    <div class="title-art" aria-hidden="true">🐈‍⬛</div>
-    <h1 class="title">Брко<span>сјај</span></h1>
-    <p class="subtitle">Мала фантастична књига-игра о изгубљеној мачки,<br>храбром детету и једној врло чудној ноћи.</p>
-    <button id="start-btn" class="btn btn-primary">Почни потрагу</button>
+    <div class="title-art" aria-hidden="true">🎒</div>
+    <h1 class="title">Први дан <span>петог</span></h1>
+    <p class="subtitle">Књига-игра о једанаестогодишњаку, првом дану<br>у петом разреду у Београду и пет часова без кеца.</p>
+    <button id="start-btn" class="btn btn-primary">Почни први дан</button>
     <button id="continue-btn" class="btn btn-ghost hidden">Настави</button>
-    <p class="credits">Баци коцке. Бирај. Пронађи Мими.</p>
+    <p class="credits">Баци коцке. Бирај. Прођи први дан без лоше оцене.</p>
   </section>
 
   <!-- Ekran igre -->
   <section id="game-screen" class="screen hidden">
     <header id="hud">
-      <div class="stat" title="Храброст"><span class="stat-icon">🔥</span><span id="stat-courage">3</span></div>
-      <div class="stat" title="Лукавост"><span class="stat-icon">🦊</span><span id="stat-cunning">3</span></div>
-      <div class="stat" title="Доброта"><span class="stat-icon">💛</span><span id="stat-kindness">3</span></div>
-      <div class="stat" title="Здравље"><span class="stat-icon">❤️</span><span id="stat-health">5</span></div>
+      <div class="stat" title="Знање"><span class="stat-icon">📘</span><span id="stat-knowledge">3</span></div>
+      <div class="stat" title="Смелост"><span class="stat-icon">🔥</span><span id="stat-courage">3</span></div>
+      <div class="stat" title="Другарство"><span class="stat-icon">🤝</span><span id="stat-friends">3</span></div>
+      <div class="stat" title="Живци"><span class="stat-icon">😌</span><span id="stat-calm">5</span></div>
       <button id="menu-btn" class="icon-btn" aria-label="Мени">☰</button>
     </header>
 
@@ -44,7 +44,7 @@
       <nav id="choices" aria-label="Избори"></nav>
     </div>
 
-    <footer id="pack" aria-label="Предмети"></footer>
+    <footer id="pack" aria-label="Ранац и оцене"></footer>
   </section>
 </main>
 
@@ -53,7 +53,7 @@
     <h2>Мени</h2>
     <button id="menu-resume" class="btn btn-ghost">Настави игру</button>
     <button id="menu-howto" class="btn btn-ghost">Како се игра</button>
-    <button id="menu-restart" class="btn btn-ghost">Почни ноћ изнова</button>
+    <button id="menu-restart" class="btn btn-ghost">Почни дан изнова</button>
     <p class="menu-note">Напредак се аутоматски чува на овом уређају.</p>
   </div>
 </div>
@@ -68,7 +68,7 @@
     <h3>🎲 Коцке</h3>
     <p>Бацају се <strong>две шестостране коцке (2к6)</strong>, па се њихов збир сабира са
       особином коју избор користи. Резултат се пореди са <strong>тежином (ТБ)</strong> која
-      пише на дугмету, на пример <span class="tag">Храброст 8+</span>.</p>
+      пише на дугмету, на пример <span class="tag">Знање 8+</span>.</p>
     <p class="formula">коцка + коцка + особина ≥ тежина → успех</p>
     <ul>
       <li><strong>Две шестице</strong> — врхунски успех, увек пролази и понекад отвара посебан исход.</li>
@@ -80,16 +80,18 @@
     <p>Особине су твој бонус на коцке — што је особина већа, то лакше успеваш у том типу изазова.
       Поступци у причи их дижу или спуштају.</p>
     <ul class="stat-legend">
-      <li><span class="stat-icon">🔥</span> <strong>Храброст</strong> — јурнути, скочити, супротставити се.</li>
-      <li><span class="stat-icon">🦊</span> <strong>Лукавост</strong> — досетити се, преварити, провући се.</li>
-      <li><span class="stat-icon">💛</span> <strong>Доброта</strong> — помоћи, умирити, стећи пријатеља.</li>
-      <li><span class="stat-icon">❤️</span> <strong>Здравље</strong> — колико још издржаваш. Ако падне на 0, ноћ се завршава на свој начин.</li>
+      <li><span class="stat-icon">📘</span> <strong>Знање</strong> — задатак на табли, микроскоп, права реч у право време.</li>
+      <li><span class="stat-icon">🔥</span> <strong>Смелост</strong> — дићи руку, читати наглас, залетети се на козлић.</li>
+      <li><span class="stat-icon">🤝</span> <strong>Другарство</strong> — помоћи, поделити, добити шапат из треће клупе.</li>
+      <li><span class="stat-icon">😌</span> <strong>Живци</strong> — колико још издржаваш. Ако падну на 0, правиш паузу код педагога.</li>
     </ul>
 
-    <h3>🏆 Победа и пораз</h3>
-    <p>Успех води ка бољем, сигурнијем путу. Неуспех <em>није</em> крај игре — прича скреће
-      у страну, обично уз губитак здравља или предмета, и иде даље. Постоји више завршетака:
-      који ћеш добити зависи од твојих избора, особина и предмета које си сакупио.</p>
+    <h3>🏆 Циљ дана</h3>
+    <p>Данас имаш пет часова: математику, српски, енглески, биологију и физичко. На сваком
+      можеш да зарадиш <strong>добру оцену ⭐</strong>, да прођеш без оцене или да покупиш
+      <strong>лошу оцену 💢</strong>. Оцене и ствари из ранца видиш на дну екрана.</p>
+    <p>Неуспех <em>није</em> крај игре — прича скреће у страну и увек постоји начин да се
+      дан поправи. Има више завршетака, а који ћеш добити зависи од оцена, другова и избора.</p>
 
     <h3>🖼️ Слике и текст</h3>
     <p>Свака страна прво покаже <strong>слику</strong>, па се онда прича исписује

@@ -1,13 +1,14 @@
 :root {
-  --bg: #140c26;
-  --bg2: #241546;
-  --ink: #f4ecff;
-  --muted: #b8a8dc;
-  --gold: #ffd166;
-  --rose: #ff7b9c;
-  --mint: #7ce7c8;
-  --panel: rgba(255, 255, 255, 0.06);
-  --panel-line: rgba(255, 255, 255, 0.14);
+  --bg: #eaf3fb;
+  --bg2: #cfe6fa;
+  --ink: #22314a;
+  --muted: #5f7391;
+  --gold: #e08a1e;
+  --rose: #e2565f;
+  --mint: #1a8f74;
+  --blue: #2f7fd8;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-line: rgba(47, 127, 216, 0.22);
   --radius: 16px;
 }
 
@@ -17,7 +18,7 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: radial-gradient(120% 90% at 50% 0%, var(--bg2) 0%, var(--bg) 60%, #0c0718 100%);
+  background: radial-gradient(120% 90% at 50% 0%, var(--bg2) 0%, var(--bg) 55%, #fdf6e6 100%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: ui-rounded, "Segoe UI", Nunito, system-ui, -apple-system, sans-serif;
@@ -31,16 +32,16 @@ html, body {
   inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(1.6px 1.6px at 20% 30%, rgba(255,255,255,.8), transparent),
-    radial-gradient(1.4px 1.4px at 70% 15%, rgba(255,255,255,.7), transparent),
-    radial-gradient(1.8px 1.8px at 40% 70%, rgba(255,235,180,.7), transparent),
-    radial-gradient(1.2px 1.2px at 85% 60%, rgba(255,255,255,.6), transparent),
-    radial-gradient(1.5px 1.5px at 10% 85%, rgba(180,220,255,.7), transparent),
-    radial-gradient(1.3px 1.3px at 60% 90%, rgba(255,255,255,.5), transparent);
-  animation: twinkle 6s ease-in-out infinite alternate;
+    radial-gradient(2.4px 2.4px at 20% 30%, rgba(255,255,255,.9), transparent),
+    radial-gradient(2px 2px at 70% 15%, rgba(226,86,95,.35), transparent),
+    radial-gradient(2.6px 2.6px at 40% 70%, rgba(255,209,102,.45), transparent),
+    radial-gradient(2px 2px at 85% 60%, rgba(47,127,216,.3), transparent),
+    radial-gradient(2.4px 2.4px at 10% 85%, rgba(26,143,116,.3), transparent),
+    radial-gradient(2px 2px at 60% 90%, rgba(255,255,255,.8), transparent);
+  animation: twinkle 7s ease-in-out infinite alternate;
   z-index: 0;
 }
-@keyframes twinkle { from { opacity: .5; } to { opacity: 1; } }
+@keyframes twinkle { from { opacity: .35; } to { opacity: .8; } }
 
 #app {
   position: relative;
@@ -74,14 +75,14 @@ html, body {
   font-size: clamp(2.4rem, 12vw, 4rem);
   margin: .2rem 0 0;
   letter-spacing: .02em;
-  background: linear-gradient(180deg, #fff 0%, var(--gold) 70%, var(--rose) 130%);
+  background: linear-gradient(180deg, var(--blue) 0%, var(--rose) 75%, var(--gold) 130%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .title span { font-style: italic; }
 .subtitle { color: var(--muted); margin: .25rem 0 1.25rem; }
-.credits { color: rgba(184,168,220,.7); font-size: .85rem; margin-top: 1.5rem; }
+.credits { color: rgba(95,115,145,.85); font-size: .85rem; margin-top: 1.5rem; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -100,9 +101,9 @@ html, body {
 .btn:active { transform: scale(.97); filter: brightness(1.15); }
 .btn-primary {
   background: linear-gradient(135deg, var(--rose), var(--gold));
-  color: #2b1436;
+  color: #fff8ec;
   border: none;
-  box-shadow: 0 10px 28px rgba(255, 123, 156, .3);
+  box-shadow: 0 10px 28px rgba(226, 86, 95, .28);
   font-size: 1.1rem;
 }
 .btn-ghost { margin-top: .5rem; }
@@ -132,7 +133,7 @@ html, body {
   gap: .35rem;
   padding: .4rem .25rem;
   margin-bottom: .5rem;
-  background: linear-gradient(180deg, rgba(20,12,38,.96), rgba(20,12,38,.75));
+  background: linear-gradient(180deg, rgba(234,243,251,.97), rgba(234,243,251,.78));
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--panel-line);
 }
@@ -152,7 +153,7 @@ html, body {
 .stat.bump { animation: bump .5s ease; }
 @keyframes bump {
   0% { transform: scale(1); }
-  40% { transform: scale(1.35); background: rgba(255,209,102,.3); }
+  40% { transform: scale(1.35); background: rgba(255,209,102,.55); }
   100% { transform: scale(1); }
 }
 #menu-btn { margin-left: auto; }
@@ -175,6 +176,7 @@ html, body {
 #passage p { margin: 0 0 .85rem; }
 #passage p:last-child { margin-bottom: 0; }
 #passage em { color: var(--mint); font-style: italic; }
+#passage { box-shadow: 0 8px 24px rgba(47, 127, 216, .1); }
 #passage .note {
   font-size: .92rem;
   color: var(--muted);
@@ -188,7 +190,7 @@ html, body {
   font: inherit;
   text-align: left;
   color: var(--ink);
-  background: linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+  background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(233,242,252,.85));
   border: 1px solid var(--panel-line);
   border-left: 4px solid var(--rose);
   border-radius: 14px;
@@ -198,14 +200,14 @@ html, body {
   transition: transform .12s ease, background .12s ease, border-color .12s ease;
   touch-action: manipulation;
 }
-.choice:active { transform: scale(.985); background: rgba(255,255,255,.16); }
+.choice:active { transform: scale(.985); background: rgba(47,127,216,.14); }
 .choice:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .choice .tag {
   display: inline-block;
   font-size: .78rem;
   font-weight: 700;
-  color: var(--gold);
-  background: rgba(255,209,102,.12);
+  color: #8a5200;
+  background: rgba(255,209,102,.4);
   border-radius: 999px;
   padding: .05rem .5rem;
   margin-left: .35rem;
@@ -221,7 +223,7 @@ html, body {
 #roll-area {
   margin-top: 1rem;
   text-align: center;
-  background: rgba(0,0,0,.25);
+  background: rgba(255,255,255,.8);
   border: 1px dashed var(--panel-line);
   border-radius: var(--radius);
   padding: 1rem;
@@ -236,9 +238,9 @@ html, body {
   border-radius: 14px;
   font-size: 1.8rem;
   font-weight: 800;
-  color: #2b1436;
+  color: #4a2c00;
   background: linear-gradient(140deg, #fff, var(--gold));
-  box-shadow: 0 8px 22px rgba(0,0,0,.4);
+  box-shadow: 0 8px 22px rgba(47,127,216,.25);
 }
 .die.rolling { animation: shake .5s ease infinite; }
 @keyframes shake {
@@ -263,9 +265,9 @@ html, body {
   font-size: .85rem;
   padding: .25rem .6rem;
   border-radius: 999px;
-  background: rgba(124,231,200,.12);
-  border: 1px solid rgba(124,231,200,.35);
-  color: var(--mint);
+  background: rgba(26,143,116,.12);
+  border: 1px solid rgba(26,143,116,.35);
+  color: #10604d;
   animation: fadein .3s ease;
 }
 #pack:empty { display: none; }
@@ -275,7 +277,7 @@ html, body {
   position: fixed;
   inset: 0;
   z-index: 10;
-  background: rgba(8,4,18,.65);
+  background: rgba(34,49,74,.45);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -283,7 +285,7 @@ html, body {
 }
 .sheet-inner {
   width: min(30rem, 100%);
-  background: #221340;
+  background: #fdf9f0;
   border: 1px solid var(--panel-line);
   border-radius: 20px 20px 0 0;
   padding: 1.25rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
@@ -318,8 +320,8 @@ html, body {
   display: inline-block;
   font-size: .78rem;
   font-weight: 700;
-  color: var(--gold);
-  background: rgba(255,209,102,.12);
+  color: #8a5200;
+  background: rgba(255,209,102,.4);
   border-radius: 999px;
   padding: .05rem .5rem;
   white-space: nowrap;
@@ -329,7 +331,7 @@ html, body {
   text-align: center;
   font-weight: 700;
   color: var(--mint);
-  background: rgba(0,0,0,.25);
+  background: rgba(255,255,255,.75);
   border: 1px dashed var(--panel-line);
   border-radius: 12px;
   padding: .6rem .5rem;
@@ -337,7 +339,7 @@ html, body {
 .sheet-scroll #howto-close { margin-top: 1.1rem; position: sticky; bottom: 0; }
 .menu-note { color: var(--muted); font-size: .85rem; margin: .5rem 0 0; text-align: center; }
 
-.ending #passage { border-color: var(--gold); box-shadow: 0 0 40px rgba(255,209,102,.15); }
+.ending #passage { border-color: var(--gold); box-shadow: 0 0 40px rgba(255,209,102,.45); }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -349,8 +351,8 @@ html, body {
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--panel-line);
-  background: #1a1136;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  background: #cfe6fa;
+  box-shadow: 0 10px 30px rgba(47, 127, 216, .22);
   line-height: 0;
   cursor: pointer;
 }
@@ -382,7 +384,7 @@ html, body {
   font: inherit;
   font-size: .9rem;
   color: var(--muted);
-  background: rgba(0, 0, 0, .25);
+  background: rgba(255, 255, 255, .7);
   border: 1px dashed var(--panel-line);
   border-radius: 12px;
   padding: .55rem .8rem;
@@ -390,7 +392,7 @@ html, body {
   cursor: pointer;
   touch-action: manipulation;
 }
-.skip-btn:active { background: rgba(255, 255, 255, .1); }
+.skip-btn:active { background: rgba(47, 127, 216, .12); }
 
 #choices.waiting { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; }
 
