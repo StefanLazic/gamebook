@@ -1,18 +1,20 @@
-/* Први дан петог разреда — gamebook engine
- * Renders passages from STORY (js/story.js), handles choices, stats,
- * items, 2d6 dice checks and local save/restore.
+/* Књига-игра — мотор
+ *
+ * Учитава причу из регистра STORIES (js/stories.js), исписује одломке,
+ * води особине, ствари у ранцу, бацање 2к6 и чување напретка на уређају.
+ * Свака прича има своје особине (statDefs), свој чувар правила (guard)
+ * и свој сет слика (js/art.js + пакети регистровани преко ART.register).
  */
 (function () {
   'use strict';
 
-  var SAVE_KEY = 'petirazred.save.sr-cyr.v1';
-  var STAT_LABELS = { knowledge: 'Знање', courage: 'Смелост', friends: 'Другарство', calm: 'Живци' };
+  var SAVE_PREFIX = 'gamebook.sr-cyr.v2.';
 
   var el = {
     titleScreen: document.getElementById('title-screen'),
     gameScreen: document.getElementById('game-screen'),
-    startBtn: document.getElementById('start-btn'),
-    continueBtn: document.getElementById('continue-btn'),
+    storyList: document.getElementById('story-list'),
+    statBar: document.getElementById('stat-bar'),
     passage: document.getElementById('passage'),
     scene: document.getElementById('scene'),
     sceneArt: document.getElementById('scene-art'),
@@ -24,6 +26,7 @@
     menuBtn: document.getElementById('menu-btn'),
     menuResume: document.getElementById('menu-resume'),
     menuRestart: document.getElementById('menu-restart'),
+    menuStories: document.getElementById('menu-stories'),
     menuHowto: document.getElementById('menu-howto'),
     howto: document.getElementById('howto'),
     howtoBtn: document.getElementById('howto-btn'),
@@ -31,37 +34,66 @@
     app: document.getElementById('app')
   };
 
+  var story = null;
   var state = null;
   var busy = false;
+  var statNodes = {};
+
+  /* ---------- прича ---------- */
+  function statDefs() { return (story && story.statDefs) || []; }
+
+  function statDef(key) {
+    var defs = statDefs();
+    for (var i = 0; i < defs.length; i++) if (defs[i].key === key) return defs[i];
+    return null;
+  }
+
+  function statLabel(key) {
+    var d = statDef(key);
+    return d ? d.label : key;
+  }
 
   function newState() {
-    return {
-      at: STORY.start,
-      stats: { knowledge: 3, courage: 3, friends: 3, calm: 5 },
-      items: [],
-      flags: {},
-      visited: {}
-    };
+    var stats = {};
+    var defs = statDefs();
+    for (var i = 0; i < defs.length; i++) stats[defs[i].key] = defs[i].start || 0;
+    return { at: story.start, stats: stats, items: [], flags: {}, visited: {} };
   }
 
-  /* ---------- persistence ---------- */
+  /* ---------- чување напретка ---------- */
+  function saveKeyFor(st) { return SAVE_PREFIX + st.id; }
+
   function save() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+    try { localStorage.setItem(saveKeyFor(story), JSON.stringify(state)); } catch (e) { /* private mode */ }
   }
-  function loadSaved() {
+
+  function readSave(st, key) {
     try {
-      var raw = localStorage.getItem(SAVE_KEY);
+      var raw = localStorage.getItem(key);
       if (!raw) return null;
       var s = JSON.parse(raw);
-      if (!s || !s.at || !STORY.passages[s.at]) return null;
+      if (!s || !s.at || !st.passages[s.at]) return null;
+      if (!s.stats) s.stats = {};
+      if (!s.items) s.items = [];
+      if (!s.flags) s.flags = {};
+      if (!s.visited) s.visited = {};
       return s;
     } catch (e) { return null; }
   }
-  function clearSave() {
-    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ }
+
+  function loadSaved(st) {
+    return readSave(st, saveKeyFor(st)) ||
+      (st.legacySaveKey ? readSave(st, st.legacySaveKey) : null);
   }
 
-  /* ---------- helpers ---------- */
+  function clearSave(st) {
+    try {
+      localStorage.removeItem(saveKeyFor(st));
+      if (st.legacySaveKey) localStorage.removeItem(st.legacySaveKey);
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ---------- помоћне ---------- */
   function has(item) { return state.items.indexOf(item) !== -1; }
 
   function d6() { return 1 + Math.floor(Math.random() * 6); }
@@ -74,7 +106,10 @@
     if (fx.stats) {
       for (var k in fx.stats) {
         if (!Object.prototype.hasOwnProperty.call(fx.stats, k)) continue;
-        state.stats[k] = clamp((state.stats[k] || 0) + fx.stats[k], 0, 10);
+        var def = statDef(k) || {};
+        var lo = typeof def.min === 'number' ? def.min : 0;
+        var hi = typeof def.max === 'number' ? def.max : 10;
+        state.stats[k] = clamp((state.stats[k] || 0) + fx.stats[k], lo, hi);
         bumpStat(k);
       }
     }
@@ -109,21 +144,47 @@
     return true;
   }
 
-  /* ---------- rendering ---------- */
+  /* ---------- исписивање ---------- */
   function bumpStat(key) {
-    var node = document.getElementById('stat-' + key);
-    if (!node) return;
-    var chip = node.parentElement;
+    var chip = statNodes[key] && statNodes[key].chip;
+    if (!chip) return;
     chip.classList.remove('bump');
     void chip.offsetWidth;
     chip.classList.add('bump');
   }
 
+  function buildHud() {
+    statNodes = {};
+    el.statBar.textContent = '';
+    var defs = statDefs();
+    for (var i = 0; i < defs.length; i++) {
+      var def = defs[i];
+      var chip = document.createElement('div');
+      chip.className = 'stat';
+      chip.title = def.label;
+      var icon = document.createElement('span');
+      icon.className = 'stat-icon';
+      icon.textContent = def.icon;
+      var value = document.createElement('span');
+      value.textContent = '0';
+      var name = document.createElement('span');
+      name.className = 'stat-name';
+      name.textContent = def.label;
+      chip.appendChild(icon);
+      chip.appendChild(value);
+      chip.appendChild(name);
+      el.statBar.appendChild(chip);
+      statNodes[def.key] = { chip: chip, value: value };
+    }
+  }
+
   function renderHud() {
-    for (var k in STAT_LABELS) {
-      if (!Object.prototype.hasOwnProperty.call(STAT_LABELS, k)) continue;
-      var node = document.getElementById('stat-' + k);
-      if (node) node.textContent = state.stats[k];
+    var defs = statDefs();
+    for (var i = 0; i < defs.length; i++) {
+      var node = statNodes[defs[i].key];
+      if (!node) continue;
+      var raw = state.stats[defs[i].key] || 0;
+      node.value.textContent = defs[i].format ? defs[i].format(raw) : raw;
     }
   }
 
@@ -176,7 +237,7 @@
     return p;
   }
 
-  /* ---------- picture first, then the text, word by word ---------- */
+  /* ---------- прво слика, па текст реч по реч ---------- */
   var reveal = { timer: 0, startDelay: 0, queue: [], done: true };
 
   function reducedMotion() {
@@ -215,7 +276,7 @@
 
   function renderScene(id) {
     if (typeof ART === 'undefined') return;
-    el.sceneArt.innerHTML = ART.svg(id);
+    el.sceneArt.innerHTML = ART.svg(id, story.art || story.id);
     el.scene.classList.remove('appear');
     void el.scene.offsetWidth;
     el.scene.classList.add('appear');
@@ -226,9 +287,12 @@
   }
 
   function goto(id, extraNote) {
-    if (state.stats.calm <= 0 && id !== 'faint' && STORY.passages.faint) id = 'faint';
+    if (story.guard) {
+      var redirect = story.guard(state, id);
+      if (redirect && redirect !== id && story.passages[redirect]) id = redirect;
+    }
 
-    var p = STORY.passages[id];
+    var p = story.passages[id];
     if (!p) { console.error('Missing passage: ' + id); return; }
 
     state.at = id;
@@ -288,7 +352,7 @@
         if (choice.roll) {
           var tag = document.createElement('span');
           tag.className = 'tag';
-          tag.textContent = STAT_LABELS[choice.roll.stat] + ' ' + choice.roll.dc + '+';
+          tag.textContent = statLabel(choice.roll.stat) + ' ' + choice.roll.dc + '+';
           btn.appendChild(tag);
         } else if (choice.tag) {
           var t2 = document.createElement('span');
@@ -317,9 +381,16 @@
       var again = document.createElement('button');
       again.className = 'choice';
       again.type = 'button';
-      again.textContent = 'Почни дан изнова ↺';
+      again.textContent = story.replayText || 'Почни причу изнова ↺';
       again.addEventListener('click', restart);
       el.choices.appendChild(again);
+
+      var back = document.createElement('button');
+      back.className = 'choice';
+      back.type = 'button';
+      back.textContent = 'Изабери другу причу 📚';
+      back.addEventListener('click', showTitle);
+      el.choices.appendChild(back);
     }
   }
 
@@ -336,7 +407,7 @@
     }
   }
 
-  /* ---------- dice ---------- */
+  /* ---------- коцке ---------- */
   function doRoll(roll) {
     busy = true;
     var bonus = state.stats[roll.stat] || 0;
@@ -357,7 +428,7 @@
 
     var caption = document.createElement('p');
     caption.className = 'roll-math';
-    caption.textContent = 'Бацам 2к6 + ' + STAT_LABELS[roll.stat] + ' (' + bonus + ') против ' + roll.dc;
+    caption.textContent = 'Бацам 2к6 + ' + statLabel(roll.stat) + ' (' + bonus + ') против ' + roll.dc;
     el.rollArea.appendChild(caption);
     el.rollArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -412,18 +483,108 @@
     cont.focus();
   }
 
-  /* ---------- screens ---------- */
-  function startGame(existing) {
+  /* ---------- насловни екран са избором приче ---------- */
+  function storyCard(st) {
+    var card = document.createElement('article');
+    card.className = 'story-card';
+
+    var cover = document.createElement('div');
+    cover.className = 'story-cover';
+    if (typeof ART !== 'undefined') cover.innerHTML = ART.svg(st.cover || st.start, st.art || st.id);
+    card.appendChild(cover);
+
+    var body = document.createElement('div');
+    body.className = 'story-body';
+
+    var h = document.createElement('h2');
+    h.className = 'story-title';
+    h.textContent = st.emoji ? st.emoji + ' ' + st.title : st.title;
+    body.appendChild(h);
+
+    var blurb = document.createElement('p');
+    blurb.className = 'story-blurb';
+    blurb.textContent = st.blurb;
+    body.appendChild(blurb);
+
+    if (st.tags && st.tags.length) {
+      var tags = document.createElement('p');
+      tags.className = 'story-tags';
+      for (var i = 0; i < st.tags.length; i++) {
+        var t = document.createElement('span');
+        t.className = 'tag';
+        t.textContent = st.tags[i];
+        tags.appendChild(t);
+      }
+      body.appendChild(tags);
+    }
+
+    var play = document.createElement('button');
+    play.className = 'btn btn-primary';
+    play.type = 'button';
+    play.textContent = st.playText || 'Играј';
+    play.addEventListener('click', function () { clearSave(st); startGame(st, null); });
+    body.appendChild(play);
+
+    var saved = loadSaved(st);
+    if (saved) {
+      var cont = document.createElement('button');
+      cont.className = 'btn btn-ghost';
+      cont.type = 'button';
+      cont.textContent = 'Настави где си стао';
+      cont.addEventListener('click', function () { startGame(st, saved); });
+      body.appendChild(cont);
+    }
+
+    card.appendChild(body);
+    return card;
+  }
+
+  function renderStoryList() {
+    el.storyList.textContent = '';
+    for (var i = 0; i < STORIES.list.length; i++) {
+      el.storyList.appendChild(storyCard(STORIES.list[i]));
+    }
+  }
+
+  function syncHowto() {
+    var sections = el.howto.querySelectorAll('[data-story]');
+    for (var i = 0; i < sections.length; i++) {
+      var forStory = sections[i].getAttribute('data-story');
+      var show = !story || forStory === story.id;
+      sections[i].classList.toggle('hidden', !show);
+    }
+  }
+
+  function startGame(st, existing) {
+    story = st;
+    document.title = st.title + ' — књига-игра';
+    buildHud();
     state = existing || newState();
     busy = false;
+    syncHowto();
     el.titleScreen.classList.add('hidden');
     el.gameScreen.classList.remove('hidden');
     goto(state.at);
   }
 
+  function showTitle() {
+    finishReveal();
+    busy = false;
+    story = null;
+    document.title = 'Књига-игра — две приче о првом школском дану';
+    syncHowto();
+    closeMenu();
+    el.gameScreen.classList.add('hidden');
+    el.titleScreen.classList.remove('hidden');
+    el.app.classList.remove('ending');
+    renderStoryList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   function restart() {
-    clearSave();
-    startGame(null);
+    if (!story) { showTitle(); return; }
+    clearSave(story);
+    startGame(story, null);
     closeMenu();
   }
 
@@ -436,10 +597,10 @@
   el.passage.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
   el.scene.addEventListener('click', function () { if (!reveal.done) finishReveal(); });
 
-  el.startBtn.addEventListener('click', function () { clearSave(); startGame(null); });
   el.menuBtn.addEventListener('click', openMenu);
   el.menuResume.addEventListener('click', closeMenu);
   el.menuRestart.addEventListener('click', restart);
+  el.menuStories.addEventListener('click', showTitle);
   el.menu.addEventListener('click', function (e) { if (e.target === el.menu) closeMenu(); });
   el.howtoBtn.addEventListener('click', openHowto);
   el.menuHowto.addEventListener('click', function () { closeMenu(); openHowto(); });
@@ -460,9 +621,6 @@
     }
   });
 
-  var saved = loadSaved();
-  if (saved) {
-    el.continueBtn.classList.remove('hidden');
-    el.continueBtn.addEventListener('click', function () { startGame(saved); });
-  }
+  renderStoryList();
+  syncHowto();
 })();

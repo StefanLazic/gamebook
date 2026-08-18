@@ -288,7 +288,7 @@ var ART = (function () {
     kiosk: ch(P_KIOSK, {}, 'продавац на киоску', 40, 1.12),
     cat: { draw: function () { return drawCat({}); }, foot: 20, size: 1.25, name: 'Мими, риђа школска мачка' },
     catUp: { draw: function () { return drawCat({ tailUp: true }); }, foot: 20, size: 1.25, name: 'Мими' },
-    pigeon: { draw: drawPigeon, foot: 13, size: 1.2, name: 'голуб' }
+    pigeon: { draw: drawPigeon, foot: 13, size: 1.2, name: 'голуб', small: true }
   };
 
   /* ---------- background pieces ---------- */
@@ -373,9 +373,9 @@ var ART = (function () {
     dusk: ['#f0a05a', '#f7c07a', '#ffe2b0']
   };
 
-  function sky(kind) {
+  function sky(kind, uid) {
     var c = SKIES[kind] || SKIES.day;
-    return el('linearGradient', { id: 'sky', x1: '0', y1: '0', x2: '0', y2: '1' },
+    return el('linearGradient', { id: 'sky' + uid, x1: '0', y1: '0', x2: '0', y2: '1' },
       el('stop', { offset: '0', 'stop-color': c[0] }) +
       el('stop', { offset: '0.6', 'stop-color': c[1] }) +
       el('stop', { offset: '1', 'stop-color': c[2] }));
@@ -703,19 +703,19 @@ var ART = (function () {
     3: [[92, 0.92], [200, 1], [312, 0.86]]
   };
 
-  function castLayer(cast, rnd) {
+  function castLayer(cast, rnd, cast_book) {
     var n = Math.min(cast.length, 3);
     if (!n) return '';
     var slots = SLOTS[n];
     var out = '';
     for (var i = 0; i < n; i++) {
       var name = cast[i];
-      var c = CHARACTERS[name];
+      var c = cast_book[name];
       if (!c) continue;
       var x = slots[i][0];
       var scale = slots[i][1];
       var y = GROUND + 14 + (i === 1 && n === 3 ? 10 : 0);
-      if (name === 'pigeon') { y -= 2; x += 26; }
+      if (c.small) { y -= 2; x += 26; }
       var sc = scale * (c.size || 1);
       out += el('ellipse', {
         cx: r2(x), cy: r2(y - 26 * sc), rx: r2(40 * sc), ry: r2(46 * sc),
@@ -730,45 +730,95 @@ var ART = (function () {
     return out;
   }
 
-  function sceneFor(id) {
-    return SCENES[id] || s('hallway', ['kid'], 'indoor', 'школски ходник');
+  /* ---------- пакети слика по причама ----------
+   * Свака прича има свој пакет: додатне ликове, додатне позадине и мапу
+   * одломак -> сцена. Основни ликови и позадине су заједнички за све приче.
+   */
+  var PACKS = {};
+
+  function register(id, pack) {
+    PACKS[id] = {
+      characters: merge(CHARACTERS, pack.characters),
+      backgrounds: merge(BACKGROUNDS, pack.backgrounds),
+      scenes: pack.scenes || {},
+      fallback: pack.fallback || s('hallway', ['kid'], 'indoor', 'школски ходник')
+    };
+    return PACKS[id];
   }
 
-  function svg(id) {
-    var scene = sceneFor(id);
+  function merge(base, extra) {
+    var out = {}, k;
+    for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) out[k] = base[k];
+    for (k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) out[k] = extra[k];
+    return out;
+  }
+
+  register('peti', { characters: {}, backgrounds: {}, scenes: SCENES });
+
+  function packFor(packId) {
+    return PACKS[packId] || PACKS.peti;
+  }
+
+  function sceneFor(id, packId) {
+    var pack = packFor(packId);
+    return pack.scenes[id] || pack.fallback;
+  }
+
+  var uidCount = 0;
+
+  function svg(id, packId) {
+    var pack = packFor(packId);
+    var scene = sceneFor(id, packId);
     var rnd = rngFrom(seedOf(id));
-    var bg = (BACKGROUNDS[scene.bg] || BACKGROUNDS.hallway)(rnd);
+    var uid = '-' + (++uidCount);
+    var bg = (pack.backgrounds[scene.bg] || pack.backgrounds.hallway)(rnd);
     var defs = el('defs', null,
-      sky(scene.sky) +
-      el('radialGradient', { id: 'vig', cx: '0.5', cy: '0.5', r: '0.75' },
+      sky(scene.sky, uid) +
+      el('radialGradient', { id: 'vig' + uid, cx: '0.5', cy: '0.5', r: '0.75' },
         el('stop', { offset: '0.55', 'stop-color': '#3a2a1e', 'stop-opacity': '0' }) +
         el('stop', { offset: '1', 'stop-color': '#3a2a1e', 'stop-opacity': '0.28' })));
     var inner = defs +
-      rect(0, 0, W, H, 'url(#sky)') +
+      rect(0, 0, W, H, 'url(#sky' + uid + ')') +
       bg +
-      castLayer(scene.cast, rnd) +
-      rect(0, 0, W, H, 'url(#vig)');
+      castLayer(scene.cast, rnd, pack.characters) +
+      rect(0, 0, W, H, 'url(#vig' + uid + ')');
     return el('svg', {
       viewBox: '0 0 ' + W + ' ' + H,
       xmlns: 'http://www.w3.org/2000/svg',
       preserveAspectRatio: 'xMidYMid slice',
       role: 'img',
-      'aria-label': altFor(id)
+      'aria-label': altFor(id, packId)
     }, inner);
   }
 
-  function altFor(id) {
-    var scene = sceneFor(id);
+  function altFor(id, packId) {
+    var pack = packFor(packId);
+    var scene = sceneFor(id, packId);
     var who = [];
     for (var i = 0; i < scene.cast.length; i++) {
-      var c = CHARACTERS[scene.cast[i]];
+      var c = pack.characters[scene.cast[i]];
       if (c && who.indexOf(c.name) === -1) who.push(c.name);
     }
     var base = 'Слика: ' + (scene.note || 'сцена из приче');
     return who.length ? base + ' (' + who.join(', ') + ')' : base;
   }
 
-  return { svg: svg, altFor: altFor, scenes: SCENES, characters: CHARACTERS };
+  /* Алат за цртање, да и друге приче могу да користе исти стил. */
+  var lib = {
+    W: W, H: H, GROUND: GROUND,
+    el: el, g: g, circle: circle, ellipse: ellipse, rect: rect, path: path, r2: r2,
+    eye: eye, sleepyEye: sleepyEye, blush: blush, smile: smile,
+    person: person, ch: ch, drawCup: drawCup, drawCat: drawCat, drawPigeon: drawPigeon,
+    drawBackpack: drawBackpack,
+    sun: sun, cloud: cloud, clouds: clouds, block: block, treeGreen: treeGreen,
+    floorTiles: floorTiles, desk: desk, board: board, windowWall: windowWall,
+    scene: s, backgrounds: BACKGROUNDS, characters: CHARACTERS
+  };
+
+  return {
+    svg: svg, altFor: altFor, register: register, packs: PACKS,
+    scenes: SCENES, characters: CHARACTERS, lib: lib
+  };
 })();
 
 if (typeof module !== 'undefined' && module.exports) module.exports = ART;

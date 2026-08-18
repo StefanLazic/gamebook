@@ -84,6 +84,50 @@ html, body {
 .subtitle { color: var(--muted); margin: .25rem 0 1.25rem; }
 .credits { color: rgba(95,115,145,.85); font-size: .85rem; margin-top: 1.5rem; }
 
+/* ---------- Story picker ---------- */
+.story-list {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  margin: .5rem 0 .25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) {
+  .story-list { grid-template-columns: 1fr 1fr; }
+}
+.story-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(47, 127, 216, .18);
+  animation: fadein .4s ease both;
+}
+.story-cover { line-height: 0; background: #cfe6fa; }
+.story-cover svg { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; }
+.story-body {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  padding: .9rem 1rem 1.1rem;
+}
+.story-title { margin: 0; font-size: 1.15rem; color: var(--gold); }
+.story-blurb { margin: 0; font-size: .93rem; color: var(--ink); }
+.story-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin: .1rem 0 .5rem; }
+.story-tags .tag {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #8a5200;
+  background: rgba(255, 209, 102, .4);
+  border-radius: 999px;
+  padding: .1rem .6rem;
+}
+.story-body .btn { margin-top: auto; }
+.story-body .btn-ghost { margin-top: .5rem; }
+
 /* ---------- Buttons ---------- */
 .btn {
   font: inherit;
@@ -157,6 +201,23 @@ html, body {
   100% { transform: scale(1); }
 }
 #menu-btn { margin-left: auto; }
+.stat-bar {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+.stat-bar::-webkit-scrollbar { display: none; }
+.stat { flex: 0 0 auto; }
+.stat-name { display: none; }
+@media (min-width: 34rem) {
+  .stat-name { display: inline; font-weight: 600; color: var(--muted); font-size: .8rem; }
+}
 
 /* ---------- Passage ---------- */
 #passage {
