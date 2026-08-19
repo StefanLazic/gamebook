@@ -1,7 +1,7 @@
 /* Први дан првог разреда — слике
  *
  * Пакет слика за причу „prvi“. Користи исти алат и исти стил као js/art.js
- * (ART.lib), само са својом поделом улога: Мила, мама, тата, учитељица
+ * (ART.lib), само са својом поделом улога: Ема, мама, тата, учитељица
  * Јована, Вук, Тара, бака Даница, домар Мија и саобраћајац Раде.
  *
  * Правила су иста као у основном пакету: ништа страшно и сваки лик изгледа
@@ -31,13 +31,13 @@
   function grown(p, opts, name) { return L.ch(p, opts, name, 40, 1.16); }
 
   var characters = {
-    mila: kid(P_MILA, {}, 'Мила, ђак првак'),
-    milaSleepy: kid(P_MILA, { sleepy: true }, 'поспана Мила'),
-    milaHand: kid(P_MILA, { raise: true, mouth: 'open' }, 'Мила диже руку'),
-    milaBook: kid(P_MILA, { book: true }, 'Мила са свеском'),
-    milaReach: kid(P_MILA, { reach: true, mouth: 'open' }, 'Мила у покрету'),
-    milaNoBag: kid(P_MILA, { noBag: true }, 'Мила без ранца'),
-    milaChalk: kid(P_MILA, { raise: true, chalk: true }, 'Мила са кредом'),
+    mila: kid(P_MILA, {}, 'Ема, ђак првак'),
+    milaSleepy: kid(P_MILA, { sleepy: true }, 'поспана Ема'),
+    milaHand: kid(P_MILA, { raise: true, mouth: 'open' }, 'Ема диже руку'),
+    milaBook: kid(P_MILA, { book: true }, 'Ема са свеском'),
+    milaReach: kid(P_MILA, { reach: true, mouth: 'open' }, 'Ема у покрету'),
+    milaNoBag: kid(P_MILA, { noBag: true }, 'Ема без ранца'),
+    milaChalk: kid(P_MILA, { raise: true, chalk: true }, 'Ема са кредом'),
     mama: grown(P_MAMA, {}, 'мама'),
     mamaReach: grown(P_MAMA, { reach: true }, 'мама која маше'),
     tata: grown(P_TATA, { cup: true }, 'тата'),
