@@ -19,7 +19,7 @@ items in the backpack, five endings — and a picture for every passage.
 
 ## 🎀 Први дан првог разреда (First Day of First Grade)
 
-Мила is seven and starts **first grade** today. She wakes at 7:00, the bell rings at
+Ема is seven and starts **first grade** today. She wakes at 7:00, the bell rings at
 8:00, and the whole of Belgrade stands in between: the duvet that steals twelve minutes,
 the unicorn T-shirt at the bottom of the third drawer, the shortcut through the park,
 a grandmother with two heavy bags, and a traffic light that is very much not a
@@ -42,7 +42,7 @@ a failure.
 
 Every passage has its own illustration, drawn as an SVG scene at runtime by `js/art.js`
 (shared drawing kit and the fifth-grade cast) and `js/art-prvi.js` (the first-grade
-cast: Мила, учитељица Јована, Вук, Тара, бака Даница, домар Мија, саобраћајац Раде) —
+cast: Ема, учитељица Јована, Вук, Тара, бака Даница, домар Мија, саобраћајац Раде) —
 no image files, no network. The picture fades in first, then the story is revealed **word
 by word**; the choices appear once the passage has finished. Tapping the picture, tapping
 the text, the „Додирни за цео текст ⏩“ button, or Space/Enter/1–9 shows everything at once,
@@ -104,7 +104,7 @@ engine builds the stat bar and the redirects from that.
   bell rings without you — one minus, and the day carries on.
 - Five minuses end the day early (`kraj_pet_minusa`), still gently. There are eight ways
   to earn one, from entering in trainers instead of slippers to throwing paper balls.
-- Six endings, chosen from minuses, pluses and how many friends Мила made.
+- Six endings, chosen from minuses, pluses and how many friends Ема made.
 
 ### Both
 
